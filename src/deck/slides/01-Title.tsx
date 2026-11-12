@@ -1,9 +1,10 @@
-import { Play } from 'lucide-react';
-import { GlassCard } from '../components/GlassCard';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
+import sweatSip from '@/assets/concept-sweat-sip.jpg';
+import deerNod from '@/assets/concept-deer-nod.jpg';
+import smirk from '@/assets/concept-smirk.jpg';
 
 export const metadata: SlideMetadata = {
   id: 'title',
@@ -12,24 +13,25 @@ export const metadata: SlideMetadata = {
   notes: 'Open with the simple promise: Ansel’s record, returned before the next recurring meeting. This is a private, timely Slack card—not another summary to find.',
 };
 
-const recordRows = [
-  { label: 'YOU OWN', text: 'Forecast update (may already be done)', time: '14:32' },
-  { label: 'STILL OPEN', text: 'Launch date: Mar 3 or Mar 10?', time: '27:05' },
-  { label: 'DECIDED', text: 'Pricing page ships with v2', time: '41:18' },
+// Visual concept options to pick from (temporary — keep one).
+const concepts = [
+  { key: 'A', label: '1:59 sweat vs. 1:30 sip', src: sweatSip },
+  { key: 'B', label: 'Deer in headlights vs. the nod', src: deerNod },
+  { key: 'C', label: 'The 2:00 PM smirk', src: smirk },
 ];
 
 export default function TitleSlide() {
   return (
     <SlideFrame section={metadata.section}>
-      <div className="absolute inset-x-[104px] top-[190px] bottom-[70px] flex items-center gap-[70px]">
-        <div className="w-[930px] flex-shrink-0">
+      <div className="absolute inset-x-[104px] top-[170px] bottom-[70px] flex items-center gap-[64px]">
+        <div className="w-[860px] flex-shrink-0">
           <Reveal>
-            <Headline style={{ fontSize: 142 }} secondary={<span className="mt-[22px] block text-[58px] leading-[1.04]"><span className="whitespace-nowrap">Ansel&apos;s record,</span> <span className="whitespace-nowrap">back when it matters.</span></span>}>
+            <Headline style={{ fontSize: 142 }} secondary={<span className="mt-[22px] block text-[58px] leading-[1.04]">Look like you took notes.</span>}>
               Heads-Up
             </Headline>
           </Reveal>
           <Reveal delay={140}>
-            <p className="mt-[42px] max-w-[790px] text-[28px] leading-[1.42] text-[var(--deck-muted)]">
+            <p className="mt-[42px] max-w-[760px] text-[28px] leading-[1.42] text-[var(--deck-muted)]">
               A Slack card before every recurring meeting: what you own, what&apos;s still open, what was decided.
             </p>
           </Reveal>
@@ -38,33 +40,24 @@ export default function TitleSlide() {
           </Reveal>
         </div>
 
-        <Reveal delay={180} className="w-[650px] flex-shrink-0">
-          <GlassCard className="h-[720px]">
-            <div className="flex items-center gap-[16px]">
-              <div className="flex h-[52px] w-[52px] items-center justify-center rounded-[15px] bg-[var(--deck-ink)] text-[24px] font-semibold text-white">H</div>
-              <div>
-                <p className="text-[20px] font-semibold">Ansel <span className="ml-[5px] rounded-[5px] bg-[var(--deck-muted)] px-[6px] py-[2px] text-[12px] text-white">APP</span> <span className="ml-[8px] font-normal text-[var(--deck-muted)]">1:30 PM</span></p>
-              </div>
-            </div>
-            <h2 className="mt-[34px] font-display text-[32px] font-extrabold tracking-[-0.03em]">Weekly Product Sync · 2:00 PM</h2>
-            <div className="mt-[25px] space-y-[22px]">
-              {recordRows.map((row) => (
-                <div key={row.label} className="border-t border-[var(--deck-secondary)]/20 pt-[18px]">
-                  <p className="text-[13px] font-semibold tracking-[0.13em] text-[var(--deck-accent)]">{row.label}</p>
-                  <div className="mt-[8px] flex items-center justify-between gap-[16px]">
-                    <p className="text-[21px] leading-[1.25]">{row.text}</p>
-                    <span className="flex flex-shrink-0 items-center gap-[6px] text-[16px] text-[var(--deck-muted)]"><Play size={12} fill="currentColor" />{row.time}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-[30px] flex flex-wrap gap-[10px]">
-              <button className="rounded-[10px] bg-[var(--deck-ink)] px-[17px] py-[11px] text-[16px] font-medium text-white">Open last meeting</button>
-              <button className="rounded-[10px] border border-[var(--deck-secondary)]/30 px-[17px] py-[11px] text-[16px]">Mute series</button>
-              <button className="rounded-[10px] border border-[var(--deck-secondary)]/30 px-[17px] py-[11px] text-[16px]">Not useful</button>
-            </div>
-          </GlassCard>
-        </Reveal>
+        <div className="flex w-[790px] flex-shrink-0 flex-col gap-[22px]">
+          <Reveal delay={180}>
+            <figure className="overflow-hidden rounded-[24px] border border-[var(--deck-secondary)]/20 shadow-[0_24px_60px_-30px_rgba(42,29,23,0.5)]">
+              <img src={concepts[0].src} alt={concepts[0].label} width={1024} height={768} className="h-[430px] w-full object-cover" />
+            </figure>
+            <p className="mt-[8px] text-[20px] text-[var(--deck-muted)]"><b className="text-[var(--deck-accent)]">{concepts[0].key}</b> · {concepts[0].label}</p>
+          </Reveal>
+          <div className="grid grid-cols-2 gap-[22px]">
+            {concepts.slice(1).map((c, i) => (
+              <Reveal key={c.key} delay={260 + i * 80}>
+                <figure className="overflow-hidden rounded-[20px] border border-[var(--deck-secondary)]/20">
+                  <img src={c.src} alt={c.label} width={1024} height={768} loading="lazy" className="h-[230px] w-full object-cover" />
+                </figure>
+                <p className="mt-[8px] text-[20px] text-[var(--deck-muted)]"><b className="text-[var(--deck-accent)]">{c.key}</b> · {c.label}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </SlideFrame>
   );
