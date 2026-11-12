@@ -79,7 +79,7 @@ export default function DeckPage() {
       const target = event.target as HTMLElement | null;
       if (target?.matches('input, textarea, [contenteditable="true"]') || event.metaKey || event.ctrlKey || event.altKey) return;
 
-      if (/^[0-9]$/.test(event.key) && !state.presenting) {
+      if (/^[0-9]$/.test(event.key)) {
         numberBuffer.current = `${numberBuffer.current}${event.key}`.slice(-2);
         window.clearTimeout(numberTimeout.current);
         numberTimeout.current = window.setTimeout(() => { numberBuffer.current = ''; }, 1000);

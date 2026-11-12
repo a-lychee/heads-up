@@ -44,7 +44,6 @@ export default function TitleSlide() {
               <div className="flex h-[52px] w-[52px] items-center justify-center rounded-[15px] bg-[var(--deck-ink)] text-[24px] font-semibold text-white">H</div>
               <div>
                 <p className="text-[20px] font-semibold">Ansel <span className="ml-[5px] rounded-[5px] bg-[var(--deck-muted)] px-[6px] py-[2px] text-[12px] text-white">APP</span> <span className="ml-[8px] font-normal text-[var(--deck-muted)]">1:30 PM</span></p>
-                <p className="mt-[3px] text-[16px] text-[var(--deck-muted)]">Your Heads-Up is ready</p>
               </div>
             </div>
             <h2 className="mt-[34px] font-['Bricolage_Grotesque'] text-[32px] font-extrabold tracking-[-0.03em]">Weekly Product Sync · 2:00 PM</h2>
