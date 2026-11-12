@@ -2,7 +2,7 @@ import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
-import beforeAfter from '@/assets/concept-a2-before-after.png';
+import beforeAfter from '@/assets/title-before-after-man.png';
 
 export const metadata: SlideMetadata = {
   id: 'title',
@@ -43,7 +43,7 @@ export default function TitleSlide() {
       <Reveal delay={180} className="absolute inset-y-0 left-[940px] right-[90px] flex items-center">
         <img
           src={beforeAfter}
-          alt="Before: a stressed person at a laptop. After: the same person relaxed with coffee as a notification arrives."
+          alt="Before: a stressed man at a laptop. After: the same man relaxed with coffee as a notification arrives."
           width={972}
           height={805}
           className="h-full w-full object-contain"

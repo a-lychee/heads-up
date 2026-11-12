@@ -28,22 +28,27 @@ interface Member {
   id: string;
   first: string;
   last: string;
-  title: RolePart[];
+  /** First line of the title, e.g. "Software Engineer". */
+  title: RolePart;
+  /** Second line; key it to strike it on the updated slide. */
+  company?: RolePart;
   note?: RolePart;
   photo: string;
 }
 
+const COMPANY = 'at Real Company';
+
 export const team: Member[] = [
   { id: 'varun', first: 'Varun', last: 'Sanklecha', photo: varunPhoto,
-    title: [{ text: 'Software Engineer', key: 'varun-title' }, { text: ' at Real Company' }] },
+    title: { text: 'Software Engineer', key: 'varun-title' } },
   { id: 'aryan', first: 'Aryan', last: 'Ochani', photo: aryanPhoto,
-    title: [{ text: 'Software Engineer at Real Company' }], note: { text: '(Varun’s Teammate)', key: 'aryan-note' } },
+    title: { text: 'Software Engineer' }, note: { text: '(Varun’s Teammate)', key: 'aryan-note' } },
   { id: 'alicia', first: 'Alicia', last: 'Wang', photo: aliciaPhoto.url,
-    title: [{ text: 'Engineering Manager at Real Company' }], note: { text: '(Varun’s Manager)', key: 'alicia-note' } },
+    title: { text: 'Engineering Manager' }, note: { text: '(Varun’s Manager)', key: 'alicia-note' } },
   { id: 'rishabh', first: 'Rishabh', last: 'Rajagopalan', photo: rishabhPhoto,
-    title: [{ text: 'CTO at Real Company', key: 'rishabh-title' }], note: { text: '(Currently OOO)', key: 'rishabh-note' } },
+    title: { text: 'CTO', key: 'rishabh-title' }, company: { text: COMPANY, key: 'rishabh-company' }, note: { text: '(Currently OOO)', key: 'rishabh-note' } },
   { id: 'gabe', first: 'Gabriel', last: 'Lam', photo: gabePhoto,
-    title: [{ text: 'Intern at Real Company' }], note: { text: '(Out Getting Coffee)' } },
+    title: { text: 'Intern' }, note: { text: '(Out Getting Coffee)' } },
 ];
 
 const medallionShadow = {
@@ -79,36 +84,39 @@ export function TeamGrid({ edits, reveal = true }: { edits?: TeamEdits; reveal?:
   // Without the reveal, the cards are already in place, so the edits read as a live correction.
   const Wrap = reveal ? Reveal : Plain;
   return (
-    <div className="mt-[96px] grid grid-cols-5 gap-[24px]">
+    <div className="mt-[104px] grid grid-cols-5 gap-[24px]">
       {team.map((member, index) => {
         const correction = edits?.corrections?.[member.id];
         return (
           <Wrap key={member.id} delay={100 + index * 80}>
-            <GlassCard className="h-[540px]">
-              <div className="flex h-full flex-col items-center text-center">
+            <GlassCard className="h-[506px]">
+              <div className="flex h-full flex-col items-center pt-[4px] text-center">
                 <div className="h-[200px] w-[200px] shrink-0 overflow-hidden rounded-full border-[7px] border-[var(--deck-accent)]" style={medallionShadow}>
                   <img src={member.photo} alt={`${member.first} ${member.last}`} className="h-full w-full object-cover object-top" />
                 </div>
-                <h2 className="mt-[26px] font-display text-[30px] font-extrabold leading-[1.12] tracking-[-0.03em]">
+                <h2 className="mt-[24px] font-display text-[30px] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--deck-accent)]">
                   <span className="block">{member.first}</span>
                   <span className="block">{member.last}</span>
                 </h2>
-                {/* Slot for a hand-written correction; empty on the opening slide so both layouts match. */}
-                <div className="flex h-[64px] items-end justify-center pb-[4px]">
-                  {correction && (
+                {/* Divider between name and role. On the updated slide a correction takes its place, so no gap is reserved. */}
+                <div className={`relative flex h-[52px] w-full justify-center ${correction ? 'items-end pb-[2px]' : 'items-center'}`}>
+                  {correction ? (
                     <p
-                      className={`rotate-[-3deg] font-display text-[36px] font-extrabold leading-none tracking-[-0.02em] text-[var(--deck-accent)] ${isStatic ? '' : 'deck-pop'}`}
+                      className={`rotate-[-3deg] font-display text-[34px] font-extrabold leading-none tracking-[-0.02em] text-[var(--deck-accent)] ${isStatic ? '' : 'deck-pop'}`}
                       style={{ animationDelay: `${correction.delay}ms` }}
                     >
                       {correction.text}
                     </p>
+                  ) : (
+                    <span className="h-[2px] w-[40px] rounded-full bg-[var(--deck-hairline-strong)]" aria-hidden="true" />
                   )}
                 </div>
-                <p className="text-[22px] font-semibold leading-[1.3] text-[var(--deck-ink)] [text-wrap:balance]">
-                  {member.title.map((part) => <Part key={part.text} part={part} edits={edits} isStatic={isStatic} />)}
+                <p className="text-[22px] font-semibold leading-[1.3] text-[var(--deck-ink)]">
+                  <span className="block"><Part part={member.title} edits={edits} isStatic={isStatic} /></span>
+                  <span className="block"><Part part={member.company ?? { text: COMPANY }} edits={edits} isStatic={isStatic} /></span>
                 </p>
                 {member.note && (
-                  <p className="mt-[6px] text-[20px] leading-[1.3] text-[var(--deck-muted)]">
+                  <p className="mt-[8px] text-[20px] leading-[1.3] text-[var(--deck-muted)]">
                     <Part part={member.note} edits={edits} isStatic={isStatic} />
                   </p>
                 )}

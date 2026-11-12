@@ -20,7 +20,7 @@ export default function TeamUpdateSlide() {
         <TeamGrid
           reveal={false}
           edits={{
-            struck: { 'rishabh-title': 500, 'rishabh-note': 650, 'aryan-note': 1000, 'alicia-note': 1300, 'varun-title': 1700 },
+            struck: { 'rishabh-title': 500, 'rishabh-company': 560, 'rishabh-note': 650, 'aryan-note': 1000, 'alicia-note': 1300, 'varun-title': 1700 },
             corrections: { varun: { text: 'CTO', delay: 2100 } },
           }}
         />

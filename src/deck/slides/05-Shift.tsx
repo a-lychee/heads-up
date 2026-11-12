@@ -8,7 +8,7 @@ export const metadata: SlideMetadata = {
   id: 'shift',
   title: 'The behavior change',
   section: '01 · Context and Problem',
-  notes: 'Today Ansel is reactive: Ethan has to go to Ansel himself, days later if at all. Light users open it about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. Our solution is Heads-Up: a 30-second Slack brief before every recurring meeting. So let’s see that in action.',
+  notes: 'Today Ansel is reactive: Varun has to go to Ansel himself, days later if at all. Light users open it about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. Our solution is Heads-Up: a 30-second Slack brief before every recurring meeting. So let’s see that in action.',
 };
 
 /** Simple filled person figure. */
@@ -75,7 +75,7 @@ export default function ShiftSlide() {
   const { static: isStatic } = useSlideEnvironment();
   const motion = !isStatic;
   // Timeline (ms after the slide appears): left half 120, right half 420, arrow draws 900,
-  // Ethan pops 1550, bell drops 1800 and pings twice, caption 2000, solution band 2500.
+  // Varun pops 1550, bell drops 1800 and pings twice, caption 2000, solution band 2500.
   return (
     <SlideFrame section={metadata.section} source="Heads-Up brief v9, Behavior Change · Kilts Center Ansel case (2026), Ex 3, 7">
       <div className="absolute inset-x-[104px] top-[160px]">

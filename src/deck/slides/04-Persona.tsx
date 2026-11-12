@@ -10,12 +10,12 @@ export const metadata: SlideMetadata = {
   id: 'persona',
   title: 'Our persona',
   section: '01 · Context and Problem',
-  notes: 'Meet Ethan, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said. So today he rereads old notes, asks a teammate, or relies on memory.',
+  notes: 'Meet Varun, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said. So today he rereads old notes, asks a teammate, or relies on memory.',
 };
 
 // Persona name and title are placeholders; edit here.
 const persona = {
-  name: 'Ethan',
+  name: 'Varun',
   role: 'Software engineer',
   traits: [
     { icon: CalendarDays, text: 'Fewer than 5 meetings a week' },
@@ -50,7 +50,7 @@ export default function PersonaSlide() {
         <Reveal>
           <Headline
             style={{ fontSize: 64 }}
-            secondary={<span className="whitespace-nowrap">Ethan struggles to remember last week&apos;s meeting.</span>}
+            secondary={<span className="whitespace-nowrap">Varun struggles to remember last week&apos;s meeting.</span>}
           >
             Who we’re building for
           </Headline>
@@ -118,7 +118,7 @@ export default function PersonaSlide() {
         </div>
       </div>
 
-      {/* Transition from slide 3: the light-user card flies over and becomes Ethan's profile card. */}
+      {/* Transition from slide 3: the light-user card flies over and becomes Varun's profile card. */}
       {!isStatic && (
         <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]" aria-hidden="true">
           <div className="deck-morph-content flex h-[428px] w-[369px] flex-col px-[26px] py-[26px]">
