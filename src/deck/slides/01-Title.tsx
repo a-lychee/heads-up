@@ -30,7 +30,7 @@ export default function TitleSlide() {
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-[36px] max-w-[720px] text-[28px] leading-[1.45] text-[var(--deck-muted)]">
-              A Slack card before every recurring meeting: what you own, what&apos;s still open, what was decided.
+              Ansel&apos;s new meeting prep companion, built to ensure you never need to scramble for a meeting again.
             </p>
           </Reveal>
           <Reveal delay={240}>
