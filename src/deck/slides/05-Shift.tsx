@@ -1,4 +1,4 @@
-import { ArrowRight, Bell, Check, HelpCircle, Mail, Users } from 'lucide-react';
+import { ArrowRight, Bell } from 'lucide-react';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
@@ -8,75 +8,54 @@ export const metadata: SlideMetadata = {
   id: 'shift',
   title: 'The behavior change',
   section: '02 · Heads-Up',
-  notes: 'Today Ansel is reactive: the notes land six minutes after the meeting, and by the next sync a week later Ethan has forgotten them. We want Ansel to be proactive: it comes to him right before the next sync, so he walks in knowing what he owns, what is open and what was decided. That is Heads-Up, a private Slack brief before every recurring meeting. So let’s see that in action.',
+  notes: 'Today Ansel is reactive: Ethan has to remember to go to Ansel, and light users do that about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. That is Heads-Up, a private Slack brief before every recurring meeting. So let’s see that in action.',
 };
 
-const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'];
-
-/** A week from one sync to the next, as eight day tiles. Words are kept to the day letters. */
-function WeekStrip({ proactive }: { proactive: boolean }) {
+/** Simple filled person figure. */
+function Person({ color, size = 150 }: { color: string; size?: number }) {
   return (
-    <div className="relative pt-[64px]">
-      {/* Where Ansel's value lands */}
-      <div
-        className={`absolute top-0 flex items-center gap-[8px] rounded-full px-[16px] py-[8px] text-[22px] font-semibold ${
-          proactive
-            ? 'right-0 bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)]'
-            : 'left-[40px] bg-[var(--deck-tone-3)] text-[var(--deck-muted)]'
-        }`}
-      >
-        {proactive ? <Bell size={22} /> : <Mail size={22} />}
-        {proactive ? '30 min before' : '6 min after'}
-      </div>
+    <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true" className="flex-shrink-0">
+      <circle cx="50" cy="34" r="18" fill={color} />
+      <path d="M14 96c0-22 16-36 36-36s36 14 36 36z" fill={color} />
+    </svg>
+  );
+}
 
-      <div className="grid grid-cols-8 gap-[10px]">
-        {days.map((day, index) => {
-          const first = index === 0;
-          const last = index === days.length - 1;
-          // Today the notes fade over the week; with Heads-Up the week stays neutral until the brief.
-          const fade = !proactive && !first && !last ? 1 - index / 7 : 1;
-          let tile = 'bg-white/45 text-[var(--deck-muted)]';
-          let icon = null;
-          if (first) {
-            tile = 'bg-[var(--deck-ink)] text-white';
-            icon = <Users size={30} />;
-          } else if (last && proactive) {
-            tile = 'bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)]';
-            icon = <Check size={34} strokeWidth={3} />;
-          } else if (last) {
-            tile = 'border-2 border-dashed border-[var(--deck-tone-1)] bg-transparent text-[var(--deck-secondary)]';
-            icon = <HelpCircle size={32} />;
-          } else if (!proactive) {
-            icon = <Mail size={24} />;
-          }
-          return (
-            <div key={index} className="flex flex-col items-center gap-[10px]">
-              <div className={`flex aspect-square w-full items-center justify-center rounded-[18px] ${tile}`} style={{ opacity: fade }}>
-                {icon}
-              </div>
-              <span className="text-[20px] font-semibold text-[var(--deck-muted)]">{day}</span>
-            </div>
-          );
-        })}
-      </div>
+function AnselTile({ faded = false }: { faded?: boolean }) {
+  return (
+    <div
+      className="flex h-[150px] w-[150px] flex-shrink-0 items-center justify-center rounded-[36px] bg-[image:var(--deck-app-icon-gradient)] font-display text-[68px] font-extrabold text-white"
+      style={{ opacity: faded ? 0.55 : 1 }}
+      aria-label="Ansel"
+    >
+      A
     </div>
   );
 }
 
-function Half({ proactive }: { proactive: boolean }) {
+function Flow({ label, accent }: { label: string; accent: boolean }) {
+  const color = accent ? 'var(--deck-accent)' : 'var(--deck-secondary)';
   return (
-    <div>
+    <div className="flex flex-shrink-0 flex-col items-center gap-[10px]">
+      <span className="text-[24px] font-semibold" style={{ color }}>{label}</span>
+      <svg width="230" height="30" viewBox="0 0 230 30" aria-hidden="true">
+        <line x1="4" y1="15" x2="212" y2="15" stroke={color} strokeWidth="5" strokeLinecap="round" strokeDasharray={accent ? undefined : '10 10'} />
+        <path d="M208 4 L226 15 L208 26" fill="none" stroke={color} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
+  );
+}
+
+function HalfTitle({ proactive }: { proactive: boolean }) {
+  return (
+    <>
       <p className={`text-[22px] font-semibold uppercase tracking-[0.1em] ${proactive ? 'text-[var(--deck-accent)]' : 'text-[var(--deck-muted)]'}`}>
         {proactive ? 'With Heads-Up' : 'Today'}
       </p>
       <p className={`mt-[6px] font-display text-[64px] font-extrabold leading-none tracking-[-0.035em] ${proactive ? '' : 'text-[var(--deck-secondary)]'}`}>
         {proactive ? 'Proactive' : 'Reactive'}
       </p>
-      <div className="mt-[40px]"><WeekStrip proactive={proactive} /></div>
-      <p className={`mt-[30px] text-[30px] leading-[1.25] ${proactive ? 'font-semibold' : 'text-[var(--deck-muted)]'}`}>
-        {proactive ? 'Ansel comes to him before the next one.' : 'Notes arrive, then get forgotten.'}
-      </p>
-    </div>
+    </>
   );
 }
 
@@ -91,14 +70,41 @@ export default function ShiftSlide() {
         </Reveal>
       </div>
 
-      <div className="absolute inset-x-[104px] top-[360px] grid grid-cols-[1fr_auto_1fr] gap-[56px]">
-        <Reveal delay={120}><Half proactive={false} /></Reveal>
-        <Reveal delay={300} className="self-center pt-[80px]">
+      <div className="absolute inset-x-[104px] top-[370px] grid grid-cols-[1fr_auto_1fr] gap-[56px]">
+        {/* Today: he has to pull */}
+        <Reveal delay={120}>
+          <HalfTitle proactive={false} />
+          <div className="mt-[56px] flex items-center gap-[26px]">
+            <Person color="var(--deck-secondary)" />
+            <Flow label="has to remember" accent={false} />
+            <AnselTile faded />
+          </div>
+          <p className="mt-[34px] text-[32px] leading-[1.25] text-[var(--deck-muted)]">He has to go to Ansel.</p>
+        </Reveal>
+
+        <Reveal delay={300} className="self-center pt-[60px]">
           <div className="flex h-[80px] w-[80px] items-center justify-center rounded-full bg-[var(--deck-ink)] text-white shadow-[var(--deck-card-shadow)]">
             <ArrowRight size={36} strokeWidth={1.8} />
           </div>
         </Reveal>
-        <Reveal delay={420}><Half proactive /></Reveal>
+
+        {/* With Heads-Up: Ansel pushes to him */}
+        <Reveal delay={420}>
+          <HalfTitle proactive />
+          <div className="mt-[56px] flex items-center gap-[26px]">
+            <AnselTile />
+            <Flow label="30 min before" accent />
+            <div className="relative flex-shrink-0">
+              <div className="flex h-[150px] w-[150px] items-center justify-center rounded-full bg-[var(--deck-accent-wash)]">
+                <Person color="var(--deck-ink)" size={120} />
+              </div>
+              <span className="absolute -right-[14px] -top-[14px] flex h-[58px] w-[58px] items-center justify-center rounded-full bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)]">
+                <Bell size={28} />
+              </span>
+            </div>
+          </div>
+          <p className="mt-[34px] text-[32px] font-semibold leading-[1.25]">Ansel comes to him.</p>
+        </Reveal>
       </div>
 
       <Reveal delay={700} className="absolute bottom-[56px] left-[104px]">
