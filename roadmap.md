@@ -5,4 +5,5 @@
 - [x] Build all 12 Heads-Up slides with the supplied copy and speaker notes.
 - [x] Add editor navigation, presentation mode, keyboard/touch controls, and URL persistence.
 - [x] Add synchronized presenter view with an 8:00 countdown and current/next slides.
+- [ ] Finish the Meet the team slide: five members, Alicia's full-resolution photo with its background kept, roles still TBD.
 - [x] Verify slide layouts, navigation, timer behavior, and production build.
