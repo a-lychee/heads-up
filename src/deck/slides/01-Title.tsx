@@ -37,16 +37,17 @@ export default function TitleSlide() {
           </Reveal>
         </div>
 
-        <Reveal delay={180} className="flex-1">
-          <img
-            src={beforeAfter}
-            alt="Before: a stressed person at a laptop just before 2:00. After: the same person relaxed with coffee as a notification arrives early."
-            width={1024}
-            height={1000}
-            className="h-[820px] w-full object-contain"
-          />
-        </Reveal>
       </div>
+
+      <Reveal delay={180} className="absolute inset-y-0 left-[940px] right-[90px] flex items-center">
+        <img
+          src={beforeAfter}
+          alt="Before: a stressed person at a laptop. After: the same person relaxed with coffee as a notification arrives."
+          width={972}
+          height={805}
+          className="h-full w-full object-contain"
+        />
+      </Reveal>
     </SlideFrame>
   );
 }
