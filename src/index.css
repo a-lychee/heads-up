@@ -24,6 +24,11 @@
     --deck-live: #4ade80;
     --deck-hairline: rgba(42, 29, 23, 0.1);
     --deck-hairline-strong: rgba(42, 29, 23, 0.16);
+    /* Neutral fills for non-highlighted chart segments, darkest to lightest. */
+    --deck-tone-1: rgba(42, 29, 23, 0.26);
+    --deck-tone-2: rgba(42, 29, 23, 0.16);
+    --deck-tone-3: rgba(42, 29, 23, 0.08);
+    --deck-accent-wash: rgba(212, 80, 47, 0.14);
     --deck-timer-amber-line: rgba(242, 184, 75, 0.45);
     --deck-slide-gradient: radial-gradient(circle at 78% 46%, #f6c3a5 0, transparent 38%), radial-gradient(circle at 8% 0%, #fbeadd 0, transparent 50%), linear-gradient(160deg, #f8ede4 0%, #f3dccd 100%);
     --deck-app-icon-gradient: linear-gradient(135deg, #2b2340 0%, #4a3d66 100%);

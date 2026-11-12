@@ -7,7 +7,7 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'opportunity',
   title: 'The opportunity',
-  section: '01 · Market',
+  section: 'Appendix',
   notes: 'Narrow the market in two steps: light seats who attend, then those with at least one recurring meeting. That leaves 1.29 million seats and about $75 million of ARR where Heads-Up can recur.',
 };
 

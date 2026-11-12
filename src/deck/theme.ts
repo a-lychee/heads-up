@@ -19,6 +19,10 @@ export const deckTheme = {
     live: '#4ade80',
     hairline: 'rgba(42, 29, 23, 0.1)',
     hairlineStrong: 'rgba(42, 29, 23, 0.16)',
+    tone1: 'rgba(42, 29, 23, 0.26)',
+    tone2: 'rgba(42, 29, 23, 0.16)',
+    tone3: 'rgba(42, 29, 23, 0.08)',
+    accentWash: 'rgba(212, 80, 47, 0.14)',
     timerAmberLine: 'rgba(242, 184, 75, 0.45)',
   },
   fonts: {
