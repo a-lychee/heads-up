@@ -22,7 +22,7 @@ const team = [
 ];
 
 const medallion =
-  'flex h-[216px] w-[216px] shrink-0 items-center justify-center overflow-hidden rounded-full border-[7px] border-white/75';
+  'flex h-[232px] w-[232px] shrink-0 items-center justify-center overflow-hidden rounded-full border-[7px] border-white/75';
 
 const medallionShadow = {
   boxShadow:
@@ -34,10 +34,10 @@ export default function TeamSlide() {
     <SlideFrame section={metadata.section}>
       <div className="absolute inset-x-[104px] top-[190px]">
         <Reveal><Headline>Meet the team.</Headline></Reveal>
-        <div className="mt-[76px] grid grid-cols-5 gap-[24px]">
+        <div className="mt-[122px] grid grid-cols-5 gap-[24px]">
           {team.map((member, index) => (
             <Reveal key={`${member.first} ${member.last}`} delay={100 + index * 80}>
-              <GlassCard className="h-[452px]">
+              <GlassCard className="h-[500px]">
                 <div className="flex h-full flex-col items-center justify-center text-center">
                   {member.photo ? (
                     <div className={medallion} style={medallionShadow}>
