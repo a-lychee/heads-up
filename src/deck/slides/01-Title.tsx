@@ -22,7 +22,7 @@ export default function TitleSlide() {
           <Reveal delay={80}>
             <p
               className="mt-[28px] font-semibold text-[var(--deck-accent)]"
-              style={{ fontFamily: 'var(--deck-font-display, "Bricolage Grotesque")', fontSize: 60, lineHeight: 1.15, letterSpacing: '-0.015em' }}
+              style={{ fontFamily: '"Bricolage Grotesque", sans-serif', fontSize: 60, lineHeight: 1.15, letterSpacing: '-0.015em' }}
             >
               Take credit, not notes.
             </p>
