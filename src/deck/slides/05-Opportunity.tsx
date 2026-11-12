@@ -21,7 +21,7 @@ export default function OpportunitySlide() {
   return (
     <SlideFrame section={metadata.section} source="One price per seat ($240M ÷ 4.1M = $58.54); 48.5% recurring (Flowtrace)">
       <div className="absolute inset-x-[104px] top-[205px]">
-        <Reveal><Headline style={{ fontSize: 86 }}>$75M of ARR sits on light seats with a recurring meeting.</Headline></Reveal>
+        <Reveal><Headline style={{ fontSize: 86 }}>$75M of ARR sits on light seats<br />with a recurring meeting.</Headline></Reveal>
         <div className="mt-[95px] flex flex-col items-center gap-[22px]">
           {bars.map((bar, index) => (
             <Reveal key={bar.label} delay={120 + index * 100} style={{ width: bar.width }}>
