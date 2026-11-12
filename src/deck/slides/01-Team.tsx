@@ -48,7 +48,7 @@ export const team: Member[] = [
 
 const medallionShadow = {
   boxShadow:
-    '0 0 0 9px color-mix(in srgb, var(--deck-accent) 13%, transparent), 0 18px 38px color-mix(in srgb, var(--deck-ink) 16%, transparent)',
+    '0 0 0 8px var(--deck-accent-wash), 0 18px 38px color-mix(in srgb, var(--deck-ink) 16%, transparent)',
 };
 
 export interface TeamEdits {
@@ -86,7 +86,7 @@ export function TeamGrid({ edits, reveal = true }: { edits?: TeamEdits; reveal?:
           <Wrap key={member.id} delay={100 + index * 80}>
             <GlassCard className="h-[540px]">
               <div className="flex h-full flex-col items-center text-center">
-                <div className="h-[200px] w-[200px] shrink-0 overflow-hidden rounded-full border-[7px] border-white/75" style={medallionShadow}>
+                <div className="h-[200px] w-[200px] shrink-0 overflow-hidden rounded-full border-[7px] border-[var(--deck-accent)]" style={medallionShadow}>
                   <img src={member.photo} alt={`${member.first} ${member.last}`} className="h-full w-full object-cover object-top" />
                 </div>
                 <h2 className="mt-[26px] font-display text-[30px] font-extrabold leading-[1.12] tracking-[-0.03em]">
