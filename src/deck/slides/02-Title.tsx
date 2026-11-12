@@ -2,7 +2,7 @@ import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
-import beforeAfter from '@/assets/title-before-after-man.png';
+import beforeAfter from '@/assets/concept-a2-before-after.png';
 
 export const metadata: SlideMetadata = {
   id: 'title',
@@ -34,7 +34,7 @@ export default function TitleSlide() {
             </p>
           </Reveal>
           <Reveal delay={240}>
-            <p className="mt-[64px] text-[20px] tracking-[0.02em] text-[var(--deck-muted)]">License to Kiltz · Chicago Booth · November 2026</p>
+            <p className="mt-[64px] text-[20px] tracking-[0.02em] text-[var(--deck-muted)]">License to Kilts · Chicago Booth · November 2026</p>
           </Reveal>
         </div>
 
