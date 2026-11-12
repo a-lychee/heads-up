@@ -1,4 +1,5 @@
 import { UserRound } from 'lucide-react';
+import aliciaPhoto from '@/assets/team-alicia.png.asset.json';
 import { GlassCard } from '../components/GlassCard';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
@@ -13,10 +14,11 @@ export const metadata: SlideMetadata = {
 };
 
 const team = [
-  { name: '[Name]', role: '[Role on team]', background: '[Background]' },
-  { name: '[Name]', role: '[Role on team]', background: '[Background]' },
-  { name: '[Name]', role: '[Role on team]', background: '[Background]' },
-  { name: '[Name]', role: '[Role on team]', background: '[Background]' },
+  { name: 'Alicia Wang', role: 'Role TBD', background: '[Background]', photo: aliciaPhoto.url },
+  { name: 'Aryan Ochani', role: 'Role TBD', background: '[Background]' },
+  { name: 'Gabriel Lam', role: 'Role TBD', background: '[Background]' },
+  { name: 'Rishabh Rajagopalan', role: 'Role TBD', background: '[Background]' },
+  { name: 'Varun Sanklecha', role: 'Role TBD', background: '[Background]' },
 ];
 
 export default function TeamSlide() {
@@ -24,16 +26,26 @@ export default function TeamSlide() {
     <SlideFrame section={metadata.section}>
       <div className="absolute inset-x-[104px] top-[190px]">
         <Reveal><Headline>Meet the team.</Headline></Reveal>
-        <div className="mt-[92px] grid grid-cols-4 gap-[28px]">
+        <div className="mt-[76px] grid grid-cols-5 gap-[24px]">
           {team.map((member, index) => (
-            <Reveal key={index} delay={100 + index * 80}>
-              <GlassCard className="h-[480px]">
-                <div className="flex h-[126px] w-[126px] items-center justify-center rounded-full border border-white/80 bg-white/50 text-[var(--deck-secondary)]">
-                  <UserRound size={58} strokeWidth={1.4} />
-                </div>
-                <h2 className="mt-[44px] font-display text-[38px] font-extrabold tracking-[-0.03em]">{member.name}</h2>
-                <p className="mt-[14px] text-[24px] font-medium">{member.role}</p>
-                <p className="mt-[22px] text-[21px] leading-[1.4] text-[var(--deck-muted)]">{member.background}</p>
+            <Reveal key={member.name} delay={100 + index * 80}>
+              <GlassCard className="h-[520px]">
+                {member.photo ? (
+                  <div className="h-[126px] w-[126px] overflow-hidden rounded-full border border-white/80 bg-white/50">
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      className="h-full w-full object-cover object-top"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-[126px] w-[126px] items-center justify-center rounded-full border border-white/80 bg-white/50 text-[var(--deck-secondary)]">
+                    <UserRound size={58} strokeWidth={1.4} />
+                  </div>
+                )}
+                <h2 className="mt-[36px] font-display text-[30px] font-extrabold leading-[1.12] tracking-[-0.03em]">{member.name}</h2>
+                <p className="mt-[12px] text-[22px] font-medium">{member.role}</p>
+                <p className="mt-[18px] text-[20px] leading-[1.4] text-[var(--deck-muted)]">{member.background}</p>
               </GlassCard>
             </Reveal>
           ))}
