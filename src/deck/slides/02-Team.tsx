@@ -9,7 +9,7 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'team',
   title: 'Meet the team',
-  section: '00 · Team',
+  section: '00 · Intro',
   notes: 'Introduce each person and the perspective they brought to the product. Keep this brief and move quickly to the user problem.',
 };
 

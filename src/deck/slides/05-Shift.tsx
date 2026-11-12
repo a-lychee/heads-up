@@ -7,8 +7,8 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'shift',
   title: 'The behavior change',
-  section: '02 · Heads-Up',
-  notes: 'Today Ansel is reactive: Ethan has to remember to go to Ansel, and light users do that about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. Our solution is Heads-Up: a 30-second Slack brief before every recurring meeting. So let’s see that in action.',
+  section: '01 · Context and Problem',
+  notes: 'Today Ansel is reactive: Ethan has to go to Ansel himself, days later if at all. Light users open it about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. Our solution is Heads-Up: a 30-second Slack brief before every recurring meeting. So let’s see that in action.',
 };
 
 /** Simple filled person figure. */
@@ -87,12 +87,12 @@ export default function ShiftSlide() {
       </div>
 
       <div className="absolute inset-x-[104px] top-[370px] grid grid-cols-[1fr_auto_1fr] gap-[56px]">
-        {/* Today: he has to pull */}
+        {/* Today: he has to pull, days later if at all (0.4 Ansel sessions a week, Ex 3) */}
         <Reveal delay={120}>
           <HalfTitle proactive={false} />
           <div className="mt-[56px] flex items-center gap-[26px]">
             <Person color="var(--deck-secondary)" />
-            <Flow label="has to remember" accent={false} animate={motion} />
+            <Flow label="days later, if ever" accent={false} animate={motion} />
             <AnselTile faded />
           </div>
         </Reveal>

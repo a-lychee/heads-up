@@ -8,7 +8,7 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'context',
   title: 'Context and problem',
-  section: '01 · Context',
+  section: '01 · Context and Problem',
   notes: 'Ansel makes the best meeting notes in its category, but usage is falling: only 38% of seats are active in a week, down from 61%, and 44% of renewals cut seats. Look at who holds those seats. Light users are half of all seats and two-thirds of the idle ones, and only one in five is active in a week. The ones who still attend a recurring meeting are 1.29 million seats and $75M of ARR. That is who we are building for.',
 };
 

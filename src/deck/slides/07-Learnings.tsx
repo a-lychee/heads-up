@@ -7,7 +7,7 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'learnings',
   title: 'What we learned',
-  section: '03 · Learnings',
+  section: '03 · Takeaways',
   notes: 'Replace the three placeholders with lessons from building and testing the prototype. End on the riskiest assumption because it explains the next experiment.',
 };
 

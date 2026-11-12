@@ -9,7 +9,7 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'persona',
   title: 'Our persona',
-  section: '01 · Persona',
+  section: '01 · Context and Problem',
   notes: 'Meet Ethan, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said. So today he rereads old notes, asks a teammate, or relies on memory.',
 };
 

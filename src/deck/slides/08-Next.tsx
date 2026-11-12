@@ -7,7 +7,7 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'next',
   title: 'What we’d test next',
-  section: '03 · Next',
+  section: '03 · Takeaways',
   notes: 'Lead with weekly activity among light attendees, then connect it to retention and useful action. Privacy escalations are a guardrail, not a tradeoff we are willing to make.',
 };
 
