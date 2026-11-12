@@ -14,11 +14,11 @@ export const metadata: SlideMetadata = {
 };
 
 const team = [
-  { name: 'Alicia Wang', role: 'Role TBD', background: '[Background]', photo: aliciaPhoto.url },
-  { name: 'Aryan Ochani', role: 'Role TBD', background: '[Background]' },
-  { name: 'Gabriel Lam', role: 'Role TBD', background: '[Background]' },
-  { name: 'Rishabh Rajagopalan', role: 'Role TBD', background: '[Background]' },
-  { name: 'Varun Sanklecha', role: 'Role TBD', background: '[Background]' },
+  { first: 'Alicia', last: 'Wang', role: 'Role TBD', photo: aliciaPhoto.url },
+  { first: 'Aryan', last: 'Ochani', role: 'Role TBD' },
+  { first: 'Gabriel', last: 'Lam', role: 'Role TBD' },
+  { first: 'Rishabh', last: 'Rajagopalan', role: 'Role TBD' },
+  { first: 'Varun', last: 'Sanklecha', role: 'Role TBD' },
 ];
 
 export default function TeamSlide() {
@@ -28,13 +28,13 @@ export default function TeamSlide() {
         <Reveal><Headline>Meet the team.</Headline></Reveal>
         <div className="mt-[76px] grid grid-cols-5 gap-[24px]">
           {team.map((member, index) => (
-            <Reveal key={member.name} delay={100 + index * 80}>
+            <Reveal key={`${member.first} ${member.last}`} delay={100 + index * 80}>
               <GlassCard className="h-[520px]">
                 {member.photo ? (
                   <div className="h-[126px] w-[126px] overflow-hidden rounded-full border border-white/80 bg-white/50">
                     <img
                       src={member.photo}
-                      alt={member.name}
+                      alt={`${member.first} ${member.last}`}
                       className="h-full w-full object-cover object-top"
                     />
                   </div>
@@ -43,9 +43,11 @@ export default function TeamSlide() {
                     <UserRound size={58} strokeWidth={1.4} />
                   </div>
                 )}
-                <h2 className="mt-[36px] font-display text-[30px] font-extrabold leading-[1.12] tracking-[-0.03em]">{member.name}</h2>
+                <h2 className="mt-[36px] font-display text-[30px] font-extrabold leading-[1.12] tracking-[-0.03em]">
+                  <span className="block">{member.first}</span>
+                  <span className="block">{member.last}</span>
+                </h2>
                 <p className="mt-[12px] text-[22px] font-medium">{member.role}</p>
-                <p className="mt-[18px] text-[20px] leading-[1.4] text-[var(--deck-muted)]">{member.background}</p>
               </GlassCard>
             </Reveal>
           ))}
