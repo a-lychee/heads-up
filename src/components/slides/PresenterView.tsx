@@ -101,10 +101,10 @@ export function PresenterView({
     setAudienceConnected(false);
   }, [audienceWindow]);
 
-  // Broadcast slide changes
+  // Broadcast slide changes and sync a newly connected audience to the current slide
   useEffect(() => {
     broadcastSlideChange(activeIndex);
-  }, [activeIndex, broadcastSlideChange]);
+  }, [activeIndex, audienceConnected, broadcastSlideChange]);
 
   // Cleanup on exit
   useEffect(() => {

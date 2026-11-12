@@ -43,6 +43,10 @@ export function usePresenterSync(
         case 'ping':
           // Audience window is checking if presenter is alive
           channelRef.current?.postMessage({ type: 'pong' });
+          if (!isConnectedRef.current) {
+            isConnectedRef.current = true;
+            onAudienceConnectedRef.current?.();
+          }
           break;
         case 'pong':
           // Presenter received response from audience
