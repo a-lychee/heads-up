@@ -17,13 +17,33 @@ export const metadata: SlideMetadata = {
   notes: 'Introduce each person and their (very real) role. Keep this brief and move quickly to the user problem.',
 };
 
-// Edit names, roles and photos here. The closing copy (10-TeamAgain.tsx) and the edited version (11-TeamUpdate.tsx) reuse this list.
-export const team = [
-  { id: 'varun', first: 'Varun', last: 'Sanklecha', role: 'Software Engineer at Real Company (TM)', photo: varunPhoto },
-  { id: 'aryan', first: 'Aryan', last: 'Ochani', role: 'Varun’s Teammate at Real Company (TM)', photo: aryanPhoto },
-  { id: 'alicia', first: 'Alicia', last: 'Wang', role: 'Varun’s Manager at Real Company (TM)', photo: aliciaPhoto.url },
-  { id: 'rishabh', first: 'Rishabh', last: 'Rajagopalan', role: 'CTO at Real Company (TM) (Currently OOO)', photo: rishabhPhoto },
-  { id: 'gabe', first: 'Gabriel', last: 'Lam', role: 'Intern at Real Company (TM) (Out Getting Coffee)', photo: gabePhoto },
+// Edit names, roles and photos here. The closing copy (10-TeamAgain.tsx) and the edited version (11-TeamUpdate.tsx)
+// reuse this list, so the card order is the same on all three slides.
+// Each role is a black title plus an optional gray note. Give a piece a `key` if the updated slide strikes it.
+interface RolePart {
+  text: string;
+  key?: string;
+}
+interface Member {
+  id: string;
+  first: string;
+  last: string;
+  title: RolePart[];
+  note?: RolePart;
+  photo: string;
+}
+
+export const team: Member[] = [
+  { id: 'varun', first: 'Varun', last: 'Sanklecha', photo: varunPhoto,
+    title: [{ text: 'Software Engineer', key: 'varun-title' }, { text: ' at Real Company' }] },
+  { id: 'aryan', first: 'Aryan', last: 'Ochani', photo: aryanPhoto,
+    title: [{ text: 'Software Engineer at Real Company' }], note: { text: '(Varun’s Teammate)', key: 'aryan-note' } },
+  { id: 'alicia', first: 'Alicia', last: 'Wang', photo: aliciaPhoto.url,
+    title: [{ text: 'Engineering Manager at Real Company' }], note: { text: '(Varun’s Manager)', key: 'alicia-note' } },
+  { id: 'rishabh', first: 'Rishabh', last: 'Rajagopalan', photo: rishabhPhoto,
+    title: [{ text: 'CTO at Real Company', key: 'rishabh-title' }], note: { text: '(Currently OOO)', key: 'rishabh-note' } },
+  { id: 'gabe', first: 'Gabriel', last: 'Lam', photo: gabePhoto,
+    title: [{ text: 'Intern at Real Company' }], note: { text: '(Out Getting Coffee)' } },
 ];
 
 const medallionShadow = {
@@ -32,10 +52,21 @@ const medallionShadow = {
 };
 
 export interface TeamEdits {
-  /** Roles to strike through. */
-  struck?: string[];
-  /** New roles written in above the struck one, by member id. */
-  corrections?: Record<string, string>;
+  /** Role pieces to strike through, by key, with the delay (ms) for each strike. */
+  struck?: Record<string, number>;
+  /** New text written in above a member's role, by member id. */
+  corrections?: Record<string, { text: string; delay: number }>;
+}
+
+/** A piece of a role, struck through in the accent color if the edits say so. */
+function Part({ part, edits, isStatic }: { part: RolePart; edits?: TeamEdits; isStatic: boolean }) {
+  const delay = part.key ? edits?.struck?.[part.key] : undefined;
+  if (delay === undefined) return <>{part.text}</>;
+  return (
+    <span className={isStatic ? 'deck-strike deck-strike-static' : 'deck-strike'} style={{ animationDelay: `${delay}ms` }}>
+      {part.text}
+    </span>
+  );
 }
 
 function Plain({ children }: { children: ReactNode; delay?: number }) {
@@ -50,7 +81,6 @@ export function TeamGrid({ edits, reveal = true }: { edits?: TeamEdits; reveal?:
   return (
     <div className="mt-[96px] grid grid-cols-5 gap-[24px]">
       {team.map((member, index) => {
-        const struck = edits?.struck?.includes(member.id);
         const correction = edits?.corrections?.[member.id];
         return (
           <Wrap key={member.id} delay={100 + index * 80}>
@@ -64,24 +94,24 @@ export function TeamGrid({ edits, reveal = true }: { edits?: TeamEdits; reveal?:
                   <span className="block">{member.last}</span>
                 </h2>
                 {/* Slot for a hand-written correction; empty on the opening slide so both layouts match. */}
-                <div className="flex h-[78px] items-end justify-center pb-[6px]">
+                <div className="flex h-[64px] items-end justify-center pb-[4px]">
                   {correction && (
                     <p
-                      className={`rotate-[-3deg] font-display text-[26px] font-extrabold leading-[1.05] tracking-[-0.02em] text-[var(--deck-accent)] ${isStatic ? '' : 'deck-pop'}`}
-                      style={{ animationDelay: '1500ms' }}
+                      className={`rotate-[-3deg] font-display text-[36px] font-extrabold leading-none tracking-[-0.02em] text-[var(--deck-accent)] ${isStatic ? '' : 'deck-pop'}`}
+                      style={{ animationDelay: `${correction.delay}ms` }}
                     >
-                      {correction}
+                      {correction.text}
                     </p>
                   )}
                 </div>
-                <p className="text-[20px] leading-[1.3] text-[var(--deck-muted)] [text-wrap:balance]">
-                  <span
-                    className={struck ? (isStatic ? 'deck-strike deck-strike-static' : 'deck-strike') : undefined}
-                    style={struck ? { animationDelay: `${member.id === 'rishabh' ? 500 : 1000}ms` } : undefined}
-                  >
-                    {member.role}
-                  </span>
+                <p className="text-[22px] font-semibold leading-[1.3] text-[var(--deck-ink)] [text-wrap:balance]">
+                  {member.title.map((part) => <Part key={part.text} part={part} edits={edits} isStatic={isStatic} />)}
                 </p>
+                {member.note && (
+                  <p className="mt-[6px] text-[20px] leading-[1.3] text-[var(--deck-muted)]">
+                    <Part part={member.note} edits={edits} isStatic={isStatic} />
+                  </p>
+                )}
               </div>
             </GlassCard>
           </Wrap>
