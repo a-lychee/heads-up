@@ -46,7 +46,7 @@ export default function ContextSlide() {
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
           <Headline
-            style={{ fontSize: 68 }}
+            style={{ fontSize: 64 }}
             secondary={<span className="whitespace-nowrap">Ansel&apos;s notes lead, but its seats sit idle.</span>}
           >
             Context and our problem to solve

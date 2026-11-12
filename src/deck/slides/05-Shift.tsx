@@ -8,7 +8,7 @@ export const metadata: SlideMetadata = {
   id: 'shift',
   title: 'The behavior change',
   section: '02 · Heads-Up',
-  notes: 'Today Ansel is reactive: Ethan has to remember to go to Ansel, and light users do that about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. That is Heads-Up, a private Slack brief before every recurring meeting. So let’s see that in action.',
+  notes: 'Today Ansel is reactive: Ethan has to remember to go to Ansel, and light users do that about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. Our solution is Heads-Up: a 30-second Slack brief before every recurring meeting. So let’s see that in action.',
 };
 
 /** Simple filled person figure. */
@@ -64,7 +64,7 @@ export default function ShiftSlide() {
     <SlideFrame section={metadata.section} source="Heads-Up brief v9, Behavior Change · Kilts Center Ansel case (2026), Ex 3, 7">
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
-          <Headline style={{ fontSize: 68 }} secondary={<span className="whitespace-nowrap">From a reactive notetaker to a proactive assistant.</span>}>
+          <Headline style={{ fontSize: 64 }} secondary={<span className="whitespace-nowrap">From a reactive notetaker to a proactive assistant.</span>}>
             The behavior change we&apos;re driving
           </Headline>
         </Reveal>
@@ -107,13 +107,20 @@ export default function ShiftSlide() {
         </Reveal>
       </div>
 
-      <Reveal delay={700} className="absolute bottom-[56px] left-[104px]">
-        <p className="text-[26px] text-[var(--deck-muted)]">
-          <span className="font-semibold text-[var(--deck-accent)]">Heads-Up</span> · a private Slack brief before every recurring meeting
-        </p>
-        <p className="mt-[14px] flex items-center gap-[14px] font-display text-[40px] font-extrabold tracking-[-0.03em] text-[var(--deck-accent)]">
-          So let&apos;s see that in action <ArrowRight size={36} strokeWidth={2.2} />
-        </p>
+      {/* Our solution, big, with the kicker into the demo */}
+      <Reveal delay={700} className="absolute inset-x-[104px] bottom-[96px]">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-[44px] rounded-[32px] border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] px-[48px] py-[28px] shadow-[var(--deck-card-shadow)]">
+          <div>
+            <p className="text-[20px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-accent)]">Our solution</p>
+            <p className="mt-[4px] font-display text-[76px] font-extrabold leading-none tracking-[-0.035em]">Heads-Up</p>
+          </div>
+          <p className="border-l border-[var(--deck-hairline-strong)] pl-[44px] text-[34px] font-semibold leading-[1.2]">
+            A 30-second Slack brief before every recurring meeting.
+          </p>
+          <p className="flex items-center gap-[12px] whitespace-nowrap rounded-full bg-[var(--deck-accent)] px-[28px] py-[16px] text-[26px] font-semibold text-white">
+            So let&apos;s see that in action <ArrowRight size={26} strokeWidth={2.4} />
+          </p>
+        </div>
       </Reveal>
     </SlideFrame>
   );

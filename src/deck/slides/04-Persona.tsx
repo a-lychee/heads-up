@@ -48,7 +48,7 @@ export default function PersonaSlide() {
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
           <Headline
-            style={{ fontSize: 68 }}
+            style={{ fontSize: 64 }}
             secondary={<span className="whitespace-nowrap">Ethan struggles to remember last week&apos;s meeting.</span>}
           >
             Who we’re building for
@@ -89,10 +89,12 @@ export default function PersonaSlide() {
           <div className="mt-[14px] flex min-h-0 flex-1 flex-col gap-[14px]">
             {pains.map((pain, index) => (
               <Reveal key={pain.title} delay={240 + index * 90} className="flex flex-1">
-                <div className="flex w-full flex-col justify-center rounded-[24px] border border-white/80 bg-white/55 px-[28px] py-[16px] backdrop-blur-[16px]">
-                  <p className="text-[24px] font-semibold leading-[1.25]">{pain.title}</p>
-                  <p className="mt-[6px] text-[21px] leading-[1.35] text-[var(--deck-muted)]">“{pain.quote}”</p>
-                  <p className="mt-[4px] text-[18px] text-[var(--deck-muted)]">— {pain.who}</p>
+                <div className="flex w-full flex-col justify-center rounded-[24px] border border-white/80 bg-white/55 px-[28px] py-[14px] backdrop-blur-[16px]">
+                  <div className="flex items-baseline justify-between gap-[16px]">
+                    <p className="text-[24px] font-semibold leading-[1.25]">{pain.title}</p>
+                    <p className="flex-shrink-0 text-[18px] text-[var(--deck-muted)]">{pain.who}</p>
+                  </div>
+                  <p className="mt-[4px] text-[21px] leading-[1.35] text-[var(--deck-muted)]">“{pain.quote}”</p>
                 </div>
               </Reveal>
             ))}
