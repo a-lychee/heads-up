@@ -12,8 +12,9 @@ export const metadata: SlideMetadata = {
 };
 
 export default function TitleSlide() {
+  // Glow centered on the illustration box (left 940px, right 90px, full height).
   return (
-    <SlideFrame section={metadata.section}>
+    <SlideFrame section={metadata.section} glow={{ x: 1385, y: 540 }}>
       <div className="absolute inset-x-[104px] top-[170px] bottom-[70px] flex items-center gap-[56px]">
         <div className="w-[800px] flex-shrink-0">
           <Reveal>

@@ -91,7 +91,11 @@
   height: 1080px;
   overflow: hidden;
   color: var(--deck-ink);
-  background: var(--deck-slide-gradient);
+  /* Same as --deck-slide-gradient, but the warm glow can move per slide (SlideFrame glow prop). */
+  background:
+    radial-gradient(circle at var(--deck-glow-x, 78%) var(--deck-glow-y, 46%), #f6c3a5 0, transparent 38%),
+    radial-gradient(circle at 8% 0%, #fbeadd 0, transparent 50%),
+    linear-gradient(160deg, #f8ede4 0%, #f3dccd 100%);
   font-family: 'Instrument Sans', sans-serif;
   font-size: 24px;
 }
