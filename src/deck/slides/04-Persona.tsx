@@ -83,22 +83,22 @@ export default function PersonaSlide() {
         </Reveal>
 
         {/* Right half: pain points, then options today */}
-        <div className="flex flex-col">
+        {/* Pain cards share the free height evenly so the column lines up with the profile card. */}
+        <div className="flex min-h-0 flex-col">
           <Reveal delay={180}><Label>Pain points</Label></Reveal>
-          <div className="mt-[14px] space-y-[14px]">
+          <div className="mt-[14px] flex min-h-0 flex-1 flex-col gap-[14px]">
             {pains.map((pain, index) => (
-              <Reveal key={pain.title} delay={240 + index * 90}>
-                <div className="rounded-[24px] border border-white/80 bg-white/55 px-[28px] py-[18px] backdrop-blur-[16px]">
+              <Reveal key={pain.title} delay={240 + index * 90} className="flex flex-1">
+                <div className="flex w-full flex-col justify-center rounded-[24px] border border-white/80 bg-white/55 px-[28px] py-[16px] backdrop-blur-[16px]">
                   <p className="text-[24px] font-semibold leading-[1.25]">{pain.title}</p>
-                  <p className="mt-[6px] text-[21px] leading-[1.35] text-[var(--deck-muted)]">
-                    “{pain.quote}” <span className="whitespace-nowrap text-[18px]">— {pain.who}</span>
-                  </p>
+                  <p className="mt-[6px] text-[21px] leading-[1.35] text-[var(--deck-muted)]">“{pain.quote}”</p>
+                  <p className="mt-[4px] text-[18px] text-[var(--deck-muted)]">— {pain.who}</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <Reveal delay={560} className="mt-auto">
+          <Reveal delay={560} className="mt-[30px]">
             <Label>Options today</Label>
             <div className="mt-[14px] grid grid-cols-3 gap-[14px]">
               {options.map(({ icon: Icon, title, body }) => (
