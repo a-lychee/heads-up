@@ -2,9 +2,9 @@ import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
-import sweatSip from '@/assets/concept-sweat-sip.jpg';
-import deerNod from '@/assets/concept-deer-nod.jpg';
-import smirk from '@/assets/concept-smirk.jpg';
+import geometric from '@/assets/concept-a1-geometric.jpg';
+import line from '@/assets/concept-a2-line.jpg';
+import silhouette from '@/assets/concept-a3-silhouette.jpg';
 
 export const metadata: SlideMetadata = {
   id: 'title',
@@ -15,9 +15,9 @@ export const metadata: SlideMetadata = {
 
 // Visual concept options to pick from (temporary — keep one).
 const concepts = [
-  { key: 'A', label: '1:59 sweat vs. 1:30 sip', src: sweatSip },
-  { key: 'B', label: 'Deer in headlights vs. the nod', src: deerNod },
-  { key: 'C', label: 'The 2:00 PM smirk', src: smirk },
+  { key: 'A1', label: 'Flat geometric', src: geometric },
+  { key: 'A2', label: 'Single line', src: line },
+  { key: 'A3', label: 'Silhouette', src: silhouette },
 ];
 
 export default function TitleSlide() {
@@ -26,7 +26,7 @@ export default function TitleSlide() {
       <div className="absolute inset-x-[104px] top-[170px] bottom-[70px] flex items-center gap-[64px]">
         <div className="w-[860px] flex-shrink-0">
           <Reveal>
-            <Headline style={{ fontSize: 142 }} secondary={<span className="mt-[22px] block text-[58px] leading-[1.04]">Look like you took notes.</span>}>
+            <Headline style={{ fontSize: 142 }} secondary={<span className="mt-[22px] block text-[58px] leading-[1.04]">Take credit, not notes.</span>}>
               Heads-Up
             </Headline>
           </Reveal>
@@ -36,7 +36,7 @@ export default function TitleSlide() {
             </p>
           </Reveal>
           <Reveal delay={240}>
-            <p className="mt-[70px] text-[20px] text-[var(--deck-muted)]">Team [Team name] · Chicago Booth · November 13, 2026</p>
+            <p className="mt-[70px] text-[20px] text-[var(--deck-muted)]">Team License to Kiltz · Chicago Booth · November 2026</p>
           </Reveal>
         </div>
 
