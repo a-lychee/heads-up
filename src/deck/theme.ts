@@ -1,0 +1,37 @@
+export const deckTheme = {
+  size: { width: 1920, height: 1080 },
+  colors: {
+    ink: '#2a1d17',
+    muted: 'rgba(42, 29, 23, 0.6)',
+    secondary: 'rgba(42, 29, 23, 0.4)',
+    accent: '#d4502f',
+    warning: '#c8442a',
+    callout: '#fff1ec',
+    calloutText: '#b43c22',
+    card: 'rgba(255, 255, 255, 0.92)',
+    cardBack: 'rgba(255, 255, 255, 0.55)',
+    chrome: '#141518',
+    panel: '#1b1c20',
+    lines: '#2e3036',
+    chromeText: '#e7e7ea',
+    timerAmber: '#f2b84b',
+    timerRed: '#ff6b5f',
+  },
+  fonts: {
+    headline: '"Bricolage Grotesque", sans-serif',
+    body: '"Instrument Sans", sans-serif',
+  },
+  radii: { card: 32, stage: 12 },
+  shadows: { card: '0 40px 90px rgba(70, 30, 60, 0.18)' },
+  gradients: {
+    slide: 'radial-gradient(circle at 78% 46%, #f6c3a5 0, transparent 38%), radial-gradient(circle at 8% 0%, #fbeadd 0, transparent 50%), linear-gradient(160deg, #f8ede4 0%, #f3dccd 100%)',
+    appIcon: 'linear-gradient(135deg, #2b2340 0%, #4a3d66 100%)',
+  },
+  motion: {
+    reveal: '0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+    crossfade: '0.5s ease',
+  },
+} as const;
+
+export const DECK_CHANNEL = 'heads-up-deck-sync';
+export const TIMER_SECONDS = 8 * 60;
