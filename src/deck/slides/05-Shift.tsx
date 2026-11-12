@@ -1,4 +1,4 @@
-import { ArrowRight, Bell, Check, Mail, Minus } from 'lucide-react';
+import { ArrowRight, Bell, Check, HelpCircle, Mail, Users } from 'lucide-react';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
@@ -8,49 +8,73 @@ export const metadata: SlideMetadata = {
   id: 'shift',
   title: 'The behavior change',
   section: '02 · Heads-Up',
-  notes: 'Today Ansel is reactive. The notes land six minutes after the meeting, and by the next sync a week later they are forgotten. We want Ansel to be proactive: it comes to Ethan right before the next meeting, so he glances at what he owns, what is open and what was decided, and walks in knowing what he owes. That is Heads-Up, a private Slack card thirty minutes before each recurring meeting. So let’s see that in action.',
+  notes: 'Today Ansel is reactive: the notes land six minutes after the meeting, and by the next sync a week later Ethan has forgotten them. We want Ansel to be proactive: it comes to him right before the next sync, so he walks in knowing what he owns, what is open and what was decided. That is Heads-Up, a private Slack brief before every recurring meeting. So let’s see that in action.',
 };
 
-// Heads-Up brief v9, "Behavior Change" (case Ex 3, 7, 8, 9).
-const shifts = [
-  { moment: 'Remembering Ansel', today: 'Forgets it once the email arrives', target: 'Ansel comes to them before each meeting' },
-  { moment: 'Before the meeting', today: 'Nothing to prep from', target: 'Sees what they own, what’s open, what’s decided' },
-  { moment: 'Walking in', today: 'Relies on memory or asks a colleague', target: 'Knows what they owe and what changed' },
-];
+const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'];
 
-const columns = 'grid grid-cols-[1fr_260px_1fr] gap-x-[32px]';
-
-/** One week between two syncs, with a marker where Ansel's value lands. */
-function WeekTimeline({ proactive }: { proactive: boolean }) {
+/** A week from one sync to the next, as eight day tiles. Words are kept to the day letters. */
+function WeekStrip({ proactive }: { proactive: boolean }) {
   return (
-    <div className="relative h-[124px]">
-      {/* Marker pill above the track */}
+    <div className="relative pt-[64px]">
+      {/* Where Ansel's value lands */}
       <div
-        className={`absolute top-0 flex items-center gap-[8px] rounded-full px-[16px] py-[7px] text-[20px] font-semibold ${
-          proactive ? 'right-0 bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)]' : 'left-0 bg-[var(--deck-tone-3)] text-[var(--deck-muted)]'
+        className={`absolute top-0 flex items-center gap-[8px] rounded-full px-[16px] py-[8px] text-[22px] font-semibold ${
+          proactive
+            ? 'right-0 bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)]'
+            : 'left-[40px] bg-[var(--deck-tone-3)] text-[var(--deck-muted)]'
         }`}
       >
-        {proactive ? <Bell size={19} /> : <Mail size={19} />}
-        {proactive ? 'Heads-Up, 30 min before' : 'Notes, 6 min after'}
+        {proactive ? <Bell size={22} /> : <Mail size={22} />}
+        {proactive ? '30 min before' : '6 min after'}
       </div>
 
-      {/* Track: today the value fades across the week; with Heads-Up it lands right before the next sync */}
-      <div className="absolute inset-x-0 top-[62px] h-[6px] rounded-full bg-[var(--deck-tone-3)]" />
-      {proactive ? (
-        <div className="absolute right-0 top-[62px] h-[6px] w-[14%] rounded-full bg-[var(--deck-accent)]" />
-      ) : (
-        <div className="absolute left-0 top-[62px] h-[6px] w-[75%] rounded-full" style={{ background: 'linear-gradient(90deg, var(--deck-tone-1), transparent)' }} />
-      )}
-      <p className="absolute left-1/2 top-[30px] -translate-x-1/2 text-[18px] text-[var(--deck-muted)]">7 days</p>
+      <div className="grid grid-cols-8 gap-[10px]">
+        {days.map((day, index) => {
+          const first = index === 0;
+          const last = index === days.length - 1;
+          // Today the notes fade over the week; with Heads-Up the week stays neutral until the brief.
+          const fade = !proactive && !first && !last ? 1 - index / 7 : 1;
+          let tile = 'bg-white/45 text-[var(--deck-muted)]';
+          let icon = null;
+          if (first) {
+            tile = 'bg-[var(--deck-ink)] text-white';
+            icon = <Users size={30} />;
+          } else if (last && proactive) {
+            tile = 'bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)]';
+            icon = <Check size={34} strokeWidth={3} />;
+          } else if (last) {
+            tile = 'border-2 border-dashed border-[var(--deck-tone-1)] bg-transparent text-[var(--deck-secondary)]';
+            icon = <HelpCircle size={32} />;
+          } else if (!proactive) {
+            icon = <Mail size={24} />;
+          }
+          return (
+            <div key={index} className="flex flex-col items-center gap-[10px]">
+              <div className={`flex aspect-square w-full items-center justify-center rounded-[18px] ${tile}`} style={{ opacity: fade }}>
+                {icon}
+              </div>
+              <span className="text-[20px] font-semibold text-[var(--deck-muted)]">{day}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
-      {/* Syncs at both ends */}
-      <span className="absolute left-0 top-[55px] h-[20px] w-[20px] rounded-full border-[4px] border-[var(--deck-ink)] bg-[var(--deck-card)]" />
-      <span
-        className={`absolute right-0 top-[55px] h-[20px] w-[20px] rounded-full border-[4px] ${proactive ? 'border-[var(--deck-accent)] bg-[var(--deck-accent)]' : 'border-[var(--deck-tone-1)] bg-[var(--deck-card)]'}`}
-      />
-      <p className="absolute left-0 top-[90px] text-[20px] font-medium">Sync</p>
-      <p className={`absolute right-0 top-[90px] text-[20px] font-semibold ${proactive ? 'text-[var(--deck-accent)]' : 'text-[var(--deck-muted)]'}`}>
-        {proactive ? 'Next sync: briefed' : 'Next sync: unprepared'}
+function Half({ proactive }: { proactive: boolean }) {
+  return (
+    <div>
+      <p className={`text-[22px] font-semibold uppercase tracking-[0.1em] ${proactive ? 'text-[var(--deck-accent)]' : 'text-[var(--deck-muted)]'}`}>
+        {proactive ? 'With Heads-Up' : 'Today'}
+      </p>
+      <p className={`mt-[6px] font-display text-[64px] font-extrabold leading-none tracking-[-0.035em] ${proactive ? '' : 'text-[var(--deck-secondary)]'}`}>
+        {proactive ? 'Proactive' : 'Reactive'}
+      </p>
+      <div className="mt-[40px]"><WeekStrip proactive={proactive} /></div>
+      <p className={`mt-[30px] text-[30px] leading-[1.25] ${proactive ? 'font-semibold' : 'text-[var(--deck-muted)]'}`}>
+        {proactive ? 'Ansel comes to him before the next one.' : 'Notes arrive, then get forgotten.'}
       </p>
     </div>
   );
@@ -58,7 +82,7 @@ function WeekTimeline({ proactive }: { proactive: boolean }) {
 
 export default function ShiftSlide() {
   return (
-    <SlideFrame section={metadata.section} source="Heads-Up brief v9, Behavior Change · Kilts Center Ansel case (2026), Ex 3, 7, 8, 9">
+    <SlideFrame section={metadata.section} source="Heads-Up brief v9, Behavior Change · Kilts Center Ansel case (2026), Ex 3, 7">
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
           <Headline style={{ fontSize: 68 }} secondary={<span className="whitespace-nowrap">From a reactive notetaker to a proactive assistant.</span>}>
@@ -67,52 +91,21 @@ export default function ShiftSlide() {
         </Reveal>
       </div>
 
-      <div className="absolute inset-x-[104px] top-[360px]">
-        {/* Half titles */}
-        <Reveal delay={100} className={columns}>
-          <p className="text-[20px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">Today · Reactive</p>
-          <span />
-          <p className="text-[20px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-accent)]">With Heads-Up · Proactive</p>
+      <div className="absolute inset-x-[104px] top-[360px] grid grid-cols-[1fr_auto_1fr] gap-[56px]">
+        <Reveal delay={120}><Half proactive={false} /></Reveal>
+        <Reveal delay={300} className="self-center pt-[80px]">
+          <div className="flex h-[80px] w-[80px] items-center justify-center rounded-full bg-[var(--deck-ink)] text-white shadow-[var(--deck-card-shadow)]">
+            <ArrowRight size={36} strokeWidth={1.8} />
+          </div>
         </Reveal>
-
-        {/* When the value lands */}
-        <div className={`${columns} mt-[18px] items-center`}>
-          <Reveal delay={160}><WeekTimeline proactive={false} /></Reveal>
-          <Reveal delay={260} className="flex justify-center">
-            <div className="flex h-[76px] w-[76px] items-center justify-center rounded-full bg-[var(--deck-ink)] text-white shadow-[var(--deck-card-shadow)]">
-              <ArrowRight size={34} strokeWidth={1.8} />
-            </div>
-          </Reveal>
-          <Reveal delay={340}><WeekTimeline proactive /></Reveal>
-        </div>
-
-        {/* The three behavior shifts */}
-        <div className="mt-[34px] space-y-[12px]">
-          {shifts.map((shift, index) => (
-            <Reveal key={shift.moment} delay={440 + index * 90} className={`${columns} items-center`}>
-              <div className="flex items-center justify-end gap-[14px] rounded-[20px] bg-white/40 px-[24px] py-[16px] text-right">
-                <p className="text-[24px] leading-[1.25] text-[var(--deck-muted)]">{shift.today}</p>
-                <Minus size={22} className="flex-shrink-0 text-[var(--deck-secondary)]" />
-              </div>
-              <p className="text-center text-[20px] font-semibold uppercase tracking-[0.08em] text-[var(--deck-ink)]">{shift.moment}</p>
-              <div className="flex items-center gap-[14px] rounded-[20px] border border-white/80 bg-[var(--deck-card)] px-[24px] py-[16px] shadow-[0_12px_30px_rgba(70,30,60,0.08)]">
-                <span className="flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center rounded-full bg-[var(--deck-accent)] text-white"><Check size={18} strokeWidth={3} /></span>
-                <p className="text-[24px] font-medium leading-[1.25]">{shift.target}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={420}><Half proactive /></Reveal>
       </div>
 
-      {/* Very brief product summary, then the kicker into the demo */}
-      <Reveal delay={760} className="absolute inset-x-[104px] bottom-[130px]">
-        <p className="text-[24px] leading-[1.35]">
-          <span className="font-semibold text-[var(--deck-accent)]">Heads-Up:</span>{' '}
-          a private Slack card 30 minutes before each recurring meeting, with what you own, what&apos;s open and what was decided.
+      <Reveal delay={700} className="absolute bottom-[56px] left-[104px]">
+        <p className="text-[26px] text-[var(--deck-muted)]">
+          <span className="font-semibold text-[var(--deck-accent)]">Heads-Up</span> · a private Slack brief before every recurring meeting
         </p>
-      </Reveal>
-      <Reveal delay={860} className="absolute bottom-[56px] left-[104px]">
-        <p className="flex items-center gap-[14px] font-display text-[40px] font-extrabold tracking-[-0.03em] text-[var(--deck-accent)]">
+        <p className="mt-[14px] flex items-center gap-[14px] font-display text-[40px] font-extrabold tracking-[-0.03em] text-[var(--deck-accent)]">
           So let&apos;s see that in action <ArrowRight size={36} strokeWidth={2.2} />
         </p>
       </Reveal>
