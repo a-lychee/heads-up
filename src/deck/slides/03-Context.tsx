@@ -55,14 +55,14 @@ export default function ContextSlide() {
       </div>
 
       <div className="absolute inset-x-[104px] top-[370px] bottom-[96px] grid grid-cols-[500px_1fr] gap-[72px]">
-        {/* Left third: what Ansel is, and the problem. Spread to match the right column's height. */}
-        <div className="flex flex-col justify-between">
+        {/* Left third: what Ansel is, and the problem, centered against the right column. */}
+        <div className="flex flex-col justify-center gap-[44px]">
           <Reveal delay={100}>
             <Label>Ansel</Label>
             <p className="mt-[12px] text-[30px] font-semibold leading-[1.25]">The quality leader in AI meeting notes for enterprises</p>
             <p className="mt-[14px] text-[24px] text-[var(--deck-muted)]">$240M ARR · 4.1M seats</p>
           </Reveal>
-          <Reveal delay={180} className="border-t border-[var(--deck-hairline-strong)] pt-[36px]">
+          <Reveal delay={180} className="border-t border-[var(--deck-hairline-strong)] pt-[40px]">
             <Label>The problem</Label>
             <p className="mt-[12px] text-[30px] font-semibold leading-[1.25]">Usage is falling, and customers are cutting seats</p>
             <div className="mt-[30px] space-y-[28px]">
