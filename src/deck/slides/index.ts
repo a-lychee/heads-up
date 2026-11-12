@@ -1,8 +1,8 @@
 import type { SlideDefinition } from '../types';
 import TitleSlide, { metadata as title } from './01-Title';
 import TeamSlide, { metadata as team } from './02-Team';
-import ProblemSlide, { metadata as problem } from './03-Problem';
-import UserSlide, { metadata as user } from './04-User';
+import ContextSlide, { metadata as context } from './03-Context';
+import ProblemSlide, { metadata as problem } from './04-Problem';
 import OpportunitySlide, { metadata as opportunity } from './05-Opportunity';
 import TodaySlide, { metadata as today } from './06-Today';
 import DemoSlide, { metadata as demo } from './07-Demo';
@@ -15,8 +15,8 @@ import GovernanceSlide, { metadata as governance } from './12-Governance';
 export const slides: SlideDefinition[] = [
   { Component: TitleSlide, ...title },
   { Component: TeamSlide, ...team },
+  { Component: ContextSlide, ...context },
   { Component: ProblemSlide, ...problem },
-  { Component: UserSlide, ...user },
   { Component: OpportunitySlide, ...opportunity },
   { Component: TodaySlide, ...today },
   { Component: DemoSlide, ...demo },
