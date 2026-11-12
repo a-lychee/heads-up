@@ -24,7 +24,7 @@ export default function TitleSlide() {
       <div className="absolute inset-x-[104px] top-[190px] bottom-[70px] flex items-center gap-[70px]">
         <div className="w-[930px] flex-shrink-0">
           <Reveal>
-            <Headline style={{ fontSize: 142 }} secondary={<span className="mt-[22px] text-[58px] leading-[1.04]">Ansel&apos;s record,<br />back when it matters.</span>}>
+            <Headline style={{ fontSize: 142 }} secondary={<span className="mt-[22px] block text-[58px] leading-[1.04]"><span className="whitespace-nowrap">Ansel&apos;s record,</span> <span className="whitespace-nowrap">back when it matters.</span></span>}>
               Heads-Up
             </Headline>
           </Reveal>
@@ -46,7 +46,7 @@ export default function TitleSlide() {
                 <p className="text-[20px] font-semibold">Ansel <span className="ml-[5px] rounded-[5px] bg-[var(--deck-muted)] px-[6px] py-[2px] text-[12px] text-white">APP</span> <span className="ml-[8px] font-normal text-[var(--deck-muted)]">1:30 PM</span></p>
               </div>
             </div>
-            <h2 className="mt-[34px] font-['Bricolage_Grotesque'] text-[32px] font-extrabold tracking-[-0.03em]">Weekly Product Sync · 2:00 PM</h2>
+            <h2 className="mt-[34px] font-display text-[32px] font-extrabold tracking-[-0.03em]">Weekly Product Sync · 2:00 PM</h2>
             <div className="mt-[25px] space-y-[22px]">
               {recordRows.map((row) => (
                 <div key={row.label} className="border-t border-[var(--deck-secondary)]/20 pt-[18px]">

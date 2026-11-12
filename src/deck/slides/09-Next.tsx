@@ -27,7 +27,7 @@ export default function NextSlide() {
             <Reveal key={test.label} delay={100 + index * 70}>
               <div className="flex h-[126px] items-center justify-between rounded-[26px] border border-white/70 bg-white/60 px-[36px]">
                 <span className="text-[27px] font-medium">{test.label}</span>
-                <div className="flex items-center gap-[24px] font-['Bricolage_Grotesque'] text-[38px] font-extrabold tracking-[-0.03em]">
+                <div className="flex items-center gap-[24px] font-display text-[38px] font-extrabold tracking-[-0.03em]">
                   <span className="text-[var(--deck-secondary)]">{test.from}</span><ArrowRight size={30} className="text-[var(--deck-muted)]" /><span className="text-[var(--deck-accent)]">{test.to}</span>
                 </div>
               </div>

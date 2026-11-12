@@ -14,7 +14,7 @@ export default function ThankYouSlide() {
   return (
     <SlideFrame section={metadata.section}>
       <div className="absolute inset-x-[104px] top-[330px]">
-        <Reveal><Headline style={{ fontSize: 150 }} secondary={<span className="mt-[25px]">Questions?</span>}>Thank you.</Headline></Reveal>
+        <Reveal><Headline style={{ fontSize: 150 }} secondary={<span className="mt-[25px] block">Questions?</span>}>Thank you.</Headline></Reveal>
         <Reveal delay={160}><p className="mt-[90px] text-[26px] text-[var(--deck-muted)]">Ansel&apos;s record, back when it matters.</p></Reveal>
       </div>
     </SlideFrame>

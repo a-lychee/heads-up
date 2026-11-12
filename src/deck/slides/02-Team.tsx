@@ -31,7 +31,7 @@ export default function TeamSlide() {
                 <div className="flex h-[126px] w-[126px] items-center justify-center rounded-full border border-white/80 bg-white/50 text-[var(--deck-secondary)]">
                   <UserRound size={58} strokeWidth={1.4} />
                 </div>
-                <h2 className="mt-[44px] font-['Bricolage_Grotesque'] text-[38px] font-extrabold tracking-[-0.03em]">{member.name}</h2>
+                <h2 className="mt-[44px] font-display text-[38px] font-extrabold tracking-[-0.03em]">{member.name}</h2>
                 <p className="mt-[14px] text-[24px] font-medium">{member.role}</p>
                 <p className="mt-[22px] text-[21px] leading-[1.4] text-[var(--deck-muted)]">{member.background}</p>
               </GlassCard>

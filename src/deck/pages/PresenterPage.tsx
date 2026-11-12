@@ -39,7 +39,7 @@ export default function PresenterPage() {
       <header className="flex min-h-[82px] flex-shrink-0 items-center gap-5 border-b border-[var(--deck-lines)] bg-[var(--deck-panel)] px-6">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/35">Time remaining</p>
-          <p className="mt-1 font-['Bricolage_Grotesque'] text-[34px] font-extrabold leading-none tabular-nums" style={{ color: tone === 'normal' ? 'var(--deck-chrome-text)' : `var(--deck-timer-${tone})` }}>{formatCountdown(remaining)}</p>
+          <p className="mt-1 font-display text-[34px] font-extrabold leading-none tabular-nums" style={{ color: tone === 'normal' ? 'var(--deck-chrome-text)' : `var(--deck-timer-${tone})` }}>{formatCountdown(remaining)}</p>
         </div>
         <div className="flex gap-2">
           <button onClick={() => controlTimer('toggle')} className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-[13px] font-semibold text-[var(--deck-chrome)]">{state.timer.running ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" />}{state.timer.running ? 'Pause' : 'Start'}</button>

@@ -29,7 +29,7 @@ export default function UserSlide() {
               <div className="flex items-start gap-[24px]">
                 <div className="flex h-[82px] w-[82px] flex-shrink-0 items-center justify-center rounded-full bg-[var(--deck-callout)] text-[var(--deck-accent)]"><UserRound size={40} /></div>
                 <div>
-                  <h2 className="font-['Bricolage_Grotesque'] text-[34px] font-extrabold tracking-[-0.03em]">Priya, data analyst</h2>
+                  <h2 className="font-display text-[34px] font-extrabold tracking-[-0.03em]">Priya, data analyst</h2>
                   <p className="mt-[18px] text-[24px] leading-[1.42] text-[var(--deck-muted)]">3–4 meetings a week, including one weekly team sync. Owns one piece of each meeting.</p>
                 </div>
               </div>

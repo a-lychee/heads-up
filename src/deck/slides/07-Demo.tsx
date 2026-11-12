@@ -21,7 +21,7 @@ export default function DemoSlide() {
           <Link to="/demo" className="group flex h-[310px] w-full items-center justify-between rounded-[36px] border border-white/80 bg-[var(--deck-card)] px-[64px] shadow-[var(--deck-card-shadow)]">
             <div>
               <p className="text-[20px] font-semibold uppercase tracking-[0.14em] text-[var(--deck-accent)]">Product prototype</p>
-              <p className="mt-[18px] font-['Bricolage_Grotesque'] text-[58px] font-extrabold tracking-[-0.035em]">Open live demo</p>
+              <p className="mt-[18px] font-display text-[58px] font-extrabold tracking-[-0.035em]">Open live demo</p>
             </div>
             <div className="flex h-[112px] w-[112px] items-center justify-center rounded-full bg-[var(--deck-ink)] text-white">
               <ArrowUpRight size={54} strokeWidth={1.5} />

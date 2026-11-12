@@ -22,8 +22,8 @@ export default function LearningsSlide() {
           {learnings.map((learning, index) => (
             <Reveal key={learning} delay={100 + index * 80}>
               <GlassCard className="h-[360px]">
-                <span className="font-['Bricolage_Grotesque'] text-[28px] font-extrabold text-[var(--deck-accent)]">0{index + 1}</span>
-                <h2 className="mt-[42px] font-['Bricolage_Grotesque'] text-[38px] font-extrabold tracking-[-0.03em]">{learning}</h2>
+                <span className="font-display text-[28px] font-extrabold text-[var(--deck-accent)]">0{index + 1}</span>
+                <h2 className="mt-[42px] font-display text-[38px] font-extrabold tracking-[-0.03em]">{learning}</h2>
                 <p className="mt-[22px] text-[24px] text-[var(--deck-muted)]">[One-line learning placeholder]</p>
               </GlassCard>
             </Reveal>

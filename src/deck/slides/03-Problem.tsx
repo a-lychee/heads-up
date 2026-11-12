@@ -20,8 +20,8 @@ export default function ProblemSlide() {
       <div className="absolute left-[104px] top-[250px] w-[960px]">
         <Reveal><Kicker>Where the value lands vs. where it&apos;s needed</Kicker></Reveal>
         <Reveal delay={80}>
-          <Headline style={{ fontSize: 80 }} secondary={<>Light users need them 7<br />days later.</>}>
-            Ansel&apos;s notes arrive 6<br />minutes after the meeting.
+          <Headline style={{ fontSize: 80 }} secondary={<>Light users need them 7&nbsp;days later.</>}>
+            Ansel&apos;s notes arrive 6&nbsp;minutes after the meeting.
           </Headline>
         </Reveal>
       </div>

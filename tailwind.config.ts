@@ -19,14 +19,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        // IBM Plex - Clean enterprise typography (Carbon Design System)
-        sans: ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', '"JetBrains Mono"', 'monospace'],
-        // Legacy alias
-        ms: ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        // C1 Apricot fonts, loaded from Google Fonts in src/index.css.
+        sans: ['"Instrument Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        display: ['"Bricolage Grotesque"', '"Instrument Sans"', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
-      // Slide-specific font scale (applied via .slide-content class in CSS)
-      // Keep Tailwind defaults for app UI, override only in slide contexts
       colors: {
         // Slide Design System - Clean, accessible tokens
         slide: {
