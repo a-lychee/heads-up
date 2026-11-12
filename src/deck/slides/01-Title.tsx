@@ -36,7 +36,7 @@ export default function TitleSlide() {
             </p>
           </Reveal>
           <Reveal delay={240}>
-            <p className="mt-[70px] text-[20px] text-[var(--deck-muted)]">Team License to Kiltz · Chicago Booth · November 2026</p>
+            <p className="mt-[70px] text-[20px] text-[var(--deck-muted)]">License to Kiltz · Chicago Booth · November 2026</p>
           </Reveal>
         </div>
 
