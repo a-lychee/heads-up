@@ -24,7 +24,18 @@ npm test         # vitest
 | `/deck/presenter` | Presenter window: current slide, next slide, notes, and an 8:00 countdown. Open it with **P** from `/deck`. |
 | `/demo` | Placeholder for the live product demo (slide 7 links here) |
 
-The editor and presenter windows stay in sync through a `BroadcastChannel`, so both need to be open in the same browser.
+The editor and presenter windows stay in sync through a `BroadcastChannel`, so both need to be open in the same browser. This doesn't work inside Lovable's preview pane: use the published URL, or click **Open in a new tab to present**.
+
+## Presenting from a lectern (two screens)
+
+Set the laptop to *extend* the display to the projector (not mirror it).
+
+1. Open `/deck` in Chrome and press **P**. The presenter window opens. Keep it on the laptop screen.
+2. Drag the main `/deck` window to the projector and press **F** there to go fullscreen. You can also click **Start presenting** in the presenter window, then press **F** on the projector window.
+3. The presenter window shows the timer, the current and next slides, and large speaker notes. Use **+ / −** (or the buttons) to change the notes size. The size is remembered.
+4. Arrow keys in either window move both. **End** in the presenter window, or **Esc** on the projector, stops presenting.
+
+If the presenter window shows **Open audience window**, it has lost contact with the main window. Click it to open a new one.
 
 ## Keyboard shortcuts (`/deck`)
 

@@ -24,6 +24,8 @@ export function useDeckSync(role: 'editor' | 'presenter') {
   }));
   const stateRef = useRef(state);
   const channelRef = useRef<BroadcastChannel | null>(null);
+  const lastPeerMessage = useRef(0);
+  const [peerConnected, setPeerConnected] = useState(false);
   stateRef.current = state;
 
   const post = useCallback((message: DeckMessage) => {
@@ -42,6 +44,8 @@ export function useDeckSync(role: 'editor' | 'presenter') {
     channelRef.current = channel;
     channel.onmessage = (event: MessageEvent<DeckMessage>) => {
       const message = event.data;
+      lastPeerMessage.current = Date.now();
+      setPeerConnected(true);
       if (message.type === 'hello') {
         if (role === 'editor') channel.postMessage({ type: 'state', state: stateRef.current });
         return;
@@ -61,8 +65,14 @@ export function useDeckSync(role: 'editor' | 'presenter') {
     };
     channel.postMessage({ type: 'hello' });
     const helloInterval = role === 'presenter' ? window.setInterval(() => channel.postMessage({ type: 'hello' }), 2500) : undefined;
+    // The presenter says hello every 2.5s and the editor answers, so silence
+    // for 6s means the other window has closed.
+    const peerCheck = window.setInterval(() => {
+      if (Date.now() - lastPeerMessage.current > 6000) setPeerConnected(false);
+    }, 1000);
     return () => {
       if (helloInterval) window.clearInterval(helloInterval);
+      window.clearInterval(peerCheck);
       channel.close();
       channelRef.current = null;
     };
@@ -121,5 +131,5 @@ export function useDeckSync(role: 'editor' | 'presenter') {
     commit({ ...current, timer });
   }, [commit]);
 
-  return { state, navigate, next, previous, setPresenting, controlTimer, timerLimit: TIMER_SECONDS };
+  return { state, navigate, next, previous, setPresenting, controlTimer, peerConnected, timerLimit: TIMER_SECONDS };
 }

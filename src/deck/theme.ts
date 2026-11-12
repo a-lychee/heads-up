@@ -16,6 +16,7 @@ export const deckTheme = {
     chromeText: '#e7e7ea',
     timerAmber: '#f2b84b',
     timerRed: '#ff6b5f',
+    live: '#4ade80',
   },
   fonts: {
     headline: '"Bricolage Grotesque", sans-serif',

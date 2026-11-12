@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type TouchEvent } from 'react';
-import { ChevronLeft, ChevronRight, CircleHelp, MonitorUp, Play, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CircleHelp, ExternalLink, MonitorUp, Play, X } from 'lucide-react';
 import { ProgressDots } from '../components/ProgressDots';
 import { SlideStage } from '../components/SlideStage';
 import { useDeckSync } from '../hooks/useDeckSync';
@@ -23,6 +23,10 @@ export default function DeckPage() {
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [blackScreen, setBlackScreen] = useState(false);
   const [idle, setIdle] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(() => Boolean(document.fullscreenElement));
+  // Inside Lovable's preview iframe the browser isolates this page from the
+  // presenter window, so syncing and fullscreen don't work. Offer a new tab.
+  const inIframe = window.self !== window.top;
   const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const numberBuffer = useRef('');
   const numberTimeout = useRef<number | undefined>(undefined);
@@ -52,11 +56,17 @@ export default function DeckPage() {
 
   useEffect(() => {
     const onFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
       if (!document.fullscreenElement && state.presenting) setPresenting(false);
     };
     document.addEventListener('fullscreenchange', onFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
   }, [setPresenting, state.presenting]);
+
+  // The presenter window can end the presentation; leave fullscreen too.
+  useEffect(() => {
+    if (!state.presenting && document.fullscreenElement) document.exitFullscreen().catch(() => undefined);
+  }, [state.presenting]);
 
   useEffect(() => {
     if (!state.presenting) return;
@@ -138,6 +148,11 @@ export default function DeckPage() {
           <span className="hidden text-[13px] text-white/40 sm:inline">Kilts Product Competition · Phase 2</span>
         </div>
         <div className="flex items-center gap-2">
+          {inIframe && (
+            <a href={window.location.href} target="_blank" rel="noreferrer" className="mr-2 flex items-center gap-2 rounded-lg border border-[var(--deck-timer-amber)]/40 px-3 py-2 text-[12px] text-[var(--deck-timer-amber)] hover:bg-white/5">
+              <ExternalLink size={14} />Open in a new tab to present
+            </a>
+          )}
           <div className="mr-2 flex items-center rounded-lg border border-[var(--deck-lines)]">
             <button onClick={previous} aria-label="Previous slide" className="p-2 text-white/70 hover:text-white"><ChevronLeft size={17} /></button>
             <span className="min-w-[58px] text-center text-[12px] tabular-nums text-white/60">{state.index + 1} / {slides.length}</span>
@@ -196,6 +211,14 @@ export default function DeckPage() {
             </SlideStage>
           )}
           <div className="absolute right-5 top-1/2 -translate-y-1/2"><ProgressDots index={state.index} onNavigate={navigate} idle={idle} /></div>
+          {!isFullscreen && (
+            <button
+              onClick={startPresent}
+              className={`absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/60 px-5 py-2 text-[14px] text-white/80 backdrop-blur-md transition-opacity duration-300 ${idle ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+            >
+              Press F for fullscreen
+            </button>
+          )}
         </div>
       )}
 
