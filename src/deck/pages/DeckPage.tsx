@@ -149,7 +149,7 @@ export default function DeckPage() {
         </div>
         <div className="flex items-center gap-2">
           {inIframe && (
-            <a href={window.location.href} target="_blank" rel="noreferrer" className="mr-2 flex items-center gap-2 rounded-lg border border-[var(--deck-timer-amber)]/40 px-3 py-2 text-[12px] text-[var(--deck-timer-amber)] hover:bg-white/5">
+            <a href={window.location.href} target="_blank" rel="noreferrer" className="mr-2 flex items-center gap-2 rounded-lg border border-[var(--deck-timer-amber-line)] px-3 py-2 text-[12px] text-[var(--deck-timer-amber)] hover:bg-white/5">
               <ExternalLink size={14} />Open in a new tab to present
             </a>
           )}

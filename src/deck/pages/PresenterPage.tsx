@@ -86,7 +86,7 @@ export default function PresenterPage() {
 
         <div className="mx-auto flex items-center gap-3">
           {!peerConnected ? (
-            <button onClick={openAudienceWindow} className="flex items-center gap-2 rounded-lg border border-[var(--deck-timer-amber)]/50 px-4 py-2 text-[14px] text-[var(--deck-timer-amber)] hover:bg-white/5">
+            <button onClick={openAudienceWindow} className="flex items-center gap-2 rounded-lg border border-[var(--deck-timer-amber-line)] px-4 py-2 text-[14px] text-[var(--deck-timer-amber)] hover:bg-white/5">
               <MonitorPlay size={16} />Open audience window
             </button>
           ) : state.presenting ? (

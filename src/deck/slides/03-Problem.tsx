@@ -40,7 +40,7 @@ export default function ProblemSlide() {
           </div>
           <GlassCard className="absolute top-[70px] h-[440px] w-full">
             <div className="flex items-center gap-[22px]">
-              <div className="flex h-[66px] w-[60px] flex-col items-center justify-center rounded-[15px] border border-[var(--deck-secondary)]/25">
+              <div className="flex h-[66px] w-[60px] flex-col items-center justify-center rounded-[15px] border border-[var(--deck-hairline-strong)]">
                 <span className="text-[12px] font-semibold text-[var(--deck-accent)]">MON</span><strong className="text-[25px] leading-none">17</strong>
               </div>
               <div>
@@ -48,9 +48,9 @@ export default function ProblemSlide() {
                 <p className="mt-[4px] text-[18px] text-[var(--deck-muted)]">Today · 2:00 PM · starts in 30 min</p>
               </div>
             </div>
-            <div className="mt-[24px] border-t border-[var(--deck-secondary)]/20">
-              <div className="flex justify-between border-b border-[var(--deck-secondary)]/20 py-[16px] text-[19px]"><span>Last week&apos;s notes</span><strong className="text-[var(--deck-warning)]">Unopened</strong></div>
-              <div className="flex justify-between border-b border-[var(--deck-secondary)]/20 py-[16px] text-[19px]"><span>Your action items</span><span className="text-[var(--deck-muted)]">0 of 4 marked done</span></div>
+            <div className="mt-[24px] border-t border-[var(--deck-hairline)]">
+              <div className="flex justify-between border-b border-[var(--deck-hairline)] py-[16px] text-[19px]"><span>Last week&apos;s notes</span><strong className="text-[var(--deck-warning)]">Unopened</strong></div>
+              <div className="flex justify-between border-b border-[var(--deck-hairline)] py-[16px] text-[19px]"><span>Your action items</span><span className="text-[var(--deck-muted)]">0 of 4 marked done</span></div>
               <div className="flex justify-between py-[16px] text-[19px]"><span>What was decided</span><span className="text-[var(--deck-muted)]">Buried in email</span></div>
             </div>
             <div className="mt-[5px] flex items-center gap-[12px] rounded-[18px] bg-[var(--deck-callout)] px-[22px] py-[17px] text-[19px] font-semibold text-[var(--deck-callout-text)]">

@@ -17,6 +17,9 @@ export const deckTheme = {
     timerAmber: '#f2b84b',
     timerRed: '#ff6b5f',
     live: '#4ade80',
+    hairline: 'rgba(42, 29, 23, 0.1)',
+    hairlineStrong: 'rgba(42, 29, 23, 0.16)',
+    timerAmberLine: 'rgba(242, 184, 75, 0.45)',
   },
   fonts: {
     headline: '"Bricolage Grotesque", sans-serif',
