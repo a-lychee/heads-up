@@ -1,6 +1,6 @@
 import { ArrowRight, Bell } from 'lucide-react';
 import { Headline } from '../components/Headline';
-import { Reveal } from '../components/Reveal';
+import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
@@ -33,14 +33,26 @@ function AnselTile({ faded = false }: { faded?: boolean }) {
   );
 }
 
-function Flow({ label, accent }: { label: string; accent: boolean }) {
+/** Arrow between the two icons. Dashed arrows crawl (he has to chase Ansel); the accent arrow draws itself. */
+function Flow({ label, accent, animate, drawDelay = 0 }: { label: string; accent: boolean; animate: boolean; drawDelay?: number }) {
   const color = accent ? 'var(--deck-accent)' : 'var(--deck-secondary)';
+  const draw = animate && accent;
   return (
     <div className="flex flex-shrink-0 flex-col items-center gap-[10px]">
-      <span className="text-[24px] font-semibold" style={{ color }}>{label}</span>
-      <svg width="230" height="30" viewBox="0 0 230 30" aria-hidden="true">
-        <line x1="4" y1="15" x2="212" y2="15" stroke={color} strokeWidth="5" strokeLinecap="round" strokeDasharray={accent ? undefined : '10 10'} />
-        <path d="M208 4 L226 15 L208 26" fill="none" stroke={color} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+      <span className={`text-[24px] font-semibold ${draw ? 'deck-pop' : ''}`} style={{ color, animationDelay: draw ? `${drawDelay + 300}ms` : undefined }}>{label}</span>
+      <svg width="230" height="30" viewBox="0 0 230 30" aria-hidden="true" overflow="visible">
+        <line
+          x1="4" y1="15" x2="212" y2="15" stroke={color} strokeWidth="5" strokeLinecap="round"
+          pathLength={draw ? 1 : undefined}
+          strokeDasharray={accent ? undefined : '10 10'}
+          className={animate ? (accent ? 'deck-draw' : 'deck-ants') : undefined}
+          style={draw ? { animationDelay: `${drawDelay}ms` } : undefined}
+        />
+        <path
+          d="M208 4 L226 15 L208 26" fill="none" stroke={color} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"
+          className={draw ? 'deck-pop' : undefined}
+          style={draw ? { animationDelay: `${drawDelay + 550}ms`, transformBox: 'fill-box', transformOrigin: 'center' } : undefined}
+        />
       </svg>
     </div>
   );
@@ -60,6 +72,10 @@ function HalfTitle({ proactive }: { proactive: boolean }) {
 }
 
 export default function ShiftSlide() {
+  const { static: isStatic } = useSlideEnvironment();
+  const motion = !isStatic;
+  // Timeline (ms after the slide appears): left half 120, right half 420, arrow draws 900,
+  // Ethan pops 1550, bell drops 1800 and pings twice, caption 2000, solution band 2500.
   return (
     <SlideFrame section={metadata.section} source="Heads-Up brief v9, Behavior Change · Kilts Center Ansel case (2026), Ex 3, 7">
       <div className="absolute inset-x-[104px] top-[160px]">
@@ -76,10 +92,9 @@ export default function ShiftSlide() {
           <HalfTitle proactive={false} />
           <div className="mt-[56px] flex items-center gap-[26px]">
             <Person color="var(--deck-secondary)" />
-            <Flow label="has to remember" accent={false} />
+            <Flow label="has to remember" accent={false} animate={motion} />
             <AnselTile faded />
           </div>
-          <p className="mt-[34px] text-[32px] leading-[1.25] text-[var(--deck-muted)]">He has to go to Ansel.</p>
         </Reveal>
 
         <Reveal delay={300} className="self-center pt-[60px]">
@@ -93,22 +108,33 @@ export default function ShiftSlide() {
           <HalfTitle proactive />
           <div className="mt-[56px] flex items-center gap-[26px]">
             <AnselTile />
-            <Flow label="30 min before" accent />
+            <Flow label="30 min before" accent animate={motion} drawDelay={900} />
             <div className="relative flex-shrink-0">
-              <div className="flex h-[150px] w-[150px] items-center justify-center rounded-full bg-[var(--deck-accent-wash)]">
+              <div className={`flex h-[150px] w-[150px] items-center justify-center rounded-full bg-[var(--deck-accent-wash)] ${motion ? 'deck-pop' : ''}`} style={{ animationDelay: '1550ms' }}>
                 <Person color="var(--deck-ink)" size={120} />
               </div>
-              <span className="absolute -right-[14px] -top-[14px] flex h-[58px] w-[58px] items-center justify-center rounded-full bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)]">
+              {motion && (
+                <span className="deck-ping absolute -right-[14px] -top-[14px] h-[58px] w-[58px] rounded-full bg-[var(--deck-accent)]" style={{ animationDelay: '2050ms' }} aria-hidden="true" />
+              )}
+              <span className={`absolute -right-[14px] -top-[14px] flex h-[58px] w-[58px] items-center justify-center rounded-full bg-[var(--deck-accent)] text-white shadow-[var(--deck-card-shadow)] ${motion ? 'deck-pop' : ''}`} style={{ animationDelay: '1800ms' }}>
                 <Bell size={28} />
               </span>
             </div>
           </div>
-          <p className="mt-[34px] text-[32px] font-semibold leading-[1.25]">Ansel comes to him.</p>
+        </Reveal>
+
+        {/* Captions share a second row so they line up */}
+        <Reveal delay={400} className="-mt-[22px]">
+          <p className="text-[32px] leading-[1.25] text-[var(--deck-muted)]">He has to go to Ansel.</p>
+        </Reveal>
+        <span />
+        <Reveal delay={2000} className="-mt-[22px]">
+          <p className="text-[32px] font-semibold leading-[1.25]">Ansel comes to him.</p>
         </Reveal>
       </div>
 
       {/* Our solution, big, with the kicker into the demo */}
-      <Reveal delay={700} className="absolute inset-x-[104px] bottom-[96px]">
+      <Reveal delay={2500} className="absolute inset-x-[104px] bottom-[96px]">
         <div className="grid grid-cols-[auto_1fr_auto] items-center gap-[44px] rounded-[32px] border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] px-[48px] py-[28px] shadow-[var(--deck-card-shadow)]">
           <div>
             <p className="text-[20px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-accent)]">Our solution</p>
@@ -118,7 +144,7 @@ export default function ShiftSlide() {
             A 30-second Slack brief before every recurring meeting.
           </p>
           <p className="flex items-center gap-[12px] whitespace-nowrap rounded-full bg-[var(--deck-accent)] px-[28px] py-[16px] text-[26px] font-semibold text-white">
-            So let&apos;s see that in action <ArrowRight size={26} strokeWidth={2.4} />
+            So let&apos;s see that in action <ArrowRight size={26} strokeWidth={2.4} className={motion ? 'deck-nudge' : undefined} style={{ animationDelay: '3300ms' }} />
           </p>
         </div>
       </Reveal>

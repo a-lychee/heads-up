@@ -190,6 +190,38 @@
 @keyframes deck-crossfade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes deck-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
+/* Slide 3: the light-user card lifts and glows once the cohort cards are in. */
+.deck-spotlight { animation: deck-spotlight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both; }
+@keyframes deck-spotlight {
+  0% { transform: translateY(0) scale(1); box-shadow: var(--deck-card-shadow), 0 0 0 0 rgba(212, 80, 47, 0.45); }
+  45% { transform: translateY(-14px) scale(1.04); box-shadow: var(--deck-card-shadow), 0 0 0 18px rgba(212, 80, 47, 0); }
+  100% { transform: translateY(-6px) scale(1.02); box-shadow: var(--deck-card-shadow), 0 0 0 0 rgba(212, 80, 47, 0); }
+}
+
+/* Slide 4: a copy of slide 3's light-user card flies from its slide-3 spot into Ethan's profile card.
+   Slide-3 card after its lift (scale 1.02, -6px): left 1191, top 406, 369×428. Slide-4 profile card: left 104, top 414, 828×570. */
+.deck-morph { animation: deck-morph 1.35s cubic-bezier(0.65, 0, 0.35, 1) both; }
+.deck-morph-content { animation: deck-morph-content 1.35s ease both; }
+@keyframes deck-morph {
+  0%, 22% { left: 1191px; top: 406px; width: 369px; height: 428px; opacity: 1; border-radius: 28px; }
+  72% { left: 104px; top: 414px; width: 828px; height: 570px; opacity: 1; border-radius: 32px; }
+  100% { left: 104px; top: 414px; width: 828px; height: 570px; opacity: 0; border-radius: 32px; }
+}
+@keyframes deck-morph-content { 0%, 18% { opacity: 1; } 36%, 100% { opacity: 0; } }
+
+/* Slide 5 */
+.deck-ants { animation: deck-ants 1.6s linear infinite; }
+@keyframes deck-ants { to { stroke-dashoffset: -40; } }
+.deck-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: deck-draw 0.7s cubic-bezier(0.65, 0, 0.35, 1) both; }
+@keyframes deck-draw { to { stroke-dashoffset: 0; } }
+.deck-pop { animation: deck-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes deck-pop { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
+/* Hidden until it plays, and hidden again after (forwards, not both). */
+.deck-ping { opacity: 0; animation: deck-ping 1.1s cubic-bezier(0, 0, 0.2, 1) 2 forwards; }
+@keyframes deck-ping { from { opacity: 0.55; transform: scale(1); } to { opacity: 0; transform: scale(2.3); } }
+.deck-nudge { animation: deck-nudge 1.6s ease-in-out infinite; }
+@keyframes deck-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(7px); } }
+
 .deck-scrollbar { scrollbar-width: thin; scrollbar-color: #3a3c43 transparent; }
 .deck-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
 .deck-scrollbar::-webkit-scrollbar-track { background: transparent; }

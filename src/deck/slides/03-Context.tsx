@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { CountUp } from '../components/CountUp';
 import { Headline } from '../components/Headline';
-import { Reveal } from '../components/Reveal';
+import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
@@ -38,6 +38,7 @@ function Stat({ value, label }: { value: ReactNode; label: string }) {
 }
 
 export default function ContextSlide() {
+  const { static: isStatic } = useSlideEnvironment();
   return (
     <SlideFrame
       section={metadata.section}
@@ -83,7 +84,7 @@ export default function ContextSlide() {
               return (
                 <Reveal key={cohort.id} delay={300 + index * 90}>
                   <div
-                    className={`flex flex-col rounded-[28px] px-[26px] ${
+                    className={`flex flex-col rounded-[28px] px-[26px] ${ours && !isStatic ? 'deck-spotlight' : ''} ${
                       ours
                         ? 'h-[420px] border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] py-[26px] shadow-[var(--deck-card-shadow)]'
                         : 'h-[380px] border border-white/80 bg-white/45 py-[24px]'

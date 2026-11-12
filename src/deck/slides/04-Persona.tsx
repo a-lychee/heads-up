@@ -2,7 +2,7 @@ import { Brain, CalendarDays, CheckCheck, FileText, MessageSquareText, MessagesS
 import type { ReactNode } from 'react';
 import personaImage from '@/assets/persona-engineer.png';
 import { Headline } from '../components/Headline';
-import { Reveal } from '../components/Reveal';
+import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
@@ -43,6 +43,7 @@ function Label({ children }: { children: ReactNode }) {
 }
 
 export default function PersonaSlide() {
+  const { static: isStatic } = useSlideEnvironment();
   return (
     <SlideFrame section={metadata.section} source="Kilts Center Ansel case (2026), Ex 5, 7, 8; team interviews (n=13) · persona is a composite">
       <div className="absolute inset-x-[104px] top-[160px]">
@@ -58,7 +59,7 @@ export default function PersonaSlide() {
 
       <div className="absolute inset-x-[104px] top-[370px] bottom-[96px] grid grid-cols-2 gap-[56px]">
         {/* Left half: profile. Label matches the right column's section labels. */}
-        <Reveal delay={100} className="flex h-full flex-col">
+        <Reveal delay={950} className="flex h-full flex-col">
           <Label>Our persona</Label>
           <div className="mt-[14px] flex min-h-0 flex-1 overflow-hidden rounded-[32px] border border-white/70 bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]">
             <div className="flex w-[340px] flex-shrink-0 items-end justify-center bg-[var(--deck-accent-wash)] px-[28px] pt-[36px]">
@@ -85,10 +86,10 @@ export default function PersonaSlide() {
         {/* Right half: pain points, then options today */}
         {/* Pain cards share the free height evenly so the column lines up with the profile card. */}
         <div className="flex min-h-0 flex-col">
-          <Reveal delay={180}><Label>Pain points</Label></Reveal>
+          <Reveal delay={1150}><Label>Pain points</Label></Reveal>
           <div className="mt-[14px] flex min-h-0 flex-1 flex-col gap-[14px]">
             {pains.map((pain, index) => (
-              <Reveal key={pain.title} delay={240 + index * 90} className="flex flex-1">
+              <Reveal key={pain.title} delay={1250 + index * 110} className="flex flex-1">
                 <div className="flex w-full flex-col justify-center rounded-[24px] border border-white/80 bg-white/55 px-[28px] py-[14px] backdrop-blur-[16px]">
                   <div className="flex items-baseline justify-between gap-[16px]">
                     <p className="text-[24px] font-semibold leading-[1.25]">{pain.title}</p>
@@ -100,7 +101,7 @@ export default function PersonaSlide() {
             ))}
           </div>
 
-          <Reveal delay={560} className="mt-[30px]">
+          <Reveal delay={1650} className="mt-[30px]">
             <Label>Options today</Label>
             <div className="mt-[14px] grid grid-cols-3 gap-[14px]">
               {options.map(({ icon: Icon, title, body }) => (
@@ -116,6 +117,23 @@ export default function PersonaSlide() {
           </Reveal>
         </div>
       </div>
+
+      {/* Transition from slide 3: the light-user card flies over and becomes Ethan's profile card. */}
+      {!isStatic && (
+        <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]" aria-hidden="true">
+          <div className="deck-morph-content flex h-[428px] w-[369px] flex-col px-[26px] py-[26px]">
+            <span className="mb-[10px] self-start rounded-full bg-[var(--deck-accent)] px-[14px] py-[5px] text-[16px] font-semibold uppercase tracking-[0.08em] text-white">Our user</span>
+            <p className="font-display text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em]">Light</p>
+            <p className="mt-[4px] text-[20px] text-[var(--deck-muted)]">Under 5 a week</p>
+            <p className="mt-auto font-display text-[80px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]">51%</p>
+            <p className="mt-[4px] text-[20px] text-[var(--deck-muted)]">of seats</p>
+            <div className="mt-[16px] space-y-[6px] border-t border-[var(--deck-hairline-strong)] pt-[14px] text-[20px] font-semibold leading-[1.3]">
+              <p>66% of idle seats</p>
+              <p>20% active weekly</p>
+            </div>
+          </div>
+        </div>
+      )}
     </SlideFrame>
   );
 }
