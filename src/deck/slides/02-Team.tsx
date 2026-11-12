@@ -21,6 +21,14 @@ const team = [
   { first: 'Varun', last: 'Sanklecha', role: 'Role TBD' },
 ];
 
+const medallion =
+  'flex h-[216px] w-[216px] shrink-0 items-center justify-center overflow-hidden rounded-full border-[7px] border-white/75';
+
+const medallionShadow = {
+  boxShadow:
+    '0 0 0 9px color-mix(in srgb, var(--deck-accent) 13%, transparent), 0 18px 38px color-mix(in srgb, var(--deck-ink) 16%, transparent)',
+};
+
 export default function TeamSlide() {
   return (
     <SlideFrame section={metadata.section}>
