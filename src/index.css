@@ -209,6 +209,19 @@
 }
 @keyframes deck-morph-content { 0%, 18% { opacity: 1; } 36%, 100% { opacity: 0; } }
 
+/* Team, updated: an accent strike-through that draws across each line of the role. */
+.deck-strike {
+  background-image: linear-gradient(var(--deck-accent), var(--deck-accent));
+  background-repeat: no-repeat;
+  background-position: 0 56%;
+  background-size: 0% 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation: deck-strike 0.5s ease-out forwards;
+}
+.deck-strike-static { background-size: 100% 3px; animation: none; }
+@keyframes deck-strike { to { background-size: 100% 3px; } }
+
 /* Slide 5 */
 .deck-ants { animation: deck-ants 1.6s linear infinite; }
 @keyframes deck-ants { to { stroke-dashoffset: -40; } }
