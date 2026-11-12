@@ -1,5 +1,4 @@
-/* IBM Plex for clean enterprise typography - inspired by Carbon Design System */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,314 +6,178 @@
 
 @layer base {
   :root {
-    /* 
-     * Design System: Inspired by IBM Carbon
-     * Clean, accessible, enterprise-grade tokens
-     */
-    
-    /* === Brand Colors (Slide Deck) === */
-    /* Primary - Deep blue for authority and trust */
-    --slide-primary: 215 100% 20%;      /* #003366 - Deep Navy */
-    --slide-primary-light: 215 85% 35%; /* #1a5490 */
-    
-    /* Accent - Vibrant blue for highlights */
-    --slide-accent: 207 90% 54%;        /* #2196F3 - Bright Blue */
-    --slide-accent-light: 207 90% 70%;  /* Lighter accent */
-    --slide-accent-muted: 207 40% 90%;  /* Very light accent bg */
-    
-    /* Semantic */
-    --slide-success: 145 63% 42%;       /* #27AE60 - Green */
-    --slide-warning: 36 100% 50%;       /* #F39C12 - Amber */
-    --slide-error: 4 90% 58%;           /* #E74C3C - Red */
-    
-    /* Neutrals - Gray scale for text and backgrounds */
-    --slide-gray-100: 220 14% 96%;      /* #F4F5F7 */
-    --slide-gray-200: 220 13% 91%;      /* #E5E7EB */
-    --slide-gray-300: 216 12% 84%;      /* #D1D5DB */
-    --slide-gray-400: 218 11% 65%;      /* #9CA3AF */
-    --slide-gray-500: 220 9% 46%;       /* #6B7280 */
-    --slide-gray-600: 215 14% 34%;      /* #4B5563 */
-    --slide-gray-700: 217 19% 27%;      /* #374151 */
-    --slide-gray-800: 215 28% 17%;      /* #1F2937 */
-    --slide-gray-900: 221 39% 11%;      /* #111827 */
-    
-    /* === Legacy MS Tokens (for backwards compatibility) === */
-    --ms-blue: 207 90% 54%;
-    --ms-navy: 215 100% 20%;
-    --ms-navy-80: 215 40% 40%;
-    --ms-blue-80: 207 70% 60%;
-    --ms-blue-40: 207 60% 80%;
-    --ms-blue-20: 207 50% 92%;
-    --ms-jade: 145 63% 42%;
-    --ms-ocean: 185 85% 26%;
-    
-    /* === App UI Tokens === */
-    --background: 0 0% 100%;
-    --foreground: 221 39% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 221 39% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 221 39% 11%;
-    --primary: 207 90% 54%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 221 39% 11%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 207 50% 92%;
-    --accent-foreground: 215 100% 20%;
-    --destructive: 4 90% 58%;
+    --deck-ink: #2a1d17;
+    --deck-muted: rgba(42, 29, 23, 0.6);
+    --deck-secondary: rgba(42, 29, 23, 0.4);
+    --deck-accent: #d4502f;
+    --deck-warning: #c8442a;
+    --deck-callout: #fff1ec;
+    --deck-callout-text: #b43c22;
+    --deck-card: rgba(255, 255, 255, 0.92);
+    --deck-card-back: rgba(255, 255, 255, 0.55);
+    --deck-chrome: #141518;
+    --deck-panel: #1b1c20;
+    --deck-lines: #2e3036;
+    --deck-chrome-text: #e7e7ea;
+    --deck-slide-gradient: radial-gradient(circle at 78% 46%, #f6c3a5 0, transparent 38%), radial-gradient(circle at 8% 0%, #fbeadd 0, transparent 50%), linear-gradient(160deg, #f8ede4 0%, #f3dccd 100%);
+    --deck-app-icon-gradient: linear-gradient(135deg, #2b2340 0%, #4a3d66 100%);
+    --deck-card-shadow: 0 40px 90px rgba(70, 30, 60, 0.18);
+    --background: 220 7% 9%;
+    --foreground: 240 6% 90%;
+    --card: 225 6% 12%;
+    --card-foreground: 240 6% 90%;
+    --popover: 225 6% 12%;
+    --popover-foreground: 240 6% 90%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 220 7% 9%;
+    --secondary: 225 5% 18%;
+    --secondary-foreground: 240 6% 90%;
+    --muted: 225 5% 18%;
+    --muted-foreground: 240 4% 65%;
+    --accent: 12 65% 51%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 207 90% 54%;
-    --radius: 0.375rem;
-    
-    /* Sidebar */
-    --sidebar-background: 215 100% 20%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 207 90% 54%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 60% 30%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 215 50% 25%;
-    --sidebar-ring: 207 90% 54%;
-    
-    /* Canvas */
-    --canvas-bg: 220 14% 96%;
-    --slide-bg: 0 0% 100%;
-    --grid-line: 220 13% 91%;
-    --comment-pin: 36 100% 50%;
-    --comment-pin-resolved: 145 63% 42%;
+    --border: 225 6% 20%;
+    --input: 225 6% 20%;
+    --ring: 12 65% 51%;
+    --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 221 39% 11%;
-    --foreground: 220 14% 96%;
-    --card: 215 28% 17%;
-    --card-foreground: 220 14% 96%;
-    --popover: 215 28% 17%;
-    --popover-foreground: 220 14% 96%;
-    --primary: 207 90% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217 19% 27%;
-    --secondary-foreground: 220 14% 96%;
-    --muted: 217 19% 27%;
-    --muted-foreground: 218 11% 65%;
-    --accent: 215 60% 30%;
-    --accent-foreground: 220 14% 96%;
-    --destructive: 4 70% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 217 19% 27%;
-    --input: 217 19% 27%;
-    --ring: 207 90% 60%;
-    
-    --sidebar-background: 221 39% 8%;
-    --sidebar-foreground: 220 14% 96%;
-    --sidebar-primary: 207 90% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 19% 22%;
-    --sidebar-accent-foreground: 220 14% 96%;
-    --sidebar-border: 217 19% 18%;
-    --sidebar-ring: 207 90% 60%;
-    
-    --canvas-bg: 221 39% 8%;
-    --slide-bg: 215 28% 17%;
-    --grid-line: 217 19% 27%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  
+  * { @apply border-border; }
+  html, body, #root { width: 100%; min-height: 100%; margin: 0; }
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply antialiased;
+    background: var(--deck-chrome);
+    color: var(--deck-chrome-text);
+    font-family: 'Instrument Sans', sans-serif;
   }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--deck-accent); outline-offset: 3px; }
 }
 
-/* === Typography utilities (legacy - Tailwind fontSize now handles this) === */
-@layer components {
-  /* Metric - Large numbers with tabular figures */
-  .type-metric {
-    @apply text-5xl font-semibold tabular-nums;
-  }
-  
-  /* Code/Mono */
-  .type-mono {
-    font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
-  }
+.deck-stage-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
-/* === Slide-specific utilities === */
-@layer components {
-  /* Card styles */
-  .slide-card {
-    @apply p-6 rounded-lg bg-white border border-slide-gray-200;
-  }
-  
-  .slide-card-elevated {
-    @apply slide-card shadow-sm;
-  }
-  
-  .slide-card-accent {
-    @apply slide-card border-l-4 border-l-slide-accent;
-  }
-  
-  /* Metric card */
-  .slide-metric-card {
-    @apply p-6 rounded-lg;
-    background: hsl(var(--slide-accent-muted));
-  }
-  
-  /* Badge */
-  .slide-badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
-    background: hsl(var(--slide-accent-muted));
-    color: hsl(var(--slide-primary));
-  }
-  
-  /* Divider */
-  .slide-divider {
-    @apply w-16 h-1 rounded-full;
-    background: hsl(var(--slide-accent));
-  }
+.deck-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: center center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f8ede4;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+.deck-stage-flat { border-radius: 0; box-shadow: none; }
+.deck-stage-thumbnail { border-radius: 5px; box-shadow: none; }
+
+.deck-slide {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  color: var(--deck-ink);
+  background: var(--deck-slide-gradient);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 24px;
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-transparent;
+.deck-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/20 rounded-full;
+.deck-chrome {
+  position: absolute;
+  z-index: 5;
+  top: 60px;
+  left: 104px;
+  right: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 19px;
+  line-height: 1;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/40;
+.deck-brand { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+.deck-brand-dot { width: 15px; height: 15px; border-radius: 999px; background: var(--deck-accent); }
+.deck-section { color: var(--deck-muted); font-weight: 400; }
+.deck-source { position: absolute; z-index: 4; right: 104px; bottom: 56px; color: var(--deck-muted); font-size: 14px; line-height: 1.4; text-align: right; }
+
+.deck-kicker { margin: 0 0 28px; color: var(--deck-ink); font-size: 23px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; }
+.deck-headline { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 88px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; }
+.deck-headline-primary, .deck-headline-secondary { display: block; }
+.deck-headline-primary { color: var(--deck-ink); }
+.deck-headline-secondary { color: var(--deck-secondary); }
+
+.deck-card-wrap { position: relative; }
+.deck-glass-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 32px 38px;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 32px;
+  background: var(--deck-card);
+  box-shadow: var(--deck-card-shadow);
 }
-
-/* Slide canvas styles */
-.slide-canvas {
-  aspect-ratio: 16 / 9;
-  background: hsl(var(--slide-bg));
+.deck-card-back {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: 32px;
+  background: var(--deck-card-back);
+  transform: translate(-24px, -36px) rotate(-4deg);
+  transform-origin: center;
 }
+.deck-card-stacked { isolation: isolate; }
 
-/* === Slide Font Scaling (1.25x scale, 20px floor) ===
-   Applied only within slide content, not app UI */
-.slide-content {
-  /* Scale up all text proportionally for 1920x1080 projection */
+.deck-stat-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px);
+  white-space: nowrap;
 }
+.deck-stat-pill strong { font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; line-height: 1; letter-spacing: -0.035em; font-weight: 800; }
+.deck-stat-pill span { color: var(--deck-muted); font-size: 18px; line-height: 1.2; }
 
-.slide-content .text-xs { font-size: 20px !important; line-height: 1.5 !important; }
-.slide-content .text-sm { font-size: 20px !important; line-height: 1.5 !important; }
-.slide-content .text-base { font-size: 20px !important; line-height: 1.6 !important; }
-.slide-content .text-lg { font-size: 22px !important; line-height: 1.6 !important; }
-.slide-content .text-xl { font-size: 24px !important; line-height: 1.5 !important; }
-.slide-content .text-2xl { font-size: 28px !important; line-height: 1.4 !important; }
-.slide-content .text-3xl { font-size: 36px !important; line-height: 1.35 !important; }
-.slide-content .text-4xl { font-size: 44px !important; line-height: 1.25 !important; }
-.slide-content .text-5xl { font-size: 56px !important; line-height: 1.2 !important; }
-.slide-content .text-6xl { font-size: 72px !important; line-height: 1.1 !important; }
-.slide-content .text-7xl { font-size: 88px !important; line-height: 1.05 !important; }
-.slide-content .text-8xl { font-size: 112px !important; line-height: 1 !important; }
-.slide-content .text-9xl { font-size: 144px !important; line-height: 1 !important; }
+.deck-reveal { opacity: 0; animation: deck-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.deck-reveal-static { opacity: 1; animation: none; }
+.deck-crossfade { animation: deck-crossfade 0.5s ease both; }
+.deck-blink { animation: deck-blink 2.4s ease-in-out infinite; }
 
-/* Grid overlay */
-.grid-overlay {
-  background-image: 
-    linear-gradient(to right, hsl(var(--grid-line)) 1px, transparent 1px),
-    linear-gradient(to bottom, hsl(var(--grid-line)) 1px, transparent 1px);
-  background-size: calc(100% / 6) calc(100% / 6);
+@keyframes deck-reveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+@keyframes deck-crossfade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes deck-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-/* Slide thumbnail hover effect */
-.slide-thumbnail {
-  @apply transition-all duration-200;
-}
+.deck-scrollbar { scrollbar-width: thin; scrollbar-color: #3a3c43 transparent; }
+.deck-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.deck-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.deck-scrollbar::-webkit-scrollbar-thumb { background: #3a3c43; border-radius: 999px; }
 
-.slide-thumbnail:hover {
-  @apply ring-2 ring-primary/50;
-}
-
-.slide-thumbnail.active {
-  @apply ring-2 ring-primary;
-}
-
-/* Comment pin styles */
-.comment-pin {
-  @apply w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer transition-transform;
-  background: hsl(var(--comment-pin));
-  color: white;
-}
-
-.comment-pin:hover {
-  @apply scale-110;
-}
-
-.comment-pin.resolved {
-  background: hsl(var(--comment-pin-resolved));
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { 
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to { 
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from { 
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to { 
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes collapseIn {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.8);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.4s ease-out;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.2s ease-out;
-}
-
-.animate-collapse {
-  animation: collapseIn 0.2s ease-out forwards;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .deck-reveal { opacity: 1; transform: none; }
 }
