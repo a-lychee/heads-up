@@ -10,7 +10,7 @@ export const metadata: SlideMetadata = {
   id: 'persona',
   title: 'Our persona',
   section: '01 · Persona',
-  notes: 'Meet Ethan, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week they are buried. So today he rereads old notes, asks a teammate, or walks in cold.',
+  notes: 'Meet Ethan, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said. So today he rereads old notes, asks a teammate, or relies on memory.',
 };
 
 // Persona name and title are placeholders; edit here.
@@ -27,7 +27,7 @@ const persona = {
 
 // Quotes from the Heads-Up brief (Kilts case Ex 7 and team interviews, Oct 2026).
 const pains = [
-  { title: 'Forgets what was said', quote: 'We talk about something and I forget what we talked about. Annoying for next week.', who: 'PhD, 3 meetings a week' },
+  { title: 'Forgets what was said', quote: 'We talk about something and I forget what we talked about. Annoying for next week.', who: 'Light user, team interview' },
   { title: 'The notes get buried', quote: 'Half the time I forget they are there after the email arrives.', who: 'Case interview, Ex 7' },
   { title: 'Doesn’t think to open Ansel', quote: 'If I only have three meetings that week, this is not something I think to open.', who: 'Light user, Ex 7' },
 ];
@@ -35,7 +35,7 @@ const pains = [
 const options = [
   { icon: FileText, title: 'Reread old notes', body: '22 seconds on a summary, then it’s buried' },
   { icon: MessagesSquare, title: 'Ask a colleague', body: 'Pulls a teammate off their own work' },
-  { icon: Brain, title: 'Walk in cold', body: 'Catches up during the meeting' },
+  { icon: Brain, title: 'Rely on memory', body: 'Catches up during the meeting' },
 ];
 
 function Label({ children }: { children: ReactNode }) {
@@ -49,7 +49,7 @@ export default function PersonaSlide() {
         <Reveal>
           <Headline
             style={{ fontSize: 68 }}
-            secondary={<span className="whitespace-nowrap">He owns part of every meeting, but walks in cold.</span>}
+            secondary={<span className="whitespace-nowrap">Ethan struggles to remember last week&apos;s meeting.</span>}
           >
             Who we’re building for
           </Headline>
@@ -57,9 +57,10 @@ export default function PersonaSlide() {
       </div>
 
       <div className="absolute inset-x-[104px] top-[370px] bottom-[96px] grid grid-cols-2 gap-[56px]">
-        {/* Left half: profile */}
-        <Reveal delay={100} className="h-full">
-          <div className="flex h-full overflow-hidden rounded-[32px] border border-white/70 bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]">
+        {/* Left half: profile. Label matches the right column's section labels. */}
+        <Reveal delay={100} className="flex h-full flex-col">
+          <Label>Our persona</Label>
+          <div className="mt-[14px] flex min-h-0 flex-1 overflow-hidden rounded-[32px] border border-white/70 bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]">
             <div className="flex w-[340px] flex-shrink-0 items-end justify-center bg-[var(--deck-accent-wash)] px-[28px] pt-[36px]">
               <img src={personaImage} alt="A software engineer working at his laptop, with a tangle of thoughts above his head" className="max-h-full w-full object-contain object-bottom" />
             </div>
