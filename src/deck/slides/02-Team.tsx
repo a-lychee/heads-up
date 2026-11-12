@@ -1,5 +1,5 @@
 import { UserRound } from 'lucide-react';
-import aliciaPhoto from '@/assets/team-alicia.png.asset.json';
+import aliciaPhoto from '@/assets/team-alicia.jpg.asset.json';
 import { GlassCard } from '../components/GlassCard';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
