@@ -41,9 +41,9 @@ export default function TitleSlide() {
           <img
             src={beforeAfter}
             alt="Before: a stressed person at a laptop just before 2:00. After: the same person relaxed with coffee as a notification arrives early."
-            width={980}
-            height={400}
-            className="h-[600px] w-full object-contain"
+            width={1024}
+            height={1000}
+            className="h-[820px] w-full object-contain"
           />
         </Reveal>
       </div>
