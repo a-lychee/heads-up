@@ -88,7 +88,9 @@ export function useDeckSync(role: 'editor' | 'presenter') {
 
   const navigate = useCallback((index: number) => {
     const nextIndex = clampIndex(index);
-    setState((previous) => ({ ...previous, index: nextIndex }));
+    const nextState = { ...stateRef.current, index: nextIndex };
+    stateRef.current = nextState;
+    setState(nextState);
     post({ type: 'navigate', index: nextIndex });
   }, [post]);
 

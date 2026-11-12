@@ -19,6 +19,8 @@
     --deck-panel: #1b1c20;
     --deck-lines: #2e3036;
     --deck-chrome-text: #e7e7ea;
+    --deck-timer-amber: #f2b84b;
+    --deck-timer-red: #ff6b5f;
     --deck-slide-gradient: radial-gradient(circle at 78% 46%, #f6c3a5 0, transparent 38%), radial-gradient(circle at 8% 0%, #fbeadd 0, transparent 50%), linear-gradient(160deg, #f8ede4 0%, #f3dccd 100%);
     --deck-app-icon-gradient: linear-gradient(135deg, #2b2340 0%, #4a3d66 100%);
     --deck-card-shadow: 0 40px 90px rgba(70, 30, 60, 0.18);
