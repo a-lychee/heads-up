@@ -1,4 +1,5 @@
-import { ArrowUpRight, CalendarCheck, CalendarDays, Clock, KeyRound, Mic, Plug } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, Check, Clock, Hash, Lock } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
@@ -20,12 +21,117 @@ const traits = [
   'Skips Ansel summaries after meetings',
 ];
 
-// What is already true (right two-thirds). These are the demo's preconditions, and they keep it inside today's permissions.
+// What is already true (right two-thirds): each card is a small mockup plus one line.
+// These are the demo's preconditions, and they keep it inside today's permissions.
+
+/** A small app window frame for the mockups. */
+function Window({ title, icon, children, dark = false, badge }: { title: string; icon: ReactNode; children: ReactNode; dark?: boolean; badge?: ReactNode }) {
+  return (
+    <div className={`flex h-full flex-col overflow-hidden rounded-[16px] border ${dark ? 'border-[var(--deck-ink)] bg-[var(--deck-ink)]' : 'border-[var(--deck-hairline)] bg-[var(--deck-card)]'} shadow-[0_14px_30px_rgba(70,30,60,0.12)]`}>
+      <div className={`flex items-center gap-[8px] px-[14px] py-[8px] text-[15px] font-semibold ${dark ? 'text-white/70' : 'border-b border-[var(--deck-hairline)] text-[var(--deck-muted)]'}`}>
+        <span className="flex gap-[5px]" aria-hidden="true">
+          {[0, 1, 2].map((dot) => <span key={dot} className={`h-[8px] w-[8px] rounded-full ${dark ? 'bg-white/25' : 'bg-[var(--deck-tone-2)]'}`} />)}
+        </span>
+        <span className="ml-[6px] flex items-center gap-[6px]">{icon}{title}</span>
+        {badge && <span className="ml-auto">{badge}</span>}
+      </div>
+      <div className="flex flex-1 flex-col justify-center px-[14px] py-[8px]">{children}</div>
+    </div>
+  );
+}
+
+function Pill({ children }: { children: ReactNode }) {
+  return (
+    <span className="flex flex-shrink-0 items-center gap-[5px] rounded-full bg-[var(--deck-callout)] px-[10px] py-[3px] text-[14px] font-semibold text-[var(--deck-callout-text)]">
+      <Check size={14} strokeWidth={3} />{children}
+    </span>
+  );
+}
+
+const AnselMark = () => (
+  <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-[image:var(--deck-app-icon-gradient)] text-[11px] font-bold text-white">A</span>
+);
+
+function SharedAccess() {
+  return (
+    <Window title="Ansel" icon={<AnselMark />}>
+      <div className="flex items-center gap-[12px]">
+        <span className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center rounded-full bg-[var(--deck-accent)] text-[15px] font-bold text-white">AW</span>
+        <div className="min-w-0 flex-1">
+          <p className="text-[17px] font-semibold leading-[1.2]">Alicia Wang shared access</p>
+          <p className="mt-[2px] flex items-center gap-[5px] text-[15px] text-[var(--deck-muted)]"><Lock size={13} />Weekly Product Sync · transcripts</p>
+        </div>
+        <Pill>Can view</Pill>
+      </div>
+    </Window>
+  );
+}
+
+function CalendarInvite() {
+  return (
+    <Window title="Outlook Calendar" icon={<CalendarDays size={15} />}>
+      <div className="flex gap-[12px] rounded-[10px] bg-[var(--deck-callout)] px-[12px] py-[9px]">
+        <span className="w-[4px] flex-shrink-0 rounded-full bg-[var(--deck-accent)]" />
+        <div className="min-w-0 flex-1">
+          <p className="text-[17px] font-semibold leading-[1.2]">Weekly Product Sync</p>
+          <p className="text-[15px] text-[var(--deck-muted)]">Mon 2:00–2:30 PM · Recurring</p>
+        </div>
+      </div>
+      <div className="mt-[8px] flex items-center justify-between text-[15px]">
+        <span className="text-[var(--deck-muted)]">Varun Sanklecha</span>
+        <Pill>Accepted</Pill>
+      </div>
+    </Window>
+  );
+}
+
+function Integrations() {
+  const rows = [
+    { icon: <CalendarDays size={16} />, name: 'Outlook Calendar' },
+    { icon: <Hash size={16} />, name: 'Slack' },
+  ];
+  return (
+    <Window title="Ansel · Integrations" icon={<AnselMark />}>
+      <div className="space-y-[6px]">
+        {rows.map((row) => (
+          <div key={row.name} className="flex items-center gap-[10px] rounded-[10px] border border-[var(--deck-hairline)] px-[12px] py-[4px]">
+            <span className="flex h-[26px] w-[26px] items-center justify-center rounded-[8px] bg-[var(--deck-tone-3)] text-[var(--deck-ink)]">{row.icon}</span>
+            <span className="flex-1 text-[16px] font-semibold">{row.name}</span>
+            <Pill>Connected</Pill>
+          </div>
+        ))}
+      </div>
+    </Window>
+  );
+}
+
+function RecordedCall() {
+  return (
+    <Window
+      title="Product Sync · last week"
+      icon={null}
+      dark
+      badge={
+        <span className="flex items-center gap-[6px] whitespace-nowrap rounded-full bg-[var(--deck-accent)] px-[10px] py-[2px] text-[13px] font-semibold text-white">
+          <span className="h-[7px] w-[7px] rounded-full bg-white" />Ansel is recording
+        </span>
+      }
+    >
+      <div className="grid flex-1 grid-cols-3 gap-[8px]">
+        {['AW', 'VS', 'AO'].map((initials) => (
+          <div key={initials} className="flex items-center justify-center rounded-[10px] bg-white/10 text-[15px] font-semibold text-white/80">{initials}</div>
+        ))}
+      </div>
+      <p className="mt-[8px] flex items-center gap-[6px] text-[14px] text-white/75"><Check size={14} strokeWidth={3} />Varun acknowledged recording</p>
+    </Window>
+  );
+}
+
 const assumptions = [
-  { icon: KeyRound, title: 'Permission to review', body: 'His manager, who uses Ansel, invited him to the series and gave explicit permission to review last meeting’s transcript.' },
-  { icon: CalendarCheck, title: 'On the invite', body: 'Varun is an invitee to the upcoming meeting.' },
-  { icon: Plug, title: 'Already connected', body: 'He heard about the new Ansel feature and connected both his calendar and Slack, so both are set up.' },
-  { icon: Mic, title: 'Recorded last week', body: 'He was in last week’s sync, where Ansel was already running, and he acknowledged the meeting was being recorded.' },
+  { mockup: <SharedAccess />, line: 'Manager shared last week’s transcript' },
+  { mockup: <CalendarInvite />, line: 'Invited to this week’s sync' },
+  { mockup: <Integrations />, line: 'Calendar and Slack connected' },
+  { mockup: <RecordedCall />, line: 'Attended last week’s recorded sync' },
 ];
 
 function Label({ children }: { children: string }) {
@@ -87,17 +193,16 @@ export default function DemoSlide() {
         <div className="flex min-h-0 flex-col">
           <Reveal delay={200}><Label>What’s already true</Label></Reveal>
           <div className="mt-[14px] grid min-h-0 flex-1 grid-cols-2 grid-rows-2 gap-[20px]">
-            {assumptions.map(({ icon: Icon, title, body }, index) => (
-              <Reveal key={title} delay={300 + index * 100} className="h-full">
-                <div className="flex h-full flex-col rounded-[28px] border border-white/80 bg-white/55 px-[30px] py-[26px] backdrop-blur-[16px]">
-                  <div className="flex items-center gap-[14px]">
-                    <span className="flex h-[52px] w-[52px] flex-shrink-0 items-center justify-center rounded-[14px] bg-[var(--deck-accent)] text-white">
-                      <Icon size={26} strokeWidth={2} />
-                    </span>
-                    <p className="text-[16px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">Assumption {index + 1}</p>
+            {assumptions.map((assumption, index) => (
+              <Reveal key={assumption.line} delay={300 + index * 100} className="h-full">
+                <div className="flex h-full flex-col rounded-[28px] border border-white/80 bg-white/55 p-[18px] backdrop-blur-[16px]">
+                  {/* Top half: visual mockup */}
+                  <div className="min-h-0 flex-1 rounded-[20px] bg-[var(--deck-tone-3)] p-[12px]">{assumption.mockup}</div>
+                  {/* Bottom half: number and one line */}
+                  <div className="flex items-center gap-[16px] px-[8px] pt-[16px] pb-[4px]">
+                    <span className="font-display text-[52px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]">{index + 1}</span>
+                    <p className="text-[24px] font-semibold leading-[1.25]">{assumption.line}</p>
                   </div>
-                  <p className="mt-[18px] font-display text-[30px] font-extrabold leading-[1.1] tracking-[-0.03em]">{title}</p>
-                  <p className="mt-[10px] text-[22px] leading-[1.38] text-[var(--deck-muted)]">{body}</p>
                 </div>
               </Reveal>
             ))}
