@@ -19,7 +19,7 @@ const metrics = [
 ];
 
 // Roadmap ideas from the Phase 1 brief ("Later"). Still to be prioritized.
-const roadmap = ['Teams, email and push', 'Questions sent ahead of the meeting', 'Non-recurring meetings'];
+const roadmap = ['Teams, email and push', 'Questions sent ahead of the meeting', 'Non-recurring meetings', 'Chat with Ansel before the meeting'];
 
 interface Column {
   word: string;
