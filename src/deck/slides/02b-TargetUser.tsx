@@ -6,12 +6,13 @@ import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
-// Three steps of one picture. Step 0: share of all seats by cohort, bars rising from 0.
-// Step 1: the same bars morph into share of idle seats. Step 2: our user group's cards appear one by one on the right.
+// Four steps of one picture. Step 0: share of all seats by cohort, bars rising from 0.
+// Step 1: the same bars morph into share of idle seats. Step 2: they morph again into each cohort's weekly active rate.
+// Step 3: our user group's cards appear one by one on the right.
 // The steps are separate slides with no crossfade, so the click only animates the change.
 
 const section = '01 · Context and Problem';
-const source = 'Kilts Center Ansel case (2026), Ex 3 · idle share is our calculation from Ex 3 · $75M at $58.54 per seat, 48.5% recurring (Flowtrace)';
+const source = 'Kilts Center Ansel case (2026), Ex 3 (share of seats, weekly active rate) · idle share is our calculation from Ex 3 · $75M at $58.54 per seat, 48.5% recurring (Flowtrace)';
 
 export const metadata: SlideMetadata = {
   id: 'target-user',
@@ -28,6 +29,14 @@ export const idleMetadata: SlideMetadata = {
   notes: 'Now look only at the idle seats. Light users go from half of all seats to two-thirds of the idle ones.',
 };
 
+export const activeMetadata: SlideMetadata = {
+  id: 'target-user-active',
+  title: 'Our target user segment · weekly active rate',
+  section,
+  transition: 'none',
+  notes: 'And here is why. Only 20% of light users are active in a given week, against 82% of heavy users and 58% of moderate ones.',
+};
+
 export const oursMetadata: SlideMetadata = {
   id: 'target-user-ours',
   title: 'Our target user segment · our user',
@@ -36,19 +45,24 @@ export const oursMetadata: SlideMetadata = {
   notes: 'Our user is the light user who rarely opens Ansel but still has a weekly recurring meeting. Of 2.09 million light seats, 1.71 million attend their meetings, and 1.29 million have a weekly recurring one. At $58.54 a seat, that is $75M of addressable ARR.',
 };
 
-type Step = 0 | 1 | 2;
+type Step = 0 | 1 | 2 | 3;
 
-// Exhibit 3 cohorts (FY25). Idle share is our calculation: share of seats × (1 − weekly active rate).
+// Exhibit 3 cohorts (FY25): share of seats and weekly active rate.
+// Idle share is our calculation: share of seats × (1 − weekly active rate).
 const cohorts = [
-  { id: 'heavy', name: 'Heavy', meetings: '15+ meetings a week', seats: 14, idle: 4 },
-  { id: 'moderate', name: 'Moderate', meetings: '5–14 meetings a week', seats: 28, idle: 19 },
-  { id: 'light', name: 'Light', meetings: 'Under 5 meetings a week', seats: 51, idle: 66 },
-  { id: 'never', name: 'Never connected', meetings: 'No calendar connected', seats: 7, idle: 11 },
+  { id: 'heavy', name: 'Heavy', meetings: '15+ meetings a week', seats: 14, idle: 4, active: 82 },
+  { id: 'moderate', name: 'Moderate', meetings: '5–14 meetings a week', seats: 28, idle: 19, active: 58 },
+  { id: 'light', name: 'Light', meetings: 'Under 5 meetings a week', seats: 51, idle: 66, active: 20 },
+  { id: 'never', name: 'Never connected', meetings: 'No calendar connected', seats: 7, idle: 11, active: 0 },
 ];
 
-// One scale for both steps (66% is the tallest bar), so the change in height is honest.
+// Which number each step shows. The last step holds the weekly active rate still while the right side builds.
+type Series = 'seats' | 'idle' | 'active';
+const seriesByStep: Series[] = ['seats', 'idle', 'active', 'active'];
+
+// One scale for every step (82% is the tallest bar), so the bars' heights compare honestly across clicks.
 const BAR_MAX = 400; // bottom of the chart lines up with the kicker on the right
-const SCALE_MAX = 66;
+const SCALE_MAX = 82;
 const barHeight = (share: number) => (share / SCALE_MAX) * BAR_MAX;
 
 // Light seats narrowed to our user (Heads-Up brief, Opportunity Size; appendix shows the math).
@@ -74,19 +88,24 @@ function Enter({ step, delay, className, children }: { step: Step; delay: number
 
 function ChartTitle({ step }: { step: Step }) {
   const { static: isStatic } = useSlideEnvironment();
-  // The one word that changes between the steps is in the accent color, so the switch from all to idle seats stands out.
+  // The words that change between the steps are in the accent color, so each switch stands out.
   const word = (text: string) => <span className="text-[var(--deck-accent)]">{text}</span>;
-  const all = <>Share of {word('all')} seats, by meetings a week</>;
-  const idle = <>Share of {word('idle')} seats, by meetings a week</>;
-  if (step === 1 && !isStatic) {
+  const titles: Record<Series, ReactNode> = {
+    seats: <>Share of {word('all')} seats, by meetings a week</>,
+    idle: <>Share of {word('idle')} seats, by meetings a week</>,
+    active: <>{word('Weekly active rate')}, by meetings a week</>,
+  };
+  const current = seriesByStep[step];
+  const previous = step > 0 ? seriesByStep[step - 1] : current;
+  if (previous !== current && !isStatic) {
     return (
       <span className="inline-grid">
-        <span className="deck-swap-out col-start-1 row-start-1"><Label>{all}</Label></span>
-        <span className="deck-swap-in col-start-1 row-start-1" style={{ animationDelay: '120ms' }}><Label>{idle}</Label></span>
+        <span className="deck-swap-out col-start-1 row-start-1"><Label>{titles[previous]}</Label></span>
+        <span className="deck-swap-in col-start-1 row-start-1" style={{ animationDelay: '120ms' }}><Label>{titles[current]}</Label></span>
       </span>
     );
   }
-  return <Label>{step === 0 ? all : idle}</Label>;
+  return <Label>{titles[current]}</Label>;
 }
 
 function TargetUserStep({ step }: { step: Step }) {
@@ -102,7 +121,7 @@ function TargetUserStep({ step }: { step: Step }) {
       </div>
 
       <div className="absolute inset-x-[104px] bottom-[96px] top-[360px] grid grid-cols-[1fr_520px] gap-[80px]">
-        {/* Left two-thirds: one chart. Step 0 shows all seats; step 1 morphs the same bars to idle seats. */}
+        {/* Left two-thirds: one chart. Step 0 shows all seats; steps 1 and 2 morph the same bars to idle seats, then weekly active rate. */}
         <div className="flex flex-col">
           <Enter step={step} delay={100}>
             <ChartTitle step={step} />
@@ -110,10 +129,10 @@ function TargetUserStep({ step }: { step: Step }) {
           <div className="mt-[20px] grid grid-cols-4 items-end gap-[32px]" style={{ height: BAR_MAX + 66 }}>
             {cohorts.map((cohort, index) => {
               const ours = cohort.id === 'light';
-              const share = step === 0 ? cohort.seats : cohort.idle;
-              // Step 2 holds the idle values still; only steps 0 and 1 animate the bars.
-              const animate = !isStatic && step < 2;
-              const from = step === 0 ? 0 : step === 1 ? cohort.seats : cohort.idle;
+              const share = cohort[seriesByStep[step]];
+              // Steps 0–2 animate the bars (from 0, then from the previous step's value); the last step holds still.
+              const animate = !isStatic && step < 3;
+              const from = step === 0 ? 0 : cohort[seriesByStep[step - 1]];
               const delay = step === 0 ? 300 + index * 120 : 200 + index * 80;
               const barStyle: CSSProperties & Record<'--bar-from', string> = {
                 height: barHeight(share),
@@ -148,7 +167,7 @@ function TargetUserStep({ step }: { step: Step }) {
 
         {/* Right third: our user group, narrowed to the addressable market. Only on the last step, one card at a time.
             Every card is a single row (number, then its label) and every gap between cards is the same 44px connector. */}
-        {step === 2 && (
+        {step === 3 && (
           <div>
             <Reveal delay={100}>
               <Label accent>Our user</Label>
@@ -199,6 +218,10 @@ export function TargetUserIdleSlide() {
   return <TargetUserStep step={1} />;
 }
 
-export function TargetUserOursSlide() {
+export function TargetUserActiveSlide() {
   return <TargetUserStep step={2} />;
+}
+
+export function TargetUserOursSlide() {
+  return <TargetUserStep step={3} />;
 }
