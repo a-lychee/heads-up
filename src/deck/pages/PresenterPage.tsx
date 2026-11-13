@@ -150,6 +150,7 @@ export default function PresenterPage() {
               edited={speakerNotes.isEdited(slide.id)}
               onSave={speakerNotes.saveNotes}
               onReset={speakerNotes.resetNotes}
+              sync={speakerNotes.sync}
               className="px-2 py-2 font-medium text-white"
               style={{ fontSize: notesSize, lineHeight: 1.4 }}
             />

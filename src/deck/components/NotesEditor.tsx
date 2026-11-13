@@ -7,15 +7,18 @@ interface NotesEditorProps {
   edited: boolean;
   onSave: (id: string, text: string) => void;
   onReset: (id: string) => void;
+  /** Where edits are being saved: for everyone ('shared'), on their way ('saving'), or only in this browser ('local'). */
+  sync?: 'shared' | 'saving' | 'local';
   className?: string;
   style?: CSSProperties;
 }
 
 /**
- * Speaker notes you can click into and type. Saves as you type (to this browser) and shows a small status line.
+ * Speaker notes you can click into and type. Saves as you type (for the whole team when the shared notes database
+ * is reachable, otherwise in this browser) and shows a small status line.
  * Arrow keys and the other deck shortcuts are ignored while the cursor is in the box.
  */
-export function NotesEditor({ slideId, value, edited, onSave, onReset, className = '', style }: NotesEditorProps) {
+export function NotesEditor({ slideId, value, edited, onSave, onReset, sync = 'local', className = '', style }: NotesEditorProps) {
   const [draft, setDraft] = useState(value);
   const [justSaved, setJustSaved] = useState(false);
 
@@ -47,7 +50,13 @@ export function NotesEditor({ slideId, value, edited, onSave, onReset, className
         style={style}
       />
       <div className="flex h-[22px] flex-shrink-0 items-center gap-3 text-[12px] text-white/40">
-        <span>{justSaved ? 'Saved' : edited ? 'Edited · saved in this browser' : 'Click to edit'}</span>
+        <span className={sync === 'local' && edited ? 'text-[var(--deck-timer-amber)]' : undefined}>
+          {sync === 'saving'
+            ? edited || justSaved ? 'Saving…' : 'Click to edit'
+            : sync === 'local'
+              ? edited || justSaved ? 'Saved in this browser only (shared notes unavailable)' : 'Click to edit'
+              : justSaved ? 'Saved for everyone' : edited ? 'Edited · saved for everyone' : 'Click to edit'}
+        </span>
         {edited && (
           <button
             type="button"

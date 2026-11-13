@@ -235,6 +235,7 @@ export default function DeckPage() {
               edited={speakerNotes.isEdited(slide.id)}
               onSave={speakerNotes.saveNotes}
               onReset={speakerNotes.resetNotes}
+              sync={speakerNotes.sync}
               className="px-2 py-1 text-[15px] leading-[1.55] text-white/80"
             />
           </div>
