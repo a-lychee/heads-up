@@ -16,7 +16,7 @@ export const metadata: SlideMetadata = {
 // The situation (left third)
 const traits = [
   'One of 7 engineers on the team',
-  'New to the project',
+  'Relatively new to the project',
   'Can’t recall last week’s meeting',
   'Skips Ansel summaries after meetings',
 ];
@@ -128,10 +128,10 @@ function RecordedCall() {
 }
 
 const assumptions = [
-  { mockup: <SharedAccess />, line: 'Manager shared last week’s transcript' },
-  { mockup: <CalendarInvite />, line: 'Invited to this week’s sync' },
+  { mockup: <CalendarInvite />, line: 'Manager invites Varun to weekly sync' },
+  { mockup: <SharedAccess />, line: 'Manager shares historical transcripts for context' },
   { mockup: <Integrations />, line: 'Calendar and Slack connected' },
-  { mockup: <RecordedCall />, line: 'Attended last week’s recorded sync' },
+  { mockup: <RecordedCall />, line: 'Varun acknowledges recording in meeting' },
 ];
 
 function Label({ children }: { children: string }) {
@@ -143,9 +143,10 @@ export default function DemoSlide() {
     <SlideFrame section={metadata.section}>
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
-          <Headline style={{ fontSize: 64 }} secondary="Now imagine you’re Varun, 30 minutes before your meeting">
-            Demo
-          </Headline>
+          <Headline style={{ fontSize: 64 }}>Ansel Heads-Up Demo</Headline>
+          <p className="mt-[18px] text-[28px] leading-[1.4] text-[var(--deck-muted)]">
+            Let&apos;s imagine how Varun&apos;s life changes with this new product
+          </p>
         </Reveal>
       </div>
 
@@ -191,7 +192,7 @@ export default function DemoSlide() {
 
         {/* Right two-thirds: what is already true */}
         <div className="flex min-h-0 flex-col">
-          <Reveal delay={200}><Label>What’s already true</Label></Reveal>
+          <Reveal delay={200}><Label>Access controls, setup and governance</Label></Reveal>
           <div className="mt-[14px] grid min-h-0 flex-1 grid-cols-2 grid-rows-2 gap-[20px]">
             {assumptions.map((assumption, index) => (
               <Reveal key={assumption.line} delay={300 + index * 100} className="h-full">
