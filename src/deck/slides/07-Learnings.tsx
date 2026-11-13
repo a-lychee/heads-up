@@ -29,8 +29,16 @@ const stops: Stop[] = [
   { lane: 'qualitative', at: 82, tag: '[Tag]', title: '[Learning 4]', body: '[One line on what we learned]', placeholder: true },
 ];
 
-const TRACK_Y = 330; // px from the top of the timeline area; the two shaded bands meet here
-const AREA_H = 640; // height of the timeline area
+// Vertical rhythm, mirrored in both bands: 26px band padding, a 30px title, 26px to the cards, 44px from the cards
+// to the timeline. Technical cards are up to ~197px tall, qualitative ~174px.
+const PAD = 26;
+const TITLE_GAP = 26;
+const STEM = 44;
+const TITLE_H = 30;
+const TOP_CARD_H = 197;
+const BOTTOM_CARD_H = 174;
+const TRACK_Y = PAD + TITLE_H + TITLE_GAP + TOP_CARD_H + STEM; // 323: where the two shaded bands meet
+const AREA_H = TRACK_Y + STEM + BOTTOM_CARD_H + TITLE_GAP + TITLE_H + PAD; // 623: height of the timeline area
 
 // Each lane has its own color, used for its label, dots, stems, card top bar and tag.
 const laneStyle: Record<Lane, { label: string; text: string; bg: string; border: string; stem: string; band: string }> = {
@@ -53,7 +61,7 @@ function LaneTitle({ lane, position }: { lane: Lane; position: 'top' | 'bottom' 
   return (
     <p
       className={`absolute left-0 flex items-center gap-[12px] font-display text-[30px] font-extrabold leading-none tracking-[-0.02em] ${style.text}`}
-      style={position === 'top' ? { top: 14 } : { bottom: 30 }}
+      style={position === 'top' ? { top: PAD } : { bottom: PAD }}
     >
       <span className={`h-[18px] w-[18px] rounded-[5px] ${style.bg}`} />
       {style.label}
@@ -74,9 +82,9 @@ export default function LearningsSlide() {
       </div>
 
       {/* Timeline area */}
-      <div className="absolute inset-x-[104px] top-[352px]" style={{ height: AREA_H }}>
+      <div className="absolute inset-x-[104px] top-[346px]" style={{ height: AREA_H }}>
         {/* Shaded bands: technical changes above the timeline, qualitative learnings below */}
-        <div className={`absolute -inset-x-[28px] -top-[10px] rounded-t-[28px] ${laneStyle.technical.band}`} style={{ height: TRACK_Y + 10 }} />
+        <div className={`absolute -inset-x-[28px] top-0 rounded-t-[28px] ${laneStyle.technical.band}`} style={{ height: TRACK_Y }} />
         <div className={`absolute -inset-x-[28px] rounded-b-[28px] ${laneStyle.qualitative.band}`} style={{ top: TRACK_Y, bottom: 0 }} />
         <LaneTitle lane="technical" position="top" />
         <LaneTitle lane="qualitative" position="bottom" />
@@ -117,10 +125,10 @@ export default function LearningsSlide() {
                 />
                 <span
                   className={`absolute w-[2px] -translate-x-1/2 ${style.stem}`}
-                  style={{ left: `${stop.at}%`, top: above ? TRACK_Y - 70 : TRACK_Y + 14, height: 56 }}
+                  style={{ left: `${stop.at}%`, top: above ? TRACK_Y - STEM : TRACK_Y + 13, height: STEM - 13 }}
                 />
                 {/* The wrapper centers the card on its stop; the Reveal inside animates without fighting that transform. */}
-                <div className="absolute w-[400px] -translate-x-1/2" style={{ left: `${stop.at}%`, ...(above ? { bottom: AREA_H - TRACK_Y + 70 } : { top: TRACK_Y + 70 }) }}>
+                <div className="absolute w-[400px] -translate-x-1/2" style={{ left: `${stop.at}%`, ...(above ? { bottom: AREA_H - TRACK_Y + STEM } : { top: TRACK_Y + STEM }) }}>
                 <Reveal delay={delay + 80}>
                   <div className={`rounded-[24px] px-[26px] py-[20px] ${stop.placeholder ? 'border-2 border-dashed border-[var(--deck-hairline-strong)] bg-white/35' : `border border-t-[6px] border-white/80 ${style.border} bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]`}`}>
                     <span className={`inline-block rounded-full px-[11px] py-[3px] text-[15px] font-semibold uppercase tracking-[0.1em] ${stop.placeholder ? 'bg-[var(--deck-tone-3)] text-[var(--deck-muted)]' : `${style.bg} text-white`}`}>{stop.tag}</span>
