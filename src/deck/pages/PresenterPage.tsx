@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Minus, MonitorPlay, Pause, Play, Plus, RotateCcw, Square } from 'lucide-react';
-import { NotesEditor } from '../components/NotesEditor';
 import { SlideStage } from '../components/SlideStage';
 import { useDeckSync } from '../hooks/useDeckSync';
-import { useSpeakerNotes } from '../hooks/useSpeakerNotes';
 import { useTimerDisplay } from '../hooks/useTimerDisplay';
 import { formatCountdown, timerTone } from '../lib/timer';
 import { slides } from '../slides';
@@ -28,7 +26,6 @@ export default function PresenterPage() {
   const [clock, setClock] = useState(new Date());
   const [notesSize, setNotesSize] = useState(readNotesSize);
   const slide = slides[state.index];
-  const speakerNotes = useSpeakerNotes();
   const ActiveSlide = slide.Component;
   const nextSlide = slides[state.index + 1];
   const NextSlide = nextSlide?.Component;
@@ -143,19 +140,12 @@ export default function PresenterPage() {
               <button onClick={() => changeNotesSize(NOTES_SIZE_STEP)} disabled={notesSize >= NOTES_SIZE_MAX} aria-label="Larger notes text" className="rounded-md p-2 text-white/60 hover:bg-white/5 hover:text-white disabled:opacity-30"><Plus size={16} /></button>
             </div>
           </div>
-          <div className="flex min-h-0 flex-1 flex-col px-6 pb-3 pt-4">
-            <NotesEditor
-              slideId={slide.id}
-              value={speakerNotes.notesFor(slide.id)}
-              edited={speakerNotes.isEdited(slide.id)}
-              onSave={speakerNotes.saveNotes}
-              onReset={speakerNotes.resetNotes}
-              sync={speakerNotes.sync}
-              syncError={speakerNotes.syncError}
-              className="px-2 py-2 font-medium text-white"
-              style={{ fontSize: notesSize, lineHeight: 1.4 }}
-            />
-          </div>
+          <p
+            className="deck-scrollbar min-h-0 flex-1 overflow-y-auto whitespace-pre-line px-8 py-6 font-medium text-white [text-wrap:pretty]"
+            style={{ fontSize: notesSize, lineHeight: 1.4 }}
+          >
+            {slide.notes}
+          </p>
         </section>
       </div>
 

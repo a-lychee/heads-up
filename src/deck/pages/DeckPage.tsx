@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type TouchEvent } from 'react';
 import { ChevronLeft, ChevronRight, CircleHelp, ExternalLink, MonitorUp, Play, X } from 'lucide-react';
 import { ProgressDots } from '../components/ProgressDots';
-import { NotesEditor } from '../components/NotesEditor';
 import { SlideStage } from '../components/SlideStage';
 import { useDeckSync } from '../hooks/useDeckSync';
-import { useSpeakerNotes } from '../hooks/useSpeakerNotes';
 import { slides } from '../slides';
 
 const shortcuts = [
@@ -34,16 +32,8 @@ export default function DeckPage() {
   const numberTimeout = useRef<number | undefined>(undefined);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const slide = slides[state.index];
-  const speakerNotes = useSpeakerNotes();
-  const [copied, setCopied] = useState(false);
   // On-screen width of the slide, so the notes panel below can match it exactly.
   const [slideWidth, setSlideWidth] = useState<number>();
-  const copyAllNotes = () => {
-    void navigator.clipboard.writeText(speakerNotes.exportAll()).then(() => {
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1500);
-    });
-  };
   const ActiveSlide = slide.Component;
 
   const openPresenter = useCallback(() => {
@@ -210,35 +200,16 @@ export default function DeckPage() {
           </div>
         </section>
 
-      {/* Notes panel is exactly as wide as the slide above it. The label, slide id and Copy button sit in a row above
-          the text box, so nothing overlaps the notes. */}
+      {/* Notes panel is exactly as wide as the slide above it, with the label and slide id in a row above the notes. */}
       <footer className="flex-shrink-0 border-t border-[var(--deck-lines)] bg-[var(--deck-panel)] px-4 py-3 sm:px-7">
         <div className="mx-auto flex max-w-full flex-col" style={{ width: slideWidth }}>
           <div className="flex items-center justify-between gap-4 pb-1">
             <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white/40">Speaker notes</span>
-            <div className="flex items-center gap-3 text-[12px] text-white/30">
-              <span className="tabular-nums">{slide.id}</span>
-              <button
-                type="button"
-                onClick={copyAllNotes}
-                className="rounded-md border border-[var(--deck-lines)] px-2 py-1 text-white/55 hover:text-white"
-                title="Copy every slide's notes, including your edits"
-              >
-                {copied ? 'Copied' : `Copy all notes${speakerNotes.editedCount ? ` (${speakerNotes.editedCount} edited)` : ''}`}
-              </button>
-            </div>
+            <span className="text-[12px] tabular-nums text-white/30">{slide.id}</span>
           </div>
           <div className="flex h-[112px]">
-            <NotesEditor
-              slideId={slide.id}
-              value={speakerNotes.notesFor(slide.id)}
-              edited={speakerNotes.isEdited(slide.id)}
-              onSave={speakerNotes.saveNotes}
-              onReset={speakerNotes.resetNotes}
-              sync={speakerNotes.sync}
-              syncError={speakerNotes.syncError}
-              className="px-2 py-1 text-[15px] leading-[1.55] text-white/80"
-            />
+            {/* Read-only: edit speaker notes in each slide's file (the `notes` field). */}
+            <p className="deck-scrollbar w-full overflow-y-auto whitespace-pre-line px-2 py-1 text-[15px] leading-[1.55] text-white/80">{slide.notes}</p>
           </div>
         </div>
       </footer>
