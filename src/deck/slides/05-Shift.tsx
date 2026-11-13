@@ -7,14 +7,14 @@ import type { SlideMetadata } from '../types';
 export const metadata: SlideMetadata = {
   id: 'shift',
   title: 'The behavior change',
-  section: '01 · Context and Problem',
+  section: '02 · Demo',
   notes: 'Today Ansel is reactive: Varun has to go to Ansel himself, days later if at all. Light users open it about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. That is the behavior change Heads-Up drives.',
 };
 
-/** Simple filled person figure. */
+/** Simple filled person figure. The viewBox is trimmed to the figure so the gaps around it match the other icons. */
 function Person({ color, size = 190 }: { color: string; size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true" className="flex-shrink-0">
+    <svg width={size * 0.72} height={size} viewBox="14 0 72 100" aria-hidden="true" className="flex-shrink-0">
       <circle cx="50" cy="34" r="18" fill={color} />
       <path d="M14 96c0-22 16-36 36-36s36 14 36 36z" fill={color} />
     </svg>
@@ -33,14 +33,18 @@ function AnselTile({ faded = false }: { faded?: boolean }) {
   );
 }
 
-/** Arrow between the two icons. Dashed arrows crawl (he has to chase Ansel); the accent arrow draws itself. */
+/** Arrow between the two icons. Only the arrow line takes part in the row's vertical centering, so it sits exactly on
+ *  the icons' center line; the label floats a fixed 12px above it. Dashed arrows crawl (he has to chase Ansel); the
+ *  accent arrow draws itself. */
 function Flow({ label, accent, animate, drawDelay = 0 }: { label: string; accent: boolean; animate: boolean; drawDelay?: number }) {
   const color = accent ? 'var(--deck-accent)' : 'var(--deck-secondary)';
   const draw = animate && accent;
   return (
-    <div className="flex flex-shrink-0 flex-col items-center gap-[10px]">
-      <span className={`text-[28px] font-semibold ${draw ? 'deck-pop' : ''}`} style={{ color, animationDelay: draw ? `${drawDelay + 300}ms` : undefined }}>{label}</span>
-      <svg width="260" height="30" viewBox="0 0 260 30" aria-hidden="true" overflow="visible">
+    <div className="relative h-[30px] w-[260px] flex-shrink-0">
+      <div className="absolute bottom-full left-[4px] right-[4px] mb-[12px] flex justify-center">
+        <span className={`whitespace-nowrap text-[28px] font-semibold leading-none ${draw ? 'deck-pop' : ''}`} style={{ color, animationDelay: draw ? `${drawDelay + 300}ms` : undefined }}>{label}</span>
+      </div>
+      <svg width="260" height="30" viewBox="0 0 260 30" aria-hidden="true" overflow="visible" className="block">
         <line
           x1="4" y1="15" x2="242" y2="15" stroke={color} strokeWidth="5" strokeLinecap="round"
           pathLength={draw ? 1 : undefined}
