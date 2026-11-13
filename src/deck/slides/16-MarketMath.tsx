@@ -7,24 +7,26 @@ export const metadata: SlideMetadata = {
   id: 'market-math',
   title: 'Addressable market',
   section: 'Appendix',
-  notes: 'Start from 4.1 million seats and $240M of ARR, so one realized price of $58.54 per seat. Light users are 51%, or 2.09 million seats and $122M. Remove the 18% with no recorded meeting: 1.71 million seats, $100M. Keep the ones with at least one recurring meeting a week: with 48.5% of meetings recurring and one to four meetings a week, about 75% qualify, leaving 1.29 million seats and $75M. That is the addressable base, not the expected lift.',
+  notes: 'Start from 4.1 million seats and $240M of ARR, so about $59 per seat. Light users are 51%, or 2.09 million seats and $123M. Only 20% of light seats are active in a given week, so 80% are idle: 1.67 million seats, $99M. Keep the idle seats with at least one recurring meeting a week: with 48.5% of meetings recurring and one to four meetings a week, about 75% qualify, leaving 1.26 million seats and $74M. That is the addressable base, not the expected lift.',
 };
 
-// Waterfall, $M. Light-seat ARR bridge from the Heads-Up brief (Opportunity Size).
+// Waterfall, $M, at ~$59 per seat (Ex 1: $240M ÷ 4.1M = $58.54, "approximately $59").
+// Light seats (Ex 3) → idle light seats (not active weekly; light weekly active rate is 20%, Ex 3)
+// → idle light seats with a weekly recurring meeting (~75%, from Flowtrace's 48.5% of meetings recurring).
 const SCALE = 3.1; // px per $M
 const bars = [
-  { label: 'All light seats', seats: '2.09M seats', value: 122, from: 0, kind: 'total' },
-  { label: 'No meetings', seats: '−0.38M', value: -22, from: 122, kind: 'drop' },
-  { label: 'Attend', seats: '1.71M seats', value: 100, from: 0, kind: 'total' },
-  { label: 'No recurring meeting', seats: '−0.42M', value: -25, from: 100, kind: 'drop' },
-  { label: 'Weekly series', seats: '1.29M seats', value: 75, from: 0, kind: 'result' },
+  { label: 'All light seats', seats: '2.09M seats', value: 123, from: 0, kind: 'total' },
+  { label: 'Active weekly', seats: '−0.42M', value: -24, from: 123, kind: 'drop' },
+  { label: 'Idle light seats', seats: '1.67M seats', value: 99, from: 0, kind: 'total' },
+  { label: 'No recurring meeting', seats: '−0.41M', value: -25, from: 99, kind: 'drop' },
+  { label: 'Idle, weekly series', seats: '1.26M seats', value: 74, from: 0, kind: 'result' },
 ] as const;
 
 const steps = [
-  { n: 1, title: 'Price per seat', math: '$240M ARR ÷ 4.1M seats = $58.54', source: 'Ex 1' },
-  { n: 2, title: 'All light seats', math: '4.1M × 51% = 2.09M seats → × $58.54 = $122M', source: 'Ex 3' },
-  { n: 3, title: 'Remove seats with no meetings', math: '18% of new seats had no recorded meeting: 2.09M × 82% = 1.71M → $100M', source: 'Ex 2' },
-  { n: 4, title: 'Keep a weekly recurring series', math: '48.5% of meetings recur. At 1–4 meetings a week, ~75% have at least one: 1.71M × 75% = 1.29M → $75M', source: 'Flowtrace' },
+  { n: 1, title: 'Price per seat', math: '$240M ARR ÷ 4.1M seats ≈ $59', source: 'Ex 1' },
+  { n: 2, title: 'All light seats', math: '4.1M × 51% = 2.09M seats → × $59 = $123M', source: 'Ex 3' },
+  { n: 3, title: 'Keep idle light seats', math: '20% of light seats are active weekly: 2.09M × (1 − 20%) = 1.67M → $99M', source: 'Ex 3' },
+  { n: 4, title: 'Keep a weekly recurring series', math: '48.5% of meetings recur. At 1–4 meetings a week, ~75% have at least one: 1.67M × 75% = 1.26M → $74M', source: 'Flowtrace' },
 ];
 
 function Bar({ bar }: { bar: (typeof bars)[number] }) {
@@ -53,11 +55,11 @@ export default function MarketMathSlide() {
   return (
     <SlideFrame
       section={metadata.section}
-      source="One realized price per seat; skippers are not removed · Kilts Center Ansel case (2026), Ex 1, 2, 3; Flowtrace (48.5% of meetings recurring); team analysis"
+      source="One realized price per seat (~$59); idle = not active in a given week · Kilts Center Ansel case (2026), Ex 1, 3; Flowtrace (48.5% of meetings recurring); team analysis"
     >
       <div className="absolute inset-x-[104px] top-[150px]">
         <Reveal>
-          <Headline style={{ fontSize: 56 }} secondary="$75M of ARR sits in light seats with a recurring weekly meeting.">
+          <Headline style={{ fontSize: 56 }} secondary="$74M of ARR sits in idle light seats with a recurring weekly meeting.">
             Addressable market
           </Headline>
         </Reveal>

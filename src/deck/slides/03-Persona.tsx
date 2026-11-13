@@ -134,12 +134,12 @@ function PersonaStep({ step }: { step: Step }) {
         </Reveal>
       </div>
 
-      {/* Transition from the target-user slide: the 1.29M box charges up, flies over and becomes Varun's profile card. */}
+      {/* Transition from the target-user slide: the 1.26M box charges up, flies over and becomes Varun's profile card. */}
       {!isStatic && step === 0 && (
         <>
           <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden bg-[var(--deck-card)]" aria-hidden="true">
             <div className="deck-morph-content flex h-[80px] w-[520px] items-baseline gap-[16px] px-[24px] py-[18px]">
-              <p className="deck-morph-number font-display text-[42px] font-extrabold leading-none tracking-[-0.035em]">1.29M</p>
+              <p className="deck-morph-number font-display text-[42px] font-extrabold leading-none tracking-[-0.035em]">1.26M</p>
               <p className="text-[21px] leading-[1.25] text-[var(--deck-muted)]">have a weekly recurring meeting</p>
             </div>
           </div>

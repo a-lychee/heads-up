@@ -12,7 +12,7 @@ import type { SlideMetadata } from '../types';
 // The steps are separate slides with no crossfade, so the click only animates the change.
 
 const section = '01 · Context and Problem';
-const source = 'Kilts Center Ansel case (2026), Ex 3 (share of seats, 12-month seat retention) · idle share is our calculation from Ex 3 · $75M at $58.54 per seat, 48.5% recurring (Flowtrace)';
+const source = 'Kilts Center Ansel case (2026), Ex 3 (share of seats, 12-month seat retention) · idle share is our calculation from Ex 3 · $74M = 2.09M light seats × 80% idle × ~75% with a weekly recurring meeting × ~$59 per seat; 48.5% of meetings recurring (Flowtrace)';
 
 export const metadata: SlideMetadata = {
   id: 'target-user',
@@ -42,7 +42,7 @@ export const oursMetadata: SlideMetadata = {
   title: 'Our target user segment · our user',
   section,
   transition: 'none',
-  notes: 'Our user is the light user who rarely opens Ansel but still has a weekly recurring meeting. Of 2.09 million light seats, 1.71 million attend their meetings, and 1.29 million have a weekly recurring one. At $58.54 a seat, that is $75M of addressable ARR.',
+  notes: 'Our user is the light user who rarely opens Ansel but still has a weekly recurring meeting. Of 2.09 million light seats, 1.67 million are idle in a given week, and 1.26 million of those have a weekly recurring meeting. At about $59 a seat, that is $74M of addressable ARR.',
 };
 
 type Step = 0 | 1 | 2 | 3;
@@ -66,11 +66,11 @@ const SCALE_MAX = 81;
 const barHeight = (share: number) => (share / SCALE_MAX) * BAR_MAX;
 
 // Light seats narrowed to our user (Heads-Up brief, Opportunity Size; appendix shows the math).
-// The 1.29M box is where the persona slide's card morph starts (see .deck-morph in index.css).
+// The 1.26M box is where the persona slide's card morph starts (see .deck-morph in index.css).
 const funnel = [
   { value: '2.09M', label: 'light seats' },
-  { value: '1.71M', label: 'attend their meetings' },
-  { value: '1.29M', label: 'have a weekly recurring meeting' },
+  { value: '1.67M', label: 'are idle in a given week' },
+  { value: '1.26M', label: 'have a weekly recurring meeting' },
 ];
 
 function Label({ children, accent = false }: { children: ReactNode; accent?: boolean }) {
@@ -197,9 +197,9 @@ function TargetUserStep({ step }: { step: Step }) {
               <Reveal delay={400 + funnel.length * 350}>
                 <div className="flex items-baseline gap-[16px] rounded-[20px] bg-[var(--deck-accent)] px-[24px] py-[18px] text-white">
                   <p className="font-display text-[42px] font-extrabold leading-none tracking-[-0.035em]">
-                    $<CountUp value={75} />M
+                    $<CountUp value={74} />M
                   </p>
-                  <p className="text-[21px] leading-[1.25] text-white/85">addressable ARR at $58.54 a seat</p>
+                  <p className="text-[21px] leading-[1.25] text-white/85">addressable ARR at ~$59 a seat</p>
                 </div>
               </Reveal>
             </div>
