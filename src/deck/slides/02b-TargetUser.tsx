@@ -18,7 +18,7 @@ export const metadata: SlideMetadata = {
   id: 'target-user',
   title: 'Our target user segment · all seats',
   section,
-  notes: 'Start with who holds Ansel’s 4.1 million seats. Split by how many meetings people have a week, light users, with fewer than five, are the biggest group: 51% of all seats.',
+  notes: `So who are these idle seats? Well case research suggests that they are users with under 5 meetings a week. These users make up the majority of all seats. [Move to next slide]`,
 };
 
 export const idleMetadata: SlideMetadata = {
@@ -26,7 +26,7 @@ export const idleMetadata: SlideMetadata = {
   title: 'Our target user segment · idle seats',
   section,
   transition: 'none',
-  notes: 'Now look only at the idle seats. Light users go from half of all seats to two-thirds of the idle ones.',
+  notes: `…But they disproportionately make up the percentage of idle seats. [Pause, then move to next slide]`,
 };
 
 export const retentionMetadata: SlideMetadata = {
@@ -34,7 +34,7 @@ export const retentionMetadata: SlideMetadata = {
   title: 'Our target user segment · 12-month seat retention',
   section,
   transition: 'none',
-  notes: 'And those seats do not last. Only 34% of light-user seats are still in use after 12 months, against 81% for heavy users and 68% for moderate ones.',
+  notes: `They also are the seats that are getting cut at renewal meetings. [Move to next slide]`,
 };
 
 export const oursMetadata: SlideMetadata = {

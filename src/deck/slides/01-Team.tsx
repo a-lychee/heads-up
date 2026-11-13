@@ -39,7 +39,7 @@ ARYAN: (to the audience, holding up the roll) Ansel remembers everything. Varun 
 
 Props: laptop, kitchen roll as the Ansel summary, reminder sound. Rehearse the unroll so it is fast and long; it is the biggest laugh. Aryan keeps the roll for the post-skit.
 
-AFTER THE SKIT: Introduce each person and their (very real) role. Keep this brief and move quickly to the user problem.`,
+AFTER THE SKIT: Have you ever been in Varun’s position before? Well, you’re not alone. We are Team License to Kilts and today, we’ll show you how our product can help you.`,
 };
 
 // Edit names, roles and photos here. The closing copy (09-TeamAgain.tsx) and the edited version (10-TeamUpdate.tsx)

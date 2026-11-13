@@ -16,7 +16,7 @@ export const metadata: SlideMetadata = {
   id: 'context',
   title: 'Context and problem · FY23',
   section,
-  notes: 'Ansel is an AI meeting notetaker for enterprises, and it leads the market in notetaking quality and governance controls. Start in FY23: $58M of ARR, 1,450 customer organizations and 1.1 million seats. Net revenue retention was 141%, and 61% of seats were active every week.',
+  notes: `Other teams have covered this pretty well, so I’ll be quick. On the slide, you’ll see a snapshot of Ansel a few years ago. Ansel is a market leader in note taking quality and has been gaining momentum with enterprise customers. [Move to next slide]`,
 };
 
 export const growthMetadata: SlideMetadata = {
@@ -24,7 +24,7 @@ export const growthMetadata: SlideMetadata = {
   title: 'Context and problem · growth',
   section,
   transition: 'none',
-  notes: 'Fast forward to FY25. On the surface Ansel is thriving: ARR is up to $240M, customers to 3,900, and provisioned seats to 4.1 million.',
+  notes: `As you can see, Ansel’s growth has been explosive in both its number of enterprise customers and the number of seats, or provisioned employees, per enterprise customer. This shows us Ansel is onboarding larger organizations than before. [Move to next slide]`,
 };
 
 export const declineMetadata: SlideMetadata = {
@@ -32,7 +32,7 @@ export const declineMetadata: SlideMetadata = {
   title: 'Context and problem · decline',
   section,
   transition: 'none',
-  notes: 'But underneath, usage is falling. Net revenue retention is down from 141% to 103%. Only 38% of seats are active in a week, down from 61%. And 44% of FY25 renewal contracts cut seats.',
+  notes: `But I want to call attention to the last two statistics on this slide. More seats doesn’t necessarily mean more active seats. And Ansel’s customers have started to realize this. Many of Ansel’s newly provisioned seats are idle, and that’s what we’re trying to solve. [Move to next slide]`,
 };
 
 type Step = 0 | 1 | 2;
