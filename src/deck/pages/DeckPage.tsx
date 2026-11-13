@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState, type TouchEvent } from 'react';
 import { ChevronLeft, ChevronRight, CircleHelp, ExternalLink, MonitorUp, Play, X } from 'lucide-react';
 import { ProgressDots } from '../components/ProgressDots';
+import { NotesEditor } from '../components/NotesEditor';
 import { SlideStage } from '../components/SlideStage';
 import { useDeckSync } from '../hooks/useDeckSync';
+import { useSpeakerNotes } from '../hooks/useSpeakerNotes';
 import { slides } from '../slides';
 
 const shortcuts = [
@@ -32,6 +34,14 @@ export default function DeckPage() {
   const numberTimeout = useRef<number | undefined>(undefined);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const slide = slides[state.index];
+  const speakerNotes = useSpeakerNotes();
+  const [copied, setCopied] = useState(false);
+  const copyAllNotes = () => {
+    void navigator.clipboard.writeText(speakerNotes.exportAll()).then(() => {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    });
+  };
   const ActiveSlide = slide.Component;
 
   const openPresenter = useCallback(() => {
@@ -199,8 +209,27 @@ export default function DeckPage() {
 
       <footer className="flex min-h-[108px] flex-shrink-0 gap-4 border-t border-[var(--deck-lines)] bg-[var(--deck-panel)] px-6 py-4">
         <div className="w-[150px] flex-shrink-0 pt-1 text-[12px] font-semibold uppercase tracking-[0.12em] text-white/40">Speaker notes</div>
-        <p className="max-w-[1100px] text-[15px] leading-[1.55] text-white/70">{slide.notes}</p>
-        <div className="ml-auto flex-shrink-0 pt-1 text-[12px] tabular-nums text-white/30">{slide.id}</div>
+        <div className="flex min-h-[88px] max-w-[1100px] flex-1">
+          <NotesEditor
+            slideId={slide.id}
+            value={speakerNotes.notesFor(slide.id)}
+            edited={speakerNotes.isEdited(slide.id)}
+            onSave={speakerNotes.saveNotes}
+            onReset={speakerNotes.resetNotes}
+            className="px-2 py-1 text-[15px] leading-[1.55] text-white/80"
+          />
+        </div>
+        <div className="ml-auto flex flex-shrink-0 flex-col items-end gap-2 pt-1 text-[12px] text-white/30">
+          <span className="tabular-nums">{slide.id}</span>
+          <button
+            type="button"
+            onClick={copyAllNotes}
+            className="rounded-md border border-[var(--deck-lines)] px-2 py-1 text-white/55 hover:text-white"
+            title="Copy every slide's notes, including your edits"
+          >
+            {copied ? 'Copied' : `Copy all notes${speakerNotes.editedCount ? ` (${speakerNotes.editedCount} edited)` : ''}`}
+          </button>
+        </div>
       </footer>
 
       {state.presenting && (
