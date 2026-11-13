@@ -9,11 +9,15 @@ interface SlideStageProps {
   stageClassName?: string;
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
   label?: string;
+  /** Called with the slide's on-screen width in px whenever it is resized (e.g. to size a notes panel to match). */
+  onWidthChange?: (width: number) => void;
 }
 
-export function SlideStage({ children, static: isStatic = false, className = '', stageClassName = '', onClick, label }: SlideStageProps) {
+export function SlideStage({ children, static: isStatic = false, className = '', stageClassName = '', onClick, label, onWidthChange }: SlideStageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
+  const onWidthChangeRef = useRef(onWidthChange);
+  onWidthChangeRef.current = onWidthChange;
 
   useEffect(() => {
     const element = containerRef.current;
@@ -21,7 +25,9 @@ export function SlideStage({ children, static: isStatic = false, className = '',
     const update = () => {
       const { width, height } = element.getBoundingClientRect();
       if (!width || !height) return;
-      setScale(Math.min(width / deckTheme.size.width, height / deckTheme.size.height));
+      const nextScale = Math.min(width / deckTheme.size.width, height / deckTheme.size.height);
+      setScale(nextScale);
+      onWidthChangeRef.current?.(nextScale * deckTheme.size.width);
     };
     update();
     const observer = new ResizeObserver(update);

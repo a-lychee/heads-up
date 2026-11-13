@@ -36,6 +36,8 @@ export default function DeckPage() {
   const slide = slides[state.index];
   const speakerNotes = useSpeakerNotes();
   const [copied, setCopied] = useState(false);
+  // On-screen width of the slide, so the notes panel below can match it exactly.
+  const [slideWidth, setSlideWidth] = useState<number>();
   const copyAllNotes = () => {
     void navigator.clipboard.writeText(speakerNotes.exportAll()).then(() => {
       setCopied(true);
@@ -200,7 +202,7 @@ export default function DeckPage() {
         {/* Slide and its notes share the column to the right of the thumbnails, so the thumbnail strip runs the full height. */}
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         <section className="relative min-h-0 min-w-0 flex-1 bg-[var(--deck-chrome)] p-4 sm:p-7">
-          <SlideStage key={state.index} stageClassName="deck-stage-flat sm:rounded-xl" label={`Slide ${state.index + 1}: ${slide.title}`}>
+          <SlideStage key={state.index} stageClassName="deck-stage-flat sm:rounded-xl" label={`Slide ${state.index + 1}: ${slide.title}`} onWidthChange={setSlideWidth}>
             <div className={slide.transition === 'none' ? undefined : 'deck-crossfade'}><ActiveSlide /></div>
           </SlideStage>
           <div className="absolute right-2 top-1/2 -translate-y-1/2 sm:right-3">
@@ -208,28 +210,34 @@ export default function DeckPage() {
           </div>
         </section>
 
-      <footer className="flex min-h-[108px] flex-shrink-0 gap-4 border-t border-[var(--deck-lines)] bg-[var(--deck-panel)] px-6 py-4">
-        <div className="w-[150px] flex-shrink-0 pt-1 text-[12px] font-semibold uppercase tracking-[0.12em] text-white/40">Speaker notes</div>
-        <div className="flex min-h-[88px] max-w-[1100px] flex-1">
-          <NotesEditor
-            slideId={slide.id}
-            value={speakerNotes.notesFor(slide.id)}
-            edited={speakerNotes.isEdited(slide.id)}
-            onSave={speakerNotes.saveNotes}
-            onReset={speakerNotes.resetNotes}
-            className="px-2 py-1 text-[15px] leading-[1.55] text-white/80"
-          />
-        </div>
-        <div className="ml-auto flex flex-shrink-0 flex-col items-end gap-2 pt-1 text-[12px] text-white/30">
-          <span className="tabular-nums">{slide.id}</span>
-          <button
-            type="button"
-            onClick={copyAllNotes}
-            className="rounded-md border border-[var(--deck-lines)] px-2 py-1 text-white/55 hover:text-white"
-            title="Copy every slide's notes, including your edits"
-          >
-            {copied ? 'Copied' : `Copy all notes${speakerNotes.editedCount ? ` (${speakerNotes.editedCount} edited)` : ''}`}
-          </button>
+      {/* Notes panel is exactly as wide as the slide above it. The label, slide id and Copy button sit in a row above
+          the text box, so nothing overlaps the notes. */}
+      <footer className="flex-shrink-0 border-t border-[var(--deck-lines)] bg-[var(--deck-panel)] px-4 py-3 sm:px-7">
+        <div className="mx-auto flex max-w-full flex-col" style={{ width: slideWidth }}>
+          <div className="flex items-center justify-between gap-4 pb-1">
+            <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white/40">Speaker notes</span>
+            <div className="flex items-center gap-3 text-[12px] text-white/30">
+              <span className="tabular-nums">{slide.id}</span>
+              <button
+                type="button"
+                onClick={copyAllNotes}
+                className="rounded-md border border-[var(--deck-lines)] px-2 py-1 text-white/55 hover:text-white"
+                title="Copy every slide's notes, including your edits"
+              >
+                {copied ? 'Copied' : `Copy all notes${speakerNotes.editedCount ? ` (${speakerNotes.editedCount} edited)` : ''}`}
+              </button>
+            </div>
+          </div>
+          <div className="flex h-[112px]">
+            <NotesEditor
+              slideId={slide.id}
+              value={speakerNotes.notesFor(slide.id)}
+              edited={speakerNotes.isEdited(slide.id)}
+              onSave={speakerNotes.saveNotes}
+              onReset={speakerNotes.resetNotes}
+              className="px-2 py-1 text-[15px] leading-[1.55] text-white/80"
+            />
+          </div>
         </div>
       </footer>
         </div>
