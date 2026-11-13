@@ -10,7 +10,7 @@ export const metadata: SlideMetadata = {
   id: 'persona',
   title: 'User segment pain points',
   section: '01 · Context and Problem',
-  notes: 'Meet Varun, a software engineer and a typical light user. He is an individual contributor, he attends all his meetings, he needs to speak at least once in most of them, and he cares about his performance at work. Ansel records everything, but by next week it is hard to remember what was said.',
+  notes: `So who are these light users? [Describe Varun]. Our team went out and talked to a dozen people we knew that fit this description and conducted some market research. [Move to next slide]`,
 };
 
 export const painsMetadata: SlideMetadata = {
@@ -18,7 +18,7 @@ export const painsMetadata: SlideMetadata = {
   title: 'User segment pain points · pains',
   section: '01 · Context and Problem',
   transition: 'none',
-  notes: 'His pain points: he forgets what was said, he skips the meeting summaries, and he fails to see Ansel’s value. So today he rereads old notes, asks a teammate, or relies on memory.',
+  notes: `What we found was [describe pain points]. [Talk about what options they have today]. But as you can see from Varun’s performance earlier, those don’t work too well.`,
 };
 
 // Persona name and title are placeholders; edit here.

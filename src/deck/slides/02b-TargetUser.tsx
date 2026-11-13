@@ -42,7 +42,7 @@ export const oursMetadata: SlideMetadata = {
   title: 'Our target user segment · our user',
   section,
   transition: 'none',
-  notes: 'Our user is the light user who rarely opens Ansel but still has a weekly recurring meeting. Of 2.09 million light seats, 1.67 million are idle in a given week, and 1.26 million of those have a weekly recurring meeting. At about $59 a seat, that is $74M of addressable ARR.',
+  notes: `So our team thought this was the best group to build for. Specifically, we are targeting light users who are currently idle users, but have a weekly recurring meeting. That’s because these are the meetings that would benefit from regular transcripts and insights. Collectively, they represent quite a big addressable market, which and although we don’t expect to capture it all from the start, it goes to show the opportunity that’s out there.`,
 };
 
 type Step = 0 | 1 | 2 | 3;
