@@ -27,7 +27,7 @@ export const slides: SlideDefinition[] = [
   { Component: ContextDeclineSlide, ...contextDecline },
   { Component: TargetUserSlide, ...targetUser },
   { Component: TargetUserIdleSlide, ...targetUserIdle },
-  { Component: TargetUserRetentionSlide, ...targetUserActive },
+  { Component: TargetUserRetentionSlide, ...targetUserRetention },
   { Component: TargetUserOursSlide, ...targetUserOurs },
   { Component: PersonaSlide, ...persona },
   { Component: PersonaPainsSlide, ...personaPains },
