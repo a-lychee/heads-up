@@ -24,7 +24,7 @@ interface Stop {
 // Edit learnings here. Top lane: technical changes to Ansel. Bottom lane: qualitative learnings.
 const stops: Stop[] = [
   { lane: 'technical', at: 28, tag: 'Slack’s UI limits', title: 'Moved the rich view into the Ansel app', body: 'Our Phase 1 card wasn’t possible in Slack. The app is in our control.' },
-  { lane: 'qualitative', at: 46, tag: 'Feedback', title: 'Tested early, iterated constantly', body: 'So no feedback came too late.' },
+  { lane: 'qualitative', at: 46, tag: 'Feedback', title: 'Iterated with real user feedback', body: 'Real users used the app; their preferences and use cases shaped it.' },
   { lane: 'technical', at: 64, tag: 'Speed', title: 'Dropped audio and video from transcripts', body: 'Less compute, and the Ansel app loads faster.' },
   { lane: 'qualitative', at: 82, tag: '[Tag]', title: '[Learning 4]', body: '[One line on what we learned]', placeholder: true },
 ];
