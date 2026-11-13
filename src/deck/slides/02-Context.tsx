@@ -6,7 +6,7 @@ import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
-// This slide is three clicks of one picture: FY23, then growth to FY25 (green), then decline to FY25 (red).
+// This slide is three clicks of one picture: FY23, then growth to FY25 (green), then decline to FY25 (orange).
 // The three steps are separate slides with no crossfade between them, so each click only animates the numbers.
 
 const section = '01 · Context and Problem';
@@ -46,21 +46,21 @@ interface Metric {
   suffix?: string;
   decimals?: number;
   grouping?: boolean;
-  /** Percent change, or percentage points for metrics that are already percentages. */
-  change: 'percent' | 'points' | 'none';
+  /** Percent change from FY23 to FY25 (relative, for every metric so the six read the same way). */
+  change: 'percent' | 'none';
 }
 
 // Case Ex 1, FY23 → FY25.
 const growth: Metric[] = [
-  { label: 'ARR', from: 58, to: 240, prefix: '$', suffix: 'M', change: 'percent' },
+  { label: 'Annual recurring revenue', from: 58, to: 240, prefix: '$', suffix: 'M', change: 'percent' },
   { label: 'Customer organizations', from: 1450, to: 3900, grouping: true, change: 'percent' },
   { label: 'Provisioned seats', from: 1.1, to: 4.1, suffix: 'M', decimals: 1, change: 'percent' },
 ];
 
 // Case Ex 1, FY23 → FY25; the renewal figure is FY25 only (Ex 6).
 const decline: Metric[] = [
-  { label: 'Net revenue retention', from: 141, to: 103, suffix: '%', change: 'points' },
-  { label: 'Seats active weekly', from: 61, to: 38, suffix: '%', change: 'points' },
+  { label: 'Net revenue retention', from: 141, to: 103, suffix: '%', change: 'percent' },
+  { label: 'Seats active weekly', from: 61, to: 38, suffix: '%', change: 'percent' },
   { label: 'Customers that cut seats at FY25 renewal', from: null, to: 44, suffix: '%', change: 'none' },
 ];
 
@@ -77,13 +77,12 @@ function changeText(metric: Metric) {
   if (metric.from === null || metric.change === 'none') return null;
   const diff = metric.to - metric.from;
   const sign = diff > 0 ? '+' : '−';
-  if (metric.change === 'points') return `${sign}${Math.round(Math.abs(diff))} pts`;
   return `${sign}${Math.round(Math.abs(diff / metric.from) * 100)}%`;
 }
 
 function Stat({ metric, showFY25, animate, tone, delay }: { metric: Metric; showFY25: boolean; animate: boolean; tone: 'up' | 'down'; delay: number }) {
   const { static: isStatic } = useSlideEnvironment();
-  const color = tone === 'up' ? 'text-[var(--deck-up)]' : 'text-[var(--deck-down)]';
+  const color = tone === 'up' ? 'text-[var(--deck-up)]' : 'text-[var(--deck-accent)]';
   const change = changeText(metric);
   const format = { prefix: metric.prefix, suffix: metric.suffix, decimals: metric.decimals, grouping: metric.grouping };
 
@@ -157,7 +156,7 @@ function ContextStep({ step }: { step: Step }) {
           </div>
         </Enter>
 
-        {/* Right two-thirds: six numbers, FY23 then FY25. Click 1 turns the top row green, click 2 the bottom row red. */}
+        {/* Right two-thirds: six numbers, FY23 then FY25. Click 1 turns the top row green, click 2 the bottom row Ansel orange. */}
         <div className="flex flex-col justify-center">
           <Enter step={step} delay={250} className="flex items-baseline gap-[18px]">
             <Label>Ansel in</Label>
@@ -165,8 +164,7 @@ function ContextStep({ step }: { step: Step }) {
           </Enter>
 
           <Enter step={step} delay={350} className="mt-[40px]">
-            <Label>Growing</Label>
-            <div className="mt-[18px] grid grid-cols-3 gap-[40px]">
+            <div className="grid grid-cols-3 gap-[40px]">
               {growth.map((metric, index) => (
                 <Stat key={metric.label} metric={metric} showFY25={step >= 1} animate={step === 1} tone="up" delay={index * 120} />
               ))}
@@ -175,8 +173,7 @@ function ContextStep({ step }: { step: Step }) {
 
           {/* Dimmed on the growth click: these are still FY23 numbers until the next click. */}
           <Enter step={step} delay={450} className={`mt-[44px] border-t border-[var(--deck-hairline-strong)] pt-[36px] transition-opacity duration-500 ${step === 1 ? 'opacity-40' : ''}`}>
-            <Label>Falling</Label>
-            <div className="mt-[18px] grid grid-cols-3 gap-[40px]">
+            <div className="grid grid-cols-3 gap-[40px]">
               {decline.map((metric, index) => (
                 <Stat key={metric.label} metric={metric} showFY25={step === 2} animate={step === 2} tone="down" delay={index * 120} />
               ))}
