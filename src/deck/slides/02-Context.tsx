@@ -160,7 +160,8 @@ function ContextStep({ step }: { step: Step }) {
             <Year step={step} />
           </Enter>
 
-          <Enter step={step} delay={350} className="mt-[40px]">
+          {/* Heavier rule under the heading than between the two rows, so it reads as heading, then stats. */}
+          <Enter step={step} delay={350} className="mt-[32px] border-t-2 border-[var(--deck-tone-1)] pt-[36px]">
             <div className="grid grid-cols-3 gap-[40px]">
               {growth.map((metric, index) => (
                 <Stat key={metric.label} metric={metric} showFY25={step >= 1} animate={step === 1} tone="up" delay={index * 120} />
