@@ -34,6 +34,12 @@ export default function TitleSlide() {
               Ansel&apos;s new meeting prep companion, built to ensure you never need to scramble for a meeting again.
             </p>
           </Reveal>
+          <Reveal delay={200}>
+            <span className="mt-[40px] inline-flex items-center gap-[14px] rounded-full bg-[var(--deck-callout)] px-[26px] py-[12px] text-[24px] font-semibold uppercase tracking-[0.14em] text-[var(--deck-callout-text)]">
+              <span className="h-[10px] w-[10px] rounded-full bg-[var(--deck-accent)]" aria-hidden="true" />
+              Prepare Smart
+            </span>
+          </Reveal>
         </div>
 
       </div>
