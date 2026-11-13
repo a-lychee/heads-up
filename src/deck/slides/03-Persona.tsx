@@ -59,7 +59,7 @@ function Enter({ step, delay, className, children }: { step: Step; delay: number
 }
 
 // Two steps: the persona alone first (with the card morph from the target-user slide), then on the click
-// the pain points and options appear on the right. The click just shows them, with no animation.
+// the pain points and options fade in on the right with the deck's usual soft reveal.
 function PersonaStep({ step }: { step: Step }) {
   const { static: isStatic } = useSlideEnvironment();
   return (
@@ -104,7 +104,8 @@ function PersonaStep({ step }: { step: Step }) {
         {/* Right half: pain points, then options today. Spacing is one rhythm: 14px from a label to its cards,
             16px between cards, 36px between the two sections. The pain cards share the free height evenly,
             so all three are the same size and the column lines up with the profile card. */}
-        <div className={`flex min-h-0 flex-col ${step === 0 ? 'invisible' : ''}`}>
+        {/* Hidden on the first step; on the click it fades in with the same soft reveal as the rest of the deck. */}
+        <Reveal className={`flex min-h-0 flex-col ${step === 0 ? 'invisible' : ''}`}>
           <Label>Pain points</Label>
           <div className="mt-[14px] flex min-h-0 flex-1 flex-col gap-[16px]">
             {pains.map((pain) => (
@@ -130,7 +131,7 @@ function PersonaStep({ step }: { step: Step }) {
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
 
       {/* Transition from the target-user slide: the 1.29M box charges up, flies over and becomes Varun's profile card. */}
