@@ -226,6 +226,10 @@
 @keyframes deck-swap-out { to { opacity: 0; transform: translateY(-10px); } }
 @keyframes deck-swap-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+/* Slide 7: the timeline track draws left to right. */
+.deck-grow-x { transform: scaleX(0); animation: deck-grow-x 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes deck-grow-x { to { transform: scaleX(1); } }
+
 /* Slide 5 */
 .deck-ants { animation: deck-ants 1.6s linear infinite; }
 @keyframes deck-ants { to { stroke-dashoffset: -40; } }
