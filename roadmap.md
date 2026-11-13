@@ -6,4 +6,5 @@
 - [x] Add editor navigation, presentation mode, keyboard/touch controls, and URL persistence.
 - [x] Add synchronized presenter view with an 8:00 countdown and current/next slides.
 - [ ] Finish the Meet the team slide: five members, Alicia's full-resolution photo with its background kept, roles still TBD.
+- [x] Title slide tagline: "Prepare Smart" and "Private, timely Slack card" chips, visually checked.
 - [x] Verify slide layouts, navigation, timer behavior, and production build.

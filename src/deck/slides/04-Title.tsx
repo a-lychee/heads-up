@@ -34,6 +34,18 @@ export default function TitleSlide() {
               Ansel&apos;s new meeting prep companion, built to ensure you never need to scramble for a meeting again.
             </p>
           </Reveal>
+          <Reveal delay={200}>
+            <div className="mt-[40px] flex flex-wrap items-center gap-[16px]">
+              <span className="inline-flex items-center gap-[12px] rounded-full bg-[var(--deck-callout)] px-[24px] py-[11px] text-[22px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-callout-text)]">
+                <span className="h-[9px] w-[9px] rounded-full bg-[var(--deck-accent)]" aria-hidden="true" />
+                Prepare Smart
+              </span>
+              <span className="inline-flex items-center gap-[12px] rounded-full bg-[var(--deck-callout)] px-[24px] py-[11px] text-[22px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-callout-text)]">
+                <span className="h-[9px] w-[9px] rounded-full bg-[var(--deck-accent)]" aria-hidden="true" />
+                Private, timely Slack card
+              </span>
+            </div>
+          </Reveal>
         </div>
 
       </div>
