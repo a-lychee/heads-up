@@ -16,7 +16,7 @@ export const metadata: SlideMetadata = {
   id: 'context',
   title: 'Context and problem · FY23',
   section,
-  notes: 'Ansel is an AI meeting notetaker for enterprises, and it leads on note quality and governance controls. Start in FY23: $58M of ARR, 1,450 customer organizations and 1.1 million seats. Net revenue retention was 141%, and 61% of seats were active every week.',
+  notes: 'Ansel is an AI meeting notetaker for enterprises, and it leads the market in notetaking quality and governance controls. Start in FY23: $58M of ARR, 1,450 customer organizations and 1.1 million seats. Net revenue retention was 141%, and 61% of seats were active every week.',
 };
 
 export const growthMetadata: SlideMetadata = {
@@ -140,7 +140,7 @@ function ContextStep({ step }: { step: Step }) {
         <Enter step={step} delay={100} className="flex flex-col justify-center">
           <div className="rounded-[36px_36px_36px_8px] bg-white px-[40px] py-[38px] shadow-[var(--deck-card-shadow)]">
             <p className="text-[36px] leading-[1.3]">
-              “Hi, I’m <span className="font-bold text-[var(--deck-accent)]">Ansel</span>. I’m an AI meeting notetaker for enterprises, and I lead on notetaking quality and governance controls.”
+              “Hi, I’m <span className="font-bold text-[var(--deck-accent)]">Ansel</span>, an AI meeting notetaker for enterprises. I lead the market in notetaking quality and governance controls.”
             </p>
           </div>
           <div className="mt-[26px] flex items-center gap-[20px]">
