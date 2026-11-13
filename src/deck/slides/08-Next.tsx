@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Check, Flag } from 'lucide-react';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
@@ -26,6 +27,8 @@ interface Column {
   tone: 'ink' | 'accent' | 'secondary';
   heading: string;
   body: ReactNode;
+  /** Stretches the body to the column height so the panel fills the lane. */
+  fill?: boolean;
 }
 
 const toneText = { ink: 'text-[var(--deck-ink)]', accent: 'text-[var(--deck-accent)]', secondary: 'text-[var(--deck-secondary)]' };
@@ -36,7 +39,32 @@ const columns: Column[] = [
     word: 'Now',
     tone: 'ink',
     heading: 'Built and proved',
-    body: <p>We built the Heads-Up prototype. In a controlled group, our riskiest assumption held: light users want help prepping.</p>,
+    fill: true,
+    body: (
+      <>
+        <p>We built the Heads-Up prototype.</p>
+        <div
+          className="mt-[18px] flex flex-1 flex-col justify-center rounded-[22px] border px-[22px] py-[18px]"
+          style={{
+            background: 'var(--deck-callout)',
+            borderColor: 'color-mix(in srgb, var(--deck-accent) 30%, transparent)',
+            boxShadow: '0 0 0 7px color-mix(in srgb, var(--deck-accent) 6%, transparent)',
+          }}
+        >
+          <span className="flex items-center gap-[8px] text-[16px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-accent)]">
+            <Flag size={16} strokeWidth={2.4} />
+            Riskiest assumption
+          </span>
+          <p className="mt-[10px] font-display text-[27px] font-extrabold leading-[1.14] tracking-[-0.02em] text-[var(--deck-ink)]">
+            Light users want help prepping for recurring meetings
+          </p>
+          <span className="mt-[14px] inline-flex items-center gap-[8px] whitespace-nowrap rounded-full bg-[var(--deck-accent)] px-[14px] py-[5px] text-[18px] font-semibold text-white">
+            <Check size={16} strokeWidth={2.6} />
+            Held in a controlled group
+          </span>
+        </div>
+      </>
+    ),
   },
   {
     word: 'Next',
@@ -94,11 +122,11 @@ export default function NextSlide() {
 
       <div className="absolute inset-x-[104px] top-[380px] grid grid-cols-[1fr_1.2fr_1fr] gap-[64px]">
         {columns.map((column, index) => (
-          <Reveal key={column.word} delay={150 + index * 180}>
-            <div className={`border-t-[4px] pt-[26px] ${toneRule[column.tone]}`}>
+          <Reveal key={column.word} delay={150 + index * 180} className={column.fill ? 'h-full' : ''}>
+            <div className={`flex h-full flex-col border-t-[4px] pt-[26px] ${toneRule[column.tone]}`}>
               <p className={`font-display text-[104px] font-extrabold leading-none tracking-[-0.04em] ${toneText[column.tone]}`}>{column.word}</p>
               <p className="mt-[22px] text-[30px] font-semibold leading-[1.25]">{column.heading}</p>
-              <div className="mt-[12px] text-[22px] leading-[1.4] text-[var(--deck-muted)]">{column.body}</div>
+              <div className={`mt-[12px] text-[22px] leading-[1.4] text-[var(--deck-muted)] ${column.fill ? 'flex flex-1 flex-col' : ''}`}>{column.body}</div>
             </div>
           </Reveal>
         ))}
