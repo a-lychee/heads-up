@@ -23,40 +23,41 @@ interface Stop {
 
 // Edit learnings here. Top lane: technical changes to Ansel. Bottom lane: qualitative learnings.
 const stops: Stop[] = [
-  { lane: 'technical', at: 24, tag: 'Slack’s UI limits', title: 'Moved the rich view into the Ansel app', body: 'Our Phase 1 card wasn’t possible in Slack. The app is in our control.' },
-  { lane: 'qualitative', at: 44, tag: 'Feedback', title: 'Tested early, iterated constantly', body: 'So no feedback came too late.' },
-  { lane: 'technical', at: 63, tag: 'Speed', title: 'Dropped audio and video from transcripts', body: 'Less compute, and the Ansel app loads faster.' },
+  { lane: 'technical', at: 28, tag: 'Slack’s UI limits', title: 'Moved the rich view into the Ansel app', body: 'Our Phase 1 card wasn’t possible in Slack. The app is in our control.' },
+  { lane: 'qualitative', at: 46, tag: 'Feedback', title: 'Tested early, iterated constantly', body: 'So no feedback came too late.' },
+  { lane: 'technical', at: 64, tag: 'Speed', title: 'Dropped audio and video from transcripts', body: 'Less compute, and the Ansel app loads faster.' },
   { lane: 'qualitative', at: 82, tag: '[Tag]', title: '[Learning 4]', body: '[One line on what we learned]', placeholder: true },
 ];
 
-const TRACK_Y = 300; // px from the top of the timeline area
-const LANE_BOTTOM = 590; // bottom of the qualitative lane
+const TRACK_Y = 330; // px from the top of the timeline area; the two shaded bands meet here
+const AREA_H = 640; // height of the timeline area
 
 // Each lane has its own color, used for its label, dots, stems, card top bar and tag.
-const laneStyle: Record<Lane, { label: string; text: string; bg: string; border: string; stem: string; guide: string }> = {
+const laneStyle: Record<Lane, { label: string; text: string; bg: string; border: string; stem: string; band: string }> = {
   technical: {
     label: 'Technical changes to Ansel',
     text: 'text-[var(--deck-accent)]', bg: 'bg-[var(--deck-accent)]', border: 'border-t-[var(--deck-accent)]',
-    stem: 'bg-[var(--deck-accent-wash)]', guide: 'border-[var(--deck-accent-wash)]',
+    stem: 'bg-[var(--deck-accent-wash)]', band: 'bg-[var(--deck-accent-wash)] opacity-60',
   },
   qualitative: {
     label: 'Qualitative learnings',
     text: 'text-[var(--deck-ink)]', bg: 'bg-[var(--deck-ink)]', border: 'border-t-[var(--deck-ink)]',
-    stem: 'bg-[var(--deck-tone-2)]', guide: 'border-[var(--deck-tone-2)]',
+    stem: 'bg-[var(--deck-tone-2)]', band: 'bg-[var(--deck-tone-3)] opacity-70',
   },
 };
 const DRAW_MS = 1400; // the line draws left to right; each card appears as the line reaches it
 
-/** Swimlane label, vertically centered on its lane. */
-function LaneLabel({ lane, top, height }: { lane: Lane; top: number; height: number }) {
+/** Lane title, inside its shaded band: large, sentence case, with a color swatch. */
+function LaneTitle({ lane, position }: { lane: Lane; position: 'top' | 'bottom' }) {
   const style = laneStyle[lane];
   return (
-    <div className="absolute left-0 flex w-[210px] items-center" style={{ top, height }}>
-      <p className={`flex items-start gap-[12px] text-[24px] font-bold leading-[1.25] ${style.text}`}>
-        <span className={`mt-[6px] h-[16px] w-[16px] flex-shrink-0 rounded-[4px] ${style.bg}`} />
-        {style.label}
-      </p>
-    </div>
+    <p
+      className={`absolute left-0 flex items-center gap-[12px] font-display text-[30px] font-extrabold leading-none tracking-[-0.02em] ${style.text}`}
+      style={position === 'top' ? { top: 14 } : { bottom: 30 }}
+    >
+      <span className={`h-[18px] w-[18px] rounded-[5px] ${style.bg}`} />
+      {style.label}
+    </p>
   );
 }
 
@@ -73,16 +74,14 @@ export default function LearningsSlide() {
       </div>
 
       {/* Timeline area */}
-      <div className="absolute inset-x-[104px] top-[360px] h-[620px]">
-        {/* Swimlane labels and the divider between them and the lanes */}
-        <LaneLabel lane="technical" top={0} height={TRACK_Y} />
-        <LaneLabel lane="qualitative" top={TRACK_Y} height={LANE_BOTTOM - TRACK_Y} />
-        <span className="absolute left-[230px] top-0 w-[2px] bg-[var(--deck-hairline-strong)]" style={{ height: LANE_BOTTOM }} />
+      <div className="absolute inset-x-[104px] top-[352px]" style={{ height: AREA_H }}>
+        {/* Shaded bands: technical changes above the timeline, qualitative learnings below */}
+        <div className={`absolute -inset-x-[28px] -top-[10px] rounded-t-[28px] ${laneStyle.technical.band}`} style={{ height: TRACK_Y + 10 }} />
+        <div className={`absolute -inset-x-[28px] rounded-b-[28px] ${laneStyle.qualitative.band}`} style={{ top: TRACK_Y, bottom: 0 }} />
+        <LaneTitle lane="technical" position="top" />
+        <LaneTitle lane="qualitative" position="bottom" />
 
-        <div className="absolute inset-y-0 left-[260px] right-0">
-          {/* Faint dashed guide through the middle of each lane */}
-          <span className={`absolute inset-x-0 border-t-2 border-dashed ${laneStyle.technical.guide}`} style={{ top: TRACK_Y / 2 }} />
-          <span className={`absolute inset-x-0 border-t-2 border-dashed ${laneStyle.qualitative.guide}`} style={{ top: (TRACK_Y + LANE_BOTTOM) / 2 }} />
+        <div className="absolute inset-0">
           {/* Track */}
           <div
             className={`absolute left-0 right-0 h-[4px] origin-left rounded-full bg-[var(--deck-tone-1)] ${isStatic ? '' : 'deck-grow-x'}`}
@@ -121,7 +120,7 @@ export default function LearningsSlide() {
                   style={{ left: `${stop.at}%`, top: above ? TRACK_Y - 70 : TRACK_Y + 14, height: 56 }}
                 />
                 {/* The wrapper centers the card on its stop; the Reveal inside animates without fighting that transform. */}
-                <div className="absolute w-[400px] -translate-x-1/2" style={{ left: `${stop.at}%`, ...(above ? { bottom: 620 - TRACK_Y + 70 } : { top: TRACK_Y + 70 }) }}>
+                <div className="absolute w-[400px] -translate-x-1/2" style={{ left: `${stop.at}%`, ...(above ? { bottom: AREA_H - TRACK_Y + 70 } : { top: TRACK_Y + 70 }) }}>
                 <Reveal delay={delay + 80}>
                   <div className={`rounded-[24px] px-[26px] py-[20px] ${stop.placeholder ? 'border-2 border-dashed border-[var(--deck-hairline-strong)] bg-white/35' : `border border-t-[6px] border-white/80 ${style.border} bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]`}`}>
                     <span className={`inline-block rounded-full px-[11px] py-[3px] text-[15px] font-semibold uppercase tracking-[0.1em] ${stop.placeholder ? 'bg-[var(--deck-tone-3)] text-[var(--deck-muted)]' : `${style.bg} text-white`}`}>{stop.tag}</span>
