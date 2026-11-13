@@ -57,7 +57,7 @@ On touch devices, swipe left or right. When presenting, clicking the slide advan
 
 ```
 src/deck/
-  slides/        One file per slide (01-Team.tsx … 14-Opportunity.tsx)
+  slides/        One file per slide (01-Team.tsx … 19-SuccessMetrics.tsx)
   slides/index.ts  The ordered list of slides
   components/    Building blocks: SlideFrame, Headline, Kicker, GlassCard,
                  StatPill, CountUp, Reveal, SlideStage, ProgressDots
@@ -74,7 +74,7 @@ src/index.css    Fonts, CSS variables, and the deck-* classes
 
 Every slide is authored at a fixed **1920×1080 px** and scaled as a whole by `SlideStage`. Use px values inside slides. Nothing reflows at different window sizes.
 
-1. Create `src/deck/slides/15-MySlide.tsx`:
+1. Create `src/deck/slides/20-MySlide.tsx`:
 
    ```tsx
    import { Headline } from '../components/Headline';

@@ -12,7 +12,12 @@ import TeamAgainSlide, { metadata as teamAgain } from './10-TeamAgain';
 import TeamUpdateSlide, { metadata as teamUpdate } from './11-TeamUpdate';
 import AppendixSlide, { metadata as appendix } from './12-Appendix';
 import GovernanceSlide, { metadata as governance } from './13-Governance';
-import OpportunitySlide, { metadata as opportunity } from './14-Opportunity';
+import WhyLightUsersSlide, { metadata as whyLightUsers } from './14-WhyLightUsers';
+import WhyThisProblemSlide, { metadata as whyThisProblem } from './15-WhyThisProblem';
+import MarketMathSlide, { metadata as marketMath } from './16-MarketMath';
+import AlternativesSlide, { metadata as alternatives } from './17-Alternatives';
+import KeyRisksSlide, { metadata as keyRisks } from './18-KeyRisks';
+import SuccessMetricsSlide, { metadata as successMetrics } from './19-SuccessMetrics';
 
 export const slides: SlideDefinition[] = [
   { Component: TeamSlide, ...team },
@@ -28,5 +33,10 @@ export const slides: SlideDefinition[] = [
   { Component: TeamUpdateSlide, ...teamUpdate },
   { Component: AppendixSlide, ...appendix },
   { Component: GovernanceSlide, ...governance },
-  { Component: OpportunitySlide, ...opportunity },
+  { Component: WhyLightUsersSlide, ...whyLightUsers },
+  { Component: WhyThisProblemSlide, ...whyThisProblem },
+  { Component: MarketMathSlide, ...marketMath },
+  { Component: AlternativesSlide, ...alternatives },
+  { Component: KeyRisksSlide, ...keyRisks },
+  { Component: SuccessMetricsSlide, ...successMetrics },
 ];
