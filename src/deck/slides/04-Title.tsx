@@ -34,6 +34,19 @@ export default function TitleSlide() {
               Ansel&apos;s new meeting prep companion, built to ensure you never need to scramble for a meeting again.
             </p>
           </Reveal>
+          <Reveal delay={200}>
+            <div className="mt-[30px] flex flex-wrap items-center gap-[14px]">
+              {['Prepare Smart', 'Private & timely Slack card'].map((chip) => (
+                <span
+                  key={chip}
+                  className="inline-flex items-center gap-[10px] rounded-full bg-[var(--deck-callout)] px-[20px] py-[8px] text-[20px] font-semibold uppercase tracking-[0.09em] text-[var(--deck-callout-text)]"
+                >
+                  <span className="h-[9px] w-[9px] rounded-full bg-[var(--deck-accent)]" />
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </Reveal>
         </div>
 
       </div>
