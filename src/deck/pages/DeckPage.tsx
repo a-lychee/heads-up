@@ -197,7 +197,9 @@ export default function DeckPage() {
           </div>
         </aside>
 
-        <section className="relative min-w-0 flex-1 bg-[var(--deck-chrome)] p-4 sm:p-7">
+        {/* Slide and its notes share the column to the right of the thumbnails, so the thumbnail strip runs the full height. */}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <section className="relative min-h-0 min-w-0 flex-1 bg-[var(--deck-chrome)] p-4 sm:p-7">
           <SlideStage key={state.index} stageClassName="deck-stage-flat sm:rounded-xl" label={`Slide ${state.index + 1}: ${slide.title}`}>
             <div className={slide.transition === 'none' ? undefined : 'deck-crossfade'}><ActiveSlide /></div>
           </SlideStage>
@@ -205,7 +207,6 @@ export default function DeckPage() {
             <ProgressDots index={state.index} onNavigate={navigate} />
           </div>
         </section>
-      </div>
 
       <footer className="flex min-h-[108px] flex-shrink-0 gap-4 border-t border-[var(--deck-lines)] bg-[var(--deck-panel)] px-6 py-4">
         <div className="w-[150px] flex-shrink-0 pt-1 text-[12px] font-semibold uppercase tracking-[0.12em] text-white/40">Speaker notes</div>
@@ -231,6 +232,8 @@ export default function DeckPage() {
           </button>
         </div>
       </footer>
+        </div>
+      </div>
 
       {state.presenting && (
         <div className={`fixed inset-0 z-50 bg-black ${idle ? 'cursor-none' : ''}`}>
