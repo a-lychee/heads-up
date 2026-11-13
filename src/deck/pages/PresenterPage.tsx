@@ -151,6 +151,7 @@ export default function PresenterPage() {
               onSave={speakerNotes.saveNotes}
               onReset={speakerNotes.resetNotes}
               sync={speakerNotes.sync}
+              syncError={speakerNotes.syncError}
               className="px-2 py-2 font-medium text-white"
               style={{ fontSize: notesSize, lineHeight: 1.4 }}
             />

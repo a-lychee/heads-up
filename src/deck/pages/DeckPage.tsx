@@ -236,6 +236,7 @@ export default function DeckPage() {
               onSave={speakerNotes.saveNotes}
               onReset={speakerNotes.resetNotes}
               sync={speakerNotes.sync}
+              syncError={speakerNotes.syncError}
               className="px-2 py-1 text-[15px] leading-[1.55] text-white/80"
             />
           </div>

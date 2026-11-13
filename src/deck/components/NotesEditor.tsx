@@ -9,6 +9,8 @@ interface NotesEditorProps {
   onReset: (id: string) => void;
   /** Where edits are being saved: for everyone ('shared'), on their way ('saving'), or only in this browser ('local'). */
   sync?: 'shared' | 'saving' | 'local';
+  /** Why shared notes are unavailable, straight from the database. */
+  syncError?: string;
   className?: string;
   style?: CSSProperties;
 }
@@ -18,7 +20,7 @@ interface NotesEditorProps {
  * is reachable, otherwise in this browser) and shows a small status line.
  * Arrow keys and the other deck shortcuts are ignored while the cursor is in the box.
  */
-export function NotesEditor({ slideId, value, edited, onSave, onReset, sync = 'local', className = '', style }: NotesEditorProps) {
+export function NotesEditor({ slideId, value, edited, onSave, onReset, sync = 'local', syncError, className = '', style }: NotesEditorProps) {
   const [draft, setDraft] = useState(value);
   const [justSaved, setJustSaved] = useState(false);
 
@@ -50,11 +52,11 @@ export function NotesEditor({ slideId, value, edited, onSave, onReset, sync = 'l
         style={style}
       />
       <div className="flex h-[22px] flex-shrink-0 items-center gap-3 text-[12px] text-white/40">
-        <span className={sync === 'local' && edited ? 'text-[var(--deck-timer-amber)]' : undefined}>
+        <span className={`truncate ${sync === 'local' ? 'text-[var(--deck-timer-amber)]' : ''}`} title={syncError}>
           {sync === 'saving'
             ? edited || justSaved ? 'Saving…' : 'Click to edit'
             : sync === 'local'
-              ? edited || justSaved ? 'Saved in this browser only (shared notes unavailable)' : 'Click to edit'
+              ? `Saved in this browser only (shared notes unavailable${syncError ? `: ${syncError}` : ''})`
               : justSaved ? 'Saved for everyone' : edited ? 'Edited · saved for everyone' : 'Click to edit'}
         </span>
         {edited && (

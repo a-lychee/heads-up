@@ -31,6 +31,15 @@ function writeLocal(edits: NotesMap) {
   }
 }
 
+/** A short, readable version of a database or network error. */
+function describeError(error: unknown): string {
+  if (error && typeof error === 'object') {
+    const e = error as { message?: string; code?: string; details?: string; hint?: string; status?: number };
+    return [e.code, e.message, e.details, e.hint].filter(Boolean).join(' · ') || String(error);
+  }
+  return String(error);
+}
+
 const original = (id: string) => slides.find((slide) => slide.id === id)?.notes ?? '';
 
 export function useSpeakerNotes() {
@@ -38,8 +47,16 @@ export function useSpeakerNotes() {
   const [sync, setSync] = useState<NotesSync>(sharedNotesConfigured ? 'saving' : 'local');
   const pending = useRef<Record<string, number>>({});
   const firstLoad = useRef(true);
+  // The database's own error message, shown under the notes box when shared notes are unavailable.
+  const [syncError, setSyncError] = useState<string | undefined>(sharedNotesConfigured ? undefined : 'database settings (VITE_SUPABASE_URL / KEY) are missing in this build');
 
   // Load shared edits, then keep refreshing so teammates' edits show up. Edits still being typed here win.
+  const reportError = useCallback((error: unknown) => {
+    const message = describeError(error);
+    console.error('[speaker notes] shared notes unavailable:', error);
+    setSyncError(message);
+  }, []);
+
   const refresh = useCallback(async () => {
     if (!sharedNotesConfigured) return;
     try {
@@ -58,11 +75,13 @@ export function useSpeakerNotes() {
         return next;
       });
       await Promise.all(toUpload.map((id) => saveSharedNote(id, local[id])));
+      setSyncError(undefined);
       if (Object.keys(pending.current).length === 0) setSync('shared');
-    } catch {
+    } catch (error) {
+      reportError(error);
       setSync('local');
     }
-  }, []);
+  }, [reportError]);
 
   useEffect(() => {
     void refresh();
@@ -88,13 +107,15 @@ export function useSpeakerNotes() {
         if (text === null) await deleteSharedNote(id);
         else await saveSharedNote(id, text);
         delete pending.current[id];
+        setSyncError(undefined);
         if (Object.keys(pending.current).length === 0) setSync('shared');
-      } catch {
+      } catch (error) {
         delete pending.current[id];
+        reportError(error);
         setSync('local');
       }
     }, SAVE_DELAY_MS);
-  }, []);
+  }, [reportError]);
 
   const notesFor = useCallback((id: string) => edits[id] ?? original(id), [edits]);
   const isEdited = useCallback((id: string) => id in edits, [edits]);
@@ -127,5 +148,5 @@ export function useSpeakerNotes() {
     [edits],
   );
 
-  return { notesFor, isEdited, saveNotes, resetNotes, exportAll, editedCount: Object.keys(edits).length, sync };
+  return { notesFor, isEdited, saveNotes, resetNotes, exportAll, editedCount: Object.keys(edits).length, sync, syncError };
 }
