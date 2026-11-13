@@ -86,7 +86,7 @@ export default function ShiftSlide() {
         </Reveal>
       </div>
 
-      <div className="absolute inset-x-[104px] bottom-[96px] top-[340px] grid grid-cols-[1fr_auto_1fr] content-center gap-x-[40px] gap-y-[48px]">
+      <div className="absolute inset-x-[104px] bottom-[96px] top-[340px] grid grid-cols-[auto_auto_auto] content-center justify-between gap-y-[48px]">
         {/* Today: he has to pull, days later if at all (0.4 Ansel sessions a week, Ex 3) */}
         <Reveal delay={120}>
           <HalfTitle proactive={false} />
@@ -97,7 +97,8 @@ export default function ShiftSlide() {
           </div>
         </Reveal>
 
-        <Reveal delay={300} className="self-center pt-[90px]">
+        {/* Center arrow: equal space on both sides, and level with the icon row (eyebrow 39 + title 84 + gap 64 + half the 190px icons, minus half the arrow). */}
+        <Reveal delay={300} className="self-start pt-[232px]">
           <div className="flex h-[100px] w-[100px] items-center justify-center rounded-full bg-[var(--deck-ink)] text-white shadow-[var(--deck-card-shadow)]">
             <ArrowRight size={46} strokeWidth={1.8} />
           </div>
