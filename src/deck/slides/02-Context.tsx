@@ -61,7 +61,7 @@ const growth: Metric[] = [
 const decline: Metric[] = [
   { label: 'Net revenue retention', from: 141, to: 103, suffix: '%', change: 'percent' },
   { label: 'Seats active weekly', from: 61, to: 38, suffix: '%', change: 'percent' },
-  { label: 'Customers that cut seats at FY25 renewal', from: null, to: 44, suffix: '%', change: 'none' },
+  { label: 'FY25 customers that cut seats', from: null, to: 44, suffix: '%', change: 'none' },
 ];
 
 /** Wraps content in a Reveal on the first step only, so later clicks don't replay the entrance. */
@@ -104,7 +104,7 @@ function Stat({ metric, showFY25, animate, tone, delay }: { metric: Metric; show
           </span>
         )}
       </div>
-      <p className="mt-[10px] text-[24px] leading-[1.25] text-[var(--deck-muted)]">{metric.label}</p>
+      <p className="mt-[10px] whitespace-nowrap text-[24px] leading-[1.25] text-[var(--deck-muted)]">{metric.label}</p>
     </div>
   );
 }
@@ -160,9 +160,10 @@ function ContextStep({ step }: { step: Step }) {
             <Year step={step} />
           </Enter>
 
-          {/* Matching heavier rules above and below the six stats frame them; a lighter rule splits the two rows. */}
-          <Enter step={step} delay={350} className="mt-[32px] border-t-2 border-[var(--deck-tone-1)] pt-[36px]">
-            <div className="grid grid-cols-3 gap-[40px]">
+          {/* Matching heavier rules above and below the six stats frame them; a lighter rule splits the two rows.
+              Every gap around the rules is 36px. The third column is a bit wider so its longest label stays on one line. */}
+          <Enter step={step} delay={350} className="mt-[36px] border-t-2 border-[var(--deck-tone-1)] pt-[36px]">
+            <div className="grid grid-cols-[1fr_1fr_1.15fr] gap-[40px]">
               {growth.map((metric, index) => (
                 <Stat key={metric.label} metric={metric} showFY25={step >= 1} animate={step === 1} tone="up" delay={index * 120} />
               ))}
@@ -170,8 +171,8 @@ function ContextStep({ step }: { step: Step }) {
           </Enter>
 
           {/* Dimmed on the growth click: these are still FY23 numbers until the next click. */}
-          <Enter step={step} delay={450} className={`mt-[44px] border-y border-t-[var(--deck-hairline-strong)] border-b-2 border-b-[var(--deck-tone-1)] pb-[36px] pt-[36px] transition-opacity duration-500 ${step === 1 ? 'opacity-40' : ''}`}>
-            <div className="grid grid-cols-3 gap-[40px]">
+          <Enter step={step} delay={450} className={`mt-[36px] border-y border-t-[var(--deck-hairline-strong)] border-b-2 border-b-[var(--deck-tone-1)] pb-[36px] pt-[36px] transition-opacity duration-500 ${step === 1 ? 'opacity-40' : ''}`}>
+            <div className="grid grid-cols-[1fr_1fr_1.15fr] gap-[40px]">
               {decline.map((metric, index) => (
                 <Stat key={metric.label} metric={metric} showFY25={step === 2} animate={step === 2} tone="down" delay={index * 120} />
               ))}
