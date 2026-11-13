@@ -1,3 +1,4 @@
+import anselLogo from '@/assets/ansel-logo.png';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
@@ -23,9 +24,13 @@ const declines = [
   { from: '141%', to: '103%', label: 'Net revenue retention, in 3 years' },
 ];
 
+function Label({ children }: { children: string }) {
+  return <p className="text-[22px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">{children}</p>;
+}
+
 function DownArrow() {
   return (
-    <svg width="60" height="80" viewBox="0 0 44 56" aria-hidden="true" className="flex-shrink-0">
+    <svg width="56" height="74" viewBox="0 0 44 56" aria-hidden="true" className="flex-shrink-0">
       <path d="M22 4 V46 M8 32 L22 48 L36 32" fill="none" stroke="var(--deck-accent)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -42,42 +47,54 @@ export default function ContextSlide() {
         </Reveal>
       </div>
 
-      <div className="absolute inset-x-[104px] bottom-[96px] top-[340px] grid grid-cols-2 content-center items-center gap-[96px]">
-        {/* Left: Ansel in a dark card */}
-        <Reveal delay={100}>
-          <div className="rounded-[32px] bg-[var(--deck-ink)] px-[48px] py-[44px] text-white">
+      <div className="absolute inset-x-[104px] bottom-[96px] top-[340px] grid grid-cols-[544px_1fr] gap-[88px]">
+        {/* Left third: Ansel in a muted rust card, text only, with the app icon tucked into the corner */}
+        <Reveal delay={100} className="h-full">
+          <div className="relative h-full overflow-hidden rounded-[32px] bg-[image:var(--deck-rust-gradient)] p-[44px] text-white">
             <p className="text-[22px] font-semibold uppercase tracking-[0.1em] text-white/70">Ansel</p>
-            <p className="mt-[16px] text-[36px] leading-[1.3] text-white/95">
+            <p className="mt-[16px] max-w-[420px] text-[38px] leading-[1.3]">
               An AI meeting notetaker for enterprises that leads on notetaking quality and governance controls
             </p>
-            <div className="mt-[36px] flex gap-[64px] border-t border-white/20 pt-[30px]">
-              {anselStats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="font-display text-[60px] font-extrabold leading-none tracking-[-0.03em]">{stat.value}</p>
-                  <p className="mt-[8px] text-[24px] text-white/80">{stat.label}</p>
-                </div>
-              ))}
-            </div>
+            <img
+              src={anselLogo}
+              alt=""
+              aria-hidden="true"
+              className="absolute -bottom-[70px] -right-[70px] h-[330px] w-[330px] rotate-[-10deg] drop-shadow-[0_24px_40px_rgba(40,12,4,0.45)]"
+            />
           </div>
         </Reveal>
 
-        {/* Right: the problem */}
-        <Reveal delay={300} className="pl-[8px]">
-          <p className="text-[22px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">The problem</p>
-          {declines.map((decline) => (
-            <div key={decline.label} className="mt-[36px] flex items-center gap-[28px]">
-              <DownArrow />
-              <div>
-                <p className="whitespace-nowrap font-display text-[96px] font-extrabold leading-none tracking-[-0.04em]">
-                  <span className="text-[var(--deck-secondary)]">{decline.from}</span>
-                  <span className="text-[56px] text-[var(--deck-muted)]"> → </span>
-                  <span className="text-[var(--deck-accent)]">{decline.to}</span>
-                </p>
-                <p className="mt-[10px] text-[28px] text-[var(--deck-muted)]">{decline.label}</p>
-              </div>
+        {/* Right two-thirds: Ansel's size, then the problem */}
+        <div className="flex h-full flex-col justify-between">
+          <Reveal delay={250}>
+            <Label>Ansel at a glance</Label>
+            <div className="mt-[20px] flex gap-[80px]">
+              {anselStats.map((stat) => (
+                <div key={stat.label}>
+                  <p className="font-display text-[72px] font-extrabold leading-none tracking-[-0.035em]">{stat.value}</p>
+                  <p className="mt-[8px] text-[26px] text-[var(--deck-muted)]">{stat.label}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </Reveal>
+          </Reveal>
+
+          <Reveal delay={450} className="border-t border-[var(--deck-hairline-strong)] pt-[30px]">
+            <Label>The problem</Label>
+            {declines.map((decline) => (
+              <div key={decline.label} className="mt-[24px] flex items-center gap-[24px]">
+                <DownArrow />
+                <div>
+                  <p className="whitespace-nowrap font-display text-[84px] font-extrabold leading-none tracking-[-0.04em]">
+                    <span className="text-[var(--deck-secondary)]">{decline.from}</span>
+                    <span className="text-[48px] text-[var(--deck-muted)]"> → </span>
+                    <span className="text-[var(--deck-accent)]">{decline.to}</span>
+                  </p>
+                  <p className="mt-[8px] text-[26px] text-[var(--deck-muted)]">{decline.label}</p>
+                </div>
+              </div>
+            ))}
+          </Reveal>
+        </div>
       </div>
     </SlideFrame>
   );
