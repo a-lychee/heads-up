@@ -74,8 +74,10 @@ function Enter({ step, delay, className, children }: { step: Step; delay: number
 
 function ChartTitle({ step }: { step: Step }) {
   const { static: isStatic } = useSlideEnvironment();
-  const all = 'Share of all seats, by meetings a week';
-  const idle = 'Share of idle seats, by meetings a week';
+  // The one word that changes between the steps is in the accent color, so the switch from all to idle seats stands out.
+  const word = (text: string) => <span className="text-[var(--deck-accent)]">{text}</span>;
+  const all = <>Share of {word('all')} seats, by meetings a week</>;
+  const idle = <>Share of {word('idle')} seats, by meetings a week</>;
   if (step === 1 && !isStatic) {
     return (
       <span className="inline-grid">
