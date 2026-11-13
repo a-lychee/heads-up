@@ -12,12 +12,50 @@ export const metadata: SlideMetadata = {
   notes: 'Now: we built the Heads-Up prototype, and in a controlled group our riskiest assumption held: light users want help prepping for recurring meetings. Next: test whether that still holds at scale, which is our product-market fit test, read through weekly activity, retention and action items, with privacy as the guardrail. Later: expand the product, starting with the ideas from our Phase 1 brief.',
 };
 
-// Pilot targets for light users (Heads-Up Phase 1 brief, Success Metrics; case Ex 2, 3, 5).
-const metrics = [
+// Short-term leading signals: do light users even look? No baseline today, so targets are team estimates.
+const shortTerm = [
+  { label: 'Cards opened before the meeting', from: '—', to: '60%' },
+  { label: 'Transcript links clicked', from: '—', to: '25%' },
+];
+
+// Long-term behavior change (Heads-Up Phase 1 brief, Success Metrics; case Ex 2, 3, 5).
+const longTerm = [
+  { label: 'Action items acted on', from: '6%', to: '20%' },
   { label: 'Light users active weekly', from: '20%', to: '26%' },
   { label: '12-month seat retention', from: '34%', to: '39%' },
-  { label: 'Action items acted on', from: '6%', to: '20%' },
 ];
+
+interface HorizonProps {
+  tag: string;
+  when: string;
+  color: string;
+  items: { label: string; from: string; to: string }[];
+}
+
+function Horizon({ tag, when, color, items }: HorizonProps) {
+  return (
+    <div className="mt-[16px]">
+      <div className="flex items-baseline justify-between gap-[12px]">
+        <span className="text-[17px] font-semibold uppercase tracking-[0.12em]" style={{ color }}>
+          {tag}
+        </span>
+        <span className="text-[16px] text-[var(--deck-muted)]">{when}</span>
+      </div>
+      <ul className="mt-[6px] space-y-[6px]">
+        {items.map((metric) => (
+          <li key={metric.label} className="flex items-baseline justify-between gap-[14px] border-t border-[var(--deck-hairline)] pt-[6px]">
+            <span className="text-[20px] leading-[1.2]">{metric.label}</span>
+            <span className="whitespace-nowrap font-display text-[26px] font-extrabold tracking-[-0.03em]">
+              <span className="text-[var(--deck-secondary)]">{metric.from}</span>
+              <span className="text-[18px] text-[var(--deck-muted)]"> → </span>
+              <span className="text-[var(--deck-accent)]">{metric.to}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 // Roadmap ideas from the Phase 1 brief ("Later"). Still to be prioritized.
 const roadmap = ['Chat with Ansel before the meeting', 'Teams, email and push', 'Questions sent ahead of the meeting', 'Non-recurring meetings'];
@@ -72,20 +110,10 @@ const columns: Column[] = [
     heading: 'Test it at scale',
     body: (
       <>
-        <p>Does the need still hold? That’s product-market fit. We’d read it through:</p>
-        <ul className="mt-[14px] space-y-[8px]">
-          {metrics.map((metric) => (
-            <li key={metric.label} className="flex items-baseline justify-between gap-[16px] border-t border-[var(--deck-hairline)] pt-[8px]">
-              <span>{metric.label}</span>
-              <span className="whitespace-nowrap font-display text-[30px] font-extrabold tracking-[-0.03em]">
-                <span className="text-[var(--deck-secondary)]">{metric.from}</span>
-                <span className="text-[22px] text-[var(--deck-muted)]"> → </span>
-                <span className="text-[var(--deck-accent)]">{metric.to}</span>
-              </span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-[14px] text-[19px]">Guardrail: no increase in admin privacy escalations</p>
+        <p>Does the need still hold? We’d read it in two horizons:</p>
+        <Horizon tag="Short term" when="weeks 1–4 · do they look?" color="var(--deck-accent)" items={shortTerm} />
+        <Horizon tag="Long term" when="2 quarters · does it change the work?" color="var(--deck-ink)" items={longTerm} />
+        <p className="mt-[14px] text-[18px]">Guardrail: no rise in admin privacy escalations</p>
       </>
     ),
   },
