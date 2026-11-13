@@ -6,8 +6,8 @@ import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
-// Two clicks of one picture. Step 0: share of all seats by cohort, bars rising from 0.
-// Step 1: the same bars morph into share of idle seats, and our user group appears on the right.
+// Three steps of one picture. Step 0: share of all seats by cohort, bars rising from 0.
+// Step 1: the same bars morph into share of idle seats. Step 2: our user group's cards appear one by one on the right.
 // The steps are separate slides with no crossfade, so the click only animates the change.
 
 const section = '01 · Context and Problem';
@@ -25,10 +25,18 @@ export const idleMetadata: SlideMetadata = {
   title: 'Our target user segment · idle seats',
   section,
   transition: 'none',
-  notes: 'Now look only at the idle seats. Light users go from half of all seats to two-thirds of the idle ones. Our user is the light user who rarely opens Ansel but still has a weekly recurring meeting. Of 2.09 million light seats, 1.71 million attend their meetings, and 1.29 million have a weekly recurring one. At $58.54 a seat, that is $75M of addressable ARR.',
+  notes: 'Now look only at the idle seats. Light users go from half of all seats to two-thirds of the idle ones.',
 };
 
-type Step = 0 | 1;
+export const oursMetadata: SlideMetadata = {
+  id: 'target-user-ours',
+  title: 'Our target user segment · our user',
+  section,
+  transition: 'none',
+  notes: 'Our user is the light user who rarely opens Ansel but still has a weekly recurring meeting. Of 2.09 million light seats, 1.71 million attend their meetings, and 1.29 million have a weekly recurring one. At $58.54 a seat, that is $75M of addressable ARR.',
+};
+
+type Step = 0 | 1 | 2;
 
 // Exhibit 3 cohorts (FY25). Idle share is our calculation: share of seats × (1 − weekly active rate).
 const cohorts = [
@@ -101,7 +109,9 @@ function TargetUserStep({ step }: { step: Step }) {
             {cohorts.map((cohort, index) => {
               const ours = cohort.id === 'light';
               const share = step === 0 ? cohort.seats : cohort.idle;
-              const from = step === 0 ? 0 : cohort.seats;
+              // Step 2 holds the idle values still; only steps 0 and 1 animate the bars.
+              const animate = !isStatic && step < 2;
+              const from = step === 0 ? 0 : step === 1 ? cohort.seats : cohort.idle;
               const delay = step === 0 ? 300 + index * 120 : 200 + index * 80;
               const barStyle: CSSProperties & Record<'--bar-from', string> = {
                 height: barHeight(share),
@@ -111,10 +121,10 @@ function TargetUserStep({ step }: { step: Step }) {
               return (
                 <div key={cohort.id} className="flex h-full flex-col items-center justify-end">
                   <p className={`font-display text-[52px] font-extrabold leading-none tracking-[-0.035em] ${ours ? 'text-[var(--deck-accent)]' : 'text-[var(--deck-secondary)]'}`}>
-                    <CountUp value={share} from={isStatic ? share : from} suffix="%" />
+                    <CountUp value={share} from={animate ? from : share} suffix="%" />
                   </p>
                   <div
-                    className={`mt-[14px] w-[58%] rounded-t-[18px] ${ours ? 'bg-[var(--deck-accent)]' : 'bg-[var(--deck-tone-2)]'} ${isStatic ? '' : 'deck-bar'}`}
+                    className={`mt-[14px] w-[58%] rounded-t-[18px] ${ours ? 'bg-[var(--deck-accent)]' : 'bg-[var(--deck-tone-2)]'} ${animate ? 'deck-bar' : ''}`}
                     style={barStyle}
                   />
                 </div>
@@ -134,45 +144,52 @@ function TargetUserStep({ step }: { step: Step }) {
           </div>
         </div>
 
-        {/* Right third: our user group, narrowed step by step to the addressable market. Appears on the click. */}
-        <div className={step === 0 ? 'invisible' : undefined}>
-          <Reveal delay={step === 1 ? 900 : 0}>
-            <Label accent>Our user</Label>
-            <p className="mt-[8px] text-[26px] font-semibold leading-[1.3]">Light users who rarely open Ansel, but have a recurring meeting</p>
-            <div className="mt-[22px] flex flex-col items-stretch">
-              {funnel.map((step_, index) => {
+        {/* Right third: our user group, narrowed to the addressable market. Only on the last step, one card at a time.
+            Every card is a single row (number, then its label) and every gap between cards is the same 44px connector. */}
+        {step === 2 && (
+          <div>
+            <Reveal delay={100}>
+              <Label accent>Our user</Label>
+              <p className="mt-[8px] text-[26px] font-semibold leading-[1.3]">Light users who rarely open Ansel, but have a recurring meeting</p>
+            </Reveal>
+            <div className="mt-[24px] flex flex-col">
+              {funnel.map((item, index) => {
                 const last = index === funnel.length - 1;
                 return (
-                  <div key={step_.label}>
-                    <div
-                      className={`rounded-[20px] px-[24px] py-[14px] ${
-                        last
-                          ? `border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)] ${isStatic ? '' : 'deck-spotlight'}`
-                          : 'border border-white/80 bg-white/55'
-                      }`}
-                      style={last ? { animationDelay: '2000ms' } : undefined}
-                    >
-                      <p className={`font-display text-[42px] font-extrabold leading-none tracking-[-0.035em] ${last ? 'text-[var(--deck-accent)]' : ''}`}>{step_.value}</p>
-                      <p className="mt-[6px] text-[21px] leading-[1.25] text-[var(--deck-muted)]">{step_.label}</p>
-                    </div>
-                    {!last && (
-                      <div className="flex justify-center py-[6px] text-[var(--deck-secondary)]" aria-hidden="true">
-                        <ArrowDown size={26} strokeWidth={2.2} />
+                  <div key={item.label}>
+                    <Reveal delay={400 + index * 350}>
+                      <div
+                        className={`flex items-baseline gap-[16px] rounded-[20px] px-[24px] py-[18px] ${
+                          last
+                            ? `border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)] ${isStatic ? '' : 'deck-spotlight'}`
+                            : 'border border-white/80 bg-white/55'
+                        }`}
+                        style={last ? { animationDelay: '2300ms' } : undefined}
+                      >
+                        <p className={`font-display text-[42px] font-extrabold leading-none tracking-[-0.035em] ${last ? 'text-[var(--deck-accent)]' : ''}`}>{item.value}</p>
+                        <p className="text-[21px] leading-[1.25] text-[var(--deck-muted)]">{item.label}</p>
                       </div>
-                    )}
+                    </Reveal>
+                    <Reveal delay={550 + index * 350}>
+                      <div className="flex h-[44px] items-center justify-center text-[var(--deck-secondary)]" aria-hidden="true">
+                        {last ? <span className="text-[34px] font-semibold leading-none">=</span> : <ArrowDown size={26} strokeWidth={2.2} />}
+                      </div>
+                    </Reveal>
                   </div>
                 );
               })}
               {/* Kicker */}
-              <div className="mt-[14px] flex items-baseline gap-[16px] rounded-[20px] bg-[var(--deck-accent)] px-[24px] py-[16px] text-white">
-                <p className="font-display text-[48px] font-extrabold leading-none tracking-[-0.035em]">
-                  $<CountUp value={75} />M
-                </p>
-                <p className="text-[21px] leading-[1.25] text-white/85">addressable ARR at $58.54 a seat</p>
-              </div>
+              <Reveal delay={400 + funnel.length * 350}>
+                <div className="flex items-baseline gap-[16px] rounded-[20px] bg-[var(--deck-accent)] px-[24px] py-[18px] text-white">
+                  <p className="font-display text-[42px] font-extrabold leading-none tracking-[-0.035em]">
+                    $<CountUp value={75} />M
+                  </p>
+                  <p className="text-[21px] leading-[1.25] text-white/85">addressable ARR at $58.54 a seat</p>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
-        </div>
+          </div>
+        )}
       </div>
     </SlideFrame>
   );
@@ -184,4 +201,8 @@ export default function TargetUserSlide() {
 
 export function TargetUserIdleSlide() {
   return <TargetUserStep step={1} />;
+}
+
+export function TargetUserOursSlide() {
+  return <TargetUserStep step={2} />;
 }

@@ -1,7 +1,7 @@
 import type { SlideDefinition } from '../types';
 import TeamSlide, { metadata as team } from './01-Team';
 import ContextSlide, { ContextDeclineSlide, ContextGrowthSlide, declineMetadata as contextDecline, growthMetadata as contextGrowth, metadata as context } from './02-Context';
-import TargetUserSlide, { TargetUserIdleSlide, idleMetadata as targetUserIdle, metadata as targetUser } from './02b-TargetUser';
+import TargetUserSlide, { TargetUserIdleSlide, TargetUserOursSlide, idleMetadata as targetUserIdle, metadata as targetUser, oursMetadata as targetUserOurs } from './02b-TargetUser';
 import PersonaSlide, { metadata as persona } from './03-Persona';
 import TitleSlide, { metadata as title } from './04-Title';
 import ShiftSlide, { metadata as shift } from './05-Shift';
@@ -27,6 +27,7 @@ export const slides: SlideDefinition[] = [
   { Component: ContextDeclineSlide, ...contextDecline },
   { Component: TargetUserSlide, ...targetUser },
   { Component: TargetUserIdleSlide, ...targetUserIdle },
+  { Component: TargetUserOursSlide, ...targetUserOurs },
   { Component: PersonaSlide, ...persona },
   { Component: TitleSlide, ...title },
   { Component: ShiftSlide, ...shift },
