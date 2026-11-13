@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { getTimerRemaining } from '../lib/timer';
+import { getTimerElapsed } from '../lib/timer';
 import type { TimerState } from '../types';
 
 export function useTimerDisplay(timer: TimerState) {
-  const [remaining, setRemaining] = useState(() => getTimerRemaining(timer));
+  const [elapsed, setElapsed] = useState(() => getTimerElapsed(timer));
 
   useEffect(() => {
-    const update = () => setRemaining(getTimerRemaining(timer));
+    const update = () => setElapsed(getTimerElapsed(timer));
     update();
     if (!timer.running) return;
     const interval = window.setInterval(update, 200);
     return () => window.clearInterval(interval);
   }, [timer]);
 
-  return remaining;
+  return elapsed;
 }

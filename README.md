@@ -21,7 +21,7 @@ npm test         # vitest
 | --- | --- |
 | `/` | Redirects to `/deck` |
 | `/deck` | Editor view: slide thumbnails, the current slide, progress dots, and speaker notes. The URL hash tracks the slide (`/deck#4`). |
-| `/deck/presenter` | Presenter window: current slide, next slide, notes, and a 9:00 countdown. Open it with **P** from `/deck`. |
+| `/deck/presenter` | Presenter window: current slide, next slide, notes, and a timer that counts up from 0:00. Open it with **P** from `/deck`. |
 | `/demo` | Placeholder for the live product demo (slide 7 links here) |
 
 The editor and presenter windows stay in sync through a `BroadcastChannel`, so both need to be open in the same browser. This doesn't work inside Lovable's preview pane: use the published URL, or click **Open in a new tab to present**.

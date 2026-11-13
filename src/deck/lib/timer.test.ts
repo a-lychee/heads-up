@@ -1,24 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { createResetTimer, formatCountdown, getTimerRemaining, timerTone } from './timer';
+import { createResetTimer, formatElapsed, getTimerElapsed } from './timer';
 
-describe('presenter countdown', () => {
-  it('starts at the hard eight-minute limit', () => {
-    expect(formatCountdown(createResetTimer().remaining)).toBe('8:00');
+describe('presenter timer', () => {
+  it('starts at zero', () => {
+    expect(formatElapsed(createResetTimer().elapsed)).toBe('0:00');
   });
 
-  it('counts down from the timestamp while running', () => {
-    const timer = { remaining: 480, running: true, updatedAt: 1_000 };
-    expect(getTimerRemaining(timer, 13_000)).toBe(468);
-    expect(formatCountdown(getTimerRemaining(timer, 13_000))).toBe('7:48');
+  it('counts up from the timestamp while running', () => {
+    const timer = { elapsed: 60, running: true, updatedAt: 1_000 };
+    expect(getTimerElapsed(timer, 13_000)).toBe(72);
+    expect(formatElapsed(getTimerElapsed(timer, 13_000))).toBe('1:12');
   });
 
-  it('turns amber under one minute', () => {
-    expect(timerTone(60)).toBe('normal');
-    expect(timerTone(59.9)).toBe('amber');
-  });
-
-  it('turns red and shows positive elapsed overtime', () => {
-    expect(timerTone(-0.1)).toBe('red');
-    expect(formatCountdown(-12)).toBe('+0:12');
+  it('holds still while paused', () => {
+    const timer = { elapsed: 125, running: false, updatedAt: 1_000 };
+    expect(getTimerElapsed(timer, 99_000)).toBe(125);
+    expect(formatElapsed(125)).toBe('2:05');
   });
 });

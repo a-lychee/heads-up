@@ -14,7 +14,8 @@ export interface SlideDefinition extends SlideMetadata {
 }
 
 export interface TimerState {
-  remaining: number;
+  /** Seconds elapsed as of `updatedAt`. */
+  elapsed: number;
   running: boolean;
   updatedAt: number;
 }

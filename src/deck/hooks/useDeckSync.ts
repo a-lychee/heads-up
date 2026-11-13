@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { slides } from '../slides';
-import { DECK_CHANNEL, TIMER_SECONDS } from '../theme';
-import { createResetTimer, getTimerRemaining } from '../lib/timer';
+import { DECK_CHANNEL } from '../theme';
+import { createResetTimer, getTimerElapsed } from '../lib/timer';
 import type { DeckState, TimerState } from '../types';
 
 type DeckMessage =
@@ -90,7 +90,7 @@ export function useDeckSync(role: 'editor' | 'presenter') {
       if (!timer.running) return;
       post({
         type: 'timer',
-        timer: { remaining: getTimerRemaining(timer), running: true, updatedAt: Date.now() },
+        timer: { elapsed: getTimerElapsed(timer), running: true, updatedAt: Date.now() },
       });
     }, 1000);
     return () => window.clearInterval(interval);
@@ -111,7 +111,7 @@ export function useDeckSync(role: 'editor' | 'presenter') {
     const current = stateRef.current;
     const now = Date.now();
     const timer = presenting
-      ? { remaining: getTimerRemaining(current.timer, now), running: true, updatedAt: now }
+      ? { elapsed: getTimerElapsed(current.timer, now), running: true, updatedAt: now }
       : current.timer;
     commit({ ...current, presenting, timer });
   }, [commit]);
@@ -124,12 +124,12 @@ export function useDeckSync(role: 'editor' | 'presenter') {
     }
     const now = Date.now();
     const timer: TimerState = {
-      remaining: getTimerRemaining(current.timer, now),
+      elapsed: getTimerElapsed(current.timer, now),
       running: !current.timer.running,
       updatedAt: now,
     };
     commit({ ...current, timer });
   }, [commit]);
 
-  return { state, navigate, next, previous, setPresenting, controlTimer, peerConnected, timerLimit: TIMER_SECONDS };
+  return { state, navigate, next, previous, setPresenting, controlTimer, peerConnected };
 }

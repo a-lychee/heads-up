@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Minus, MonitorPlay, Pause, Play, Plus, Rotat
 import { SlideStage } from '../components/SlideStage';
 import { useDeckSync } from '../hooks/useDeckSync';
 import { useTimerDisplay } from '../hooks/useTimerDisplay';
-import { formatCountdown, timerTone } from '../lib/timer';
+import { formatElapsed } from '../lib/timer';
 import { slides } from '../slides';
 
 const NOTES_SIZE_KEY = 'heads-up-notes-size';
@@ -22,14 +22,13 @@ const label = 'text-[12px] font-semibold uppercase tracking-[0.14em] text-white/
 
 export default function PresenterPage() {
   const { state, navigate, next, previous, controlTimer, setPresenting, peerConnected } = useDeckSync('presenter');
-  const remaining = useTimerDisplay(state.timer);
+  const elapsed = useTimerDisplay(state.timer);
   const [clock, setClock] = useState(new Date());
   const [notesSize, setNotesSize] = useState(readNotesSize);
   const slide = slides[state.index];
   const ActiveSlide = slide.Component;
   const nextSlide = slides[state.index + 1];
   const NextSlide = nextSlide?.Component;
-  const tone = timerTone(remaining);
 
   const changeNotesSize = useCallback((delta: number) => {
     setNotesSize((size) => {
@@ -67,12 +66,8 @@ export default function PresenterPage() {
     <main className="flex h-dvh min-h-[600px] flex-col overflow-hidden bg-[var(--deck-chrome)] text-[var(--deck-chrome-text)]">
       <header className="flex flex-shrink-0 items-center gap-6 border-b border-[var(--deck-lines)] bg-[var(--deck-panel)] px-6 py-3">
         <div className="flex items-center gap-4">
-          <p
-            className="font-display text-[44px] font-extrabold leading-none tabular-nums"
-            style={{ color: tone === 'normal' ? 'var(--deck-chrome-text)' : `var(--deck-timer-${tone})` }}
-            aria-label="Time remaining"
-          >
-            {formatCountdown(remaining)}
+          <p className="font-display text-[44px] font-extrabold leading-none tabular-nums text-[var(--deck-chrome-text)]" aria-label="Time elapsed">
+            {formatElapsed(elapsed)}
           </p>
           <div className="flex gap-2">
             <button onClick={() => controlTimer('toggle')} className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-[13px] font-medium text-white/85 hover:bg-white/15">
