@@ -44,7 +44,7 @@ export const team: Member[] = [
   { id: 'aryan', first: 'Aryan', last: 'Ochani', photo: aryanPhoto,
     title: { text: 'Software Engineer' }, note: { text: '(Varun’s Teammate)', key: 'aryan-note' } },
   { id: 'alicia', first: 'Alicia', last: 'Wang', photo: aliciaPhoto.url,
-    title: { text: 'Engineering Manager' }, note: { text: '(Varun’s Manager)', key: 'alicia-note' } },
+    title: { text: 'CEO' }, note: { text: '(Varun’s Manager)', key: 'alicia-note' } },
   { id: 'rishabh', first: 'Rishabh', last: 'Rajagopalan', photo: rishabhPhoto,
     title: { text: 'CTO', key: 'rishabh-title' }, company: { text: COMPANY, key: 'rishabh-company' }, note: { text: '(Currently OOO)', key: 'rishabh-note' } },
   { id: 'gabe', first: 'Gabriel', last: 'Lam', photo: gabePhoto,
