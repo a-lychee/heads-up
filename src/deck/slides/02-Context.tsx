@@ -160,7 +160,7 @@ function ContextStep({ step }: { step: Step }) {
             <Year step={step} />
           </Enter>
 
-          {/* Heavier rule under the heading than between the two rows, so it reads as heading, then stats. */}
+          {/* Matching heavier rules above and below the six stats frame them; a lighter rule splits the two rows. */}
           <Enter step={step} delay={350} className="mt-[32px] border-t-2 border-[var(--deck-tone-1)] pt-[36px]">
             <div className="grid grid-cols-3 gap-[40px]">
               {growth.map((metric, index) => (
@@ -170,7 +170,7 @@ function ContextStep({ step }: { step: Step }) {
           </Enter>
 
           {/* Dimmed on the growth click: these are still FY23 numbers until the next click. */}
-          <Enter step={step} delay={450} className={`mt-[44px] border-t border-[var(--deck-hairline-strong)] pt-[36px] transition-opacity duration-500 ${step === 1 ? 'opacity-40' : ''}`}>
+          <Enter step={step} delay={450} className={`mt-[44px] border-y border-t-[var(--deck-hairline-strong)] border-b-2 border-b-[var(--deck-tone-1)] pb-[36px] pt-[36px] transition-opacity duration-500 ${step === 1 ? 'opacity-40' : ''}`}>
             <div className="grid grid-cols-3 gap-[40px]">
               {decline.map((metric, index) => (
                 <Stat key={metric.label} metric={metric} showFY25={step === 2} animate={step === 2} tone="down" delay={index * 120} />
