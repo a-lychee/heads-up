@@ -23,6 +23,8 @@ export const deckTheme = {
     tone2: 'rgba(42, 29, 23, 0.16)',
     tone3: 'rgba(42, 29, 23, 0.08)',
     accentWash: 'rgba(212, 80, 47, 0.14)',
+    up: '#2e7d4f',
+    down: '#c0392b',
     timerAmberLine: 'rgba(242, 184, 75, 0.45)',
   },
   fonts: {
@@ -34,7 +36,6 @@ export const deckTheme = {
   gradients: {
     slide: 'radial-gradient(circle at 78% 46%, #f6c3a5 0, transparent 38%), radial-gradient(circle at 8% 0%, #fbeadd 0, transparent 50%), linear-gradient(160deg, #f8ede4 0%, #f3dccd 100%)',
     appIcon: 'linear-gradient(135deg, #2b2340 0%, #4a3d66 100%)',
-    rust: 'linear-gradient(160deg, #9c4a33 0%, #7a3523 100%)',
   },
   motion: {
     reveal: '0.8s cubic-bezier(0.16, 1, 0.3, 1)',

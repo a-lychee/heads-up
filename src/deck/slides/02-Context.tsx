@@ -1,101 +1,201 @@
+import type { ReactNode } from 'react';
 import anselLogo from '@/assets/ansel-logo.png';
+import { CountUp } from '../components/CountUp';
 import { Headline } from '../components/Headline';
-import { Reveal } from '../components/Reveal';
+import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
+// This slide is three clicks of one picture: FY23, then growth to FY25 (green), then decline to FY25 (red).
+// The three steps are separate slides with no crossfade between them, so each click only animates the numbers.
+
+const section = '01 · Context and Problem';
+const source = 'Kilts Center Ansel case (2026), Phase 1, Ex 1 (financial and operating summary) and Ex 6 (FY25 renewals)';
+
 export const metadata: SlideMetadata = {
   id: 'context',
-  title: 'Context and problem',
-  section: '01 · Context and Problem',
-  notes: 'Ansel is an AI meeting notetaker for enterprises: $240M of ARR, 4.1 million seats and 3,900 customers, and it leads on note quality and governance. But usage is falling. Seats active in a week fell from 61% to 38% in two years, and net revenue retention from 141% to 103%.',
+  title: 'Context and problem · FY23',
+  section,
+  notes: 'Ansel is an AI meeting notetaker for enterprises, and it leads on note quality and governance controls. Start in FY23: $58M of ARR, 1,450 customer organizations and 1.1 million seats. Net revenue retention was 141%, and 61% of seats were active every week.',
 };
 
-// Ansel at a glance (case, company context).
-const anselStats = [
-  { value: '$240M', label: 'ARR' },
-  { value: '4.1M', label: 'seats' },
-  { value: '3,900', label: 'customers' },
+export const growthMetadata: SlideMetadata = {
+  id: 'context-growth',
+  title: 'Context and problem · growth',
+  section,
+  transition: 'none',
+  notes: 'Fast forward to FY25. On the surface Ansel is thriving: ARR is up to $240M, customers to 3,900, and provisioned seats to 4.1 million.',
+};
+
+export const declineMetadata: SlideMetadata = {
+  id: 'context-decline',
+  title: 'Context and problem · decline',
+  section,
+  transition: 'none',
+  notes: 'But underneath, usage is falling. Net revenue retention is down from 141% to 103%. Only 38% of seats are active in a week, down from 61%. And 44% of customers cut seats at their FY25 renewal.',
+};
+
+type Step = 0 | 1 | 2;
+
+interface Metric {
+  label: string;
+  /** FY23 value; null if the case only reports it for FY25. */
+  from: number | null;
+  to: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  grouping?: boolean;
+  /** Percent change, or percentage points for metrics that are already percentages. */
+  change: 'percent' | 'points' | 'none';
+}
+
+// Case Ex 1, FY23 → FY25.
+const growth: Metric[] = [
+  { label: 'ARR', from: 58, to: 240, prefix: '$', suffix: 'M', change: 'percent' },
+  { label: 'Customer organizations', from: 1450, to: 3900, grouping: true, change: 'percent' },
+  { label: 'Provisioned seats', from: 1.1, to: 4.1, suffix: 'M', decimals: 1, change: 'percent' },
 ];
 
-// The problem: two declines, each shown as was (gray) → now (accent). Case, business situation.
-const declines = [
-  { from: '61%', to: '38%', label: 'Seats active weekly, in 2 years' },
-  { from: '141%', to: '103%', label: 'Net revenue retention, in 3 years' },
+// Case Ex 1, FY23 → FY25; the renewal figure is FY25 only (Ex 6).
+const decline: Metric[] = [
+  { label: 'Net revenue retention', from: 141, to: 103, suffix: '%', change: 'points' },
+  { label: 'Seats active weekly', from: 61, to: 38, suffix: '%', change: 'points' },
+  { label: 'Customers that cut seats at FY25 renewal', from: null, to: 44, suffix: '%', change: 'none' },
 ];
 
-function Label({ children }: { children: string }) {
+function Label({ children }: { children: ReactNode }) {
   return <p className="text-[22px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">{children}</p>;
 }
 
-function DownArrow() {
+/** Wraps content in a Reveal on the first step only, so later clicks don't replay the entrance. */
+function Enter({ step, delay, className, children }: { step: Step; delay: number; className?: string; children: ReactNode }) {
+  return step === 0 ? <Reveal delay={delay} className={className}>{children}</Reveal> : <div className={className}>{children}</div>;
+}
+
+function changeText(metric: Metric) {
+  if (metric.from === null || metric.change === 'none') return null;
+  const diff = metric.to - metric.from;
+  const sign = diff > 0 ? '+' : '−';
+  if (metric.change === 'points') return `${sign}${Math.round(Math.abs(diff))} pts`;
+  return `${sign}${Math.round(Math.abs(diff / metric.from) * 100)}%`;
+}
+
+function Stat({ metric, showFY25, animate, tone, delay }: { metric: Metric; showFY25: boolean; animate: boolean; tone: 'up' | 'down'; delay: number }) {
+  const { static: isStatic } = useSlideEnvironment();
+  const color = tone === 'up' ? 'text-[var(--deck-up)]' : 'text-[var(--deck-down)]';
+  const change = changeText(metric);
+  const format = { prefix: metric.prefix, suffix: metric.suffix, decimals: metric.decimals, grouping: metric.grouping };
+
+  let value: ReactNode;
+  if (!showFY25) {
+    value = metric.from === null ? <span className="text-[var(--deck-secondary)]">—</span> : <CountUp {...format} value={metric.from} from={metric.from} />;
+  } else if (animate && metric.from !== null) {
+    value = <CountUp {...format} value={metric.to} from={metric.from} />;
+  } else if (animate) {
+    // No FY23 value: the number pops in instead of counting.
+    value = <span className={isStatic ? '' : 'deck-pop inline-block'} style={{ animationDelay: `${delay + 300}ms` }}><CountUp {...format} value={metric.to} from={metric.to} /></span>;
+  } else {
+    value = <CountUp {...format} value={metric.to} from={metric.to} />;
+  }
+
   return (
-    <svg width="56" height="74" viewBox="0 0 44 56" aria-hidden="true" className="flex-shrink-0">
-      <path d="M22 4 V46 M8 32 L22 48 L36 32" fill="none" stroke="var(--deck-accent)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div>
+      <div className="flex items-baseline gap-[12px] whitespace-nowrap">
+        <p style={{ animationDelay: `${delay}ms` }} className={`font-display text-[64px] font-extrabold leading-none tracking-[-0.035em] ${showFY25 ? color : ''} ${showFY25 && animate && !isStatic ? 'deck-tint' : ''}`}>{value}</p>
+        {showFY25 && change && (
+          <span className={`text-[24px] font-semibold ${color} ${animate && !isStatic ? 'deck-pop' : ''}`} style={{ animationDelay: `${delay + 1000}ms` }}>
+            {change}
+          </span>
+        )}
+      </div>
+      <p className="mt-[10px] text-[24px] leading-[1.25] text-[var(--deck-muted)]">{metric.label}</p>
+    </div>
   );
 }
 
-export default function ContextSlide() {
+function Year({ step }: { step: Step }) {
+  const { static: isStatic } = useSlideEnvironment();
+  const big = 'font-display text-[64px] font-extrabold leading-none tracking-[-0.035em]';
+  // Flips from FY23 to FY25 on the growth click, then stays.
+  if (step === 1 && !isStatic) {
+    return (
+      <span className="inline-grid">
+        <span className={`deck-swap-out col-start-1 row-start-1 ${big}`}>FY23</span>
+        <span className={`deck-swap-in col-start-1 row-start-1 ${big} text-[var(--deck-accent)]`} style={{ animationDelay: '120ms' }}>FY25</span>
+      </span>
+    );
+  }
+  return <span className={`${big} ${step > 0 ? 'text-[var(--deck-accent)]' : ''}`}>{step === 0 ? 'FY23' : 'FY25'}</span>;
+}
+
+function ContextStep({ step }: { step: Step }) {
   return (
-    <SlideFrame section={metadata.section} className="deck-no-glow" source="Kilts Center Ansel case (2026), company context and business situation">
+    <SlideFrame section={section} className="deck-no-glow" source={source}>
       <div className="absolute inset-x-[104px] top-[160px]">
-        <Reveal>
+        <Enter step={step} delay={0}>
           <Headline style={{ fontSize: 64 }} secondary="Ansel is a leading notetaker, but its usage is falling">
             Context and problem
           </Headline>
-        </Reveal>
+        </Enter>
       </div>
 
       <div className="absolute inset-x-[104px] bottom-[96px] top-[340px] grid grid-cols-[544px_1fr] gap-[88px]">
-        {/* Left third: Ansel in a muted rust card, text only, with the app icon tucked into the corner */}
-        <Reveal delay={100} className="h-full">
-          <div className="relative h-full overflow-hidden rounded-[32px] bg-[image:var(--deck-rust-gradient)] p-[44px] text-white">
-            <p className="text-[22px] font-semibold uppercase tracking-[0.1em] text-white/70">Ansel</p>
-            <p className="mt-[16px] max-w-[420px] text-[38px] leading-[1.3]">
-              An AI meeting notetaker for enterprises that leads on notetaking quality and governance controls
+        {/* Left third: Ansel introduces itself, with its app icon as the speaker */}
+        <Enter step={step} delay={100} className="flex flex-col justify-center">
+          <div className="rounded-[36px_36px_36px_8px] bg-white px-[40px] py-[38px] shadow-[var(--deck-card-shadow)]">
+            <p className="text-[36px] leading-[1.3]">
+              “Hi, I’m <span className="font-bold text-[var(--deck-accent)]">Ansel</span>. I’m an AI meeting notetaker for enterprises, and I lead on notetaking quality and governance controls.”
             </p>
-            <img
-              src={anselLogo}
-              alt=""
-              aria-hidden="true"
-              className="absolute -bottom-[70px] -right-[70px] h-[330px] w-[330px] rotate-[-10deg] drop-shadow-[0_24px_40px_rgba(40,12,4,0.45)]"
-            />
           </div>
-        </Reveal>
+          <div className="mt-[26px] flex items-center gap-[20px]">
+            <img src={anselLogo} alt="Ansel app icon" className="h-[120px] w-[120px] drop-shadow-[0_16px_30px_rgba(40,60,110,0.25)]" />
+            <div>
+              <p className="text-[22px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-accent)]">Ansel</p>
+              <p className="mt-[4px] text-[22px] text-[var(--deck-muted)]">Your AI meeting assistant</p>
+            </div>
+          </div>
+        </Enter>
 
-        {/* Right two-thirds: Ansel's size, then the problem */}
-        <div className="flex h-full flex-col justify-between">
-          <Reveal delay={250}>
-            <Label>Ansel at a glance</Label>
-            <div className="mt-[20px] flex gap-[80px]">
-              {anselStats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="font-display text-[72px] font-extrabold leading-none tracking-[-0.035em]">{stat.value}</p>
-                  <p className="mt-[8px] text-[26px] text-[var(--deck-muted)]">{stat.label}</p>
-                </div>
+        {/* Right two-thirds: six numbers, FY23 then FY25. Click 1 turns the top row green, click 2 the bottom row red. */}
+        <div className="flex flex-col justify-center">
+          <Enter step={step} delay={250} className="flex items-baseline gap-[18px]">
+            <Label>Ansel in</Label>
+            <Year step={step} />
+          </Enter>
+
+          <Enter step={step} delay={350} className="mt-[40px]">
+            <Label>Growing</Label>
+            <div className="mt-[18px] grid grid-cols-3 gap-[40px]">
+              {growth.map((metric, index) => (
+                <Stat key={metric.label} metric={metric} showFY25={step >= 1} animate={step === 1} tone="up" delay={index * 120} />
               ))}
             </div>
-          </Reveal>
+          </Enter>
 
-          <Reveal delay={450} className="border-t border-[var(--deck-hairline-strong)] pt-[30px]">
-            <Label>The problem</Label>
-            {declines.map((decline) => (
-              <div key={decline.label} className="mt-[24px] flex items-center gap-[24px]">
-                <DownArrow />
-                <div>
-                  <p className="whitespace-nowrap font-display text-[84px] font-extrabold leading-none tracking-[-0.04em]">
-                    <span className="text-[var(--deck-secondary)]">{decline.from}</span>
-                    <span className="text-[48px] text-[var(--deck-muted)]"> → </span>
-                    <span className="text-[var(--deck-accent)]">{decline.to}</span>
-                  </p>
-                  <p className="mt-[8px] text-[26px] text-[var(--deck-muted)]">{decline.label}</p>
-                </div>
-              </div>
-            ))}
-          </Reveal>
+          {/* Dimmed on the growth click: these are still FY23 numbers until the next click. */}
+          <Enter step={step} delay={450} className={`mt-[44px] border-t border-[var(--deck-hairline-strong)] pt-[36px] transition-opacity duration-500 ${step === 1 ? 'opacity-40' : ''}`}>
+            <Label>Falling</Label>
+            <div className="mt-[18px] grid grid-cols-3 gap-[40px]">
+              {decline.map((metric, index) => (
+                <Stat key={metric.label} metric={metric} showFY25={step === 2} animate={step === 2} tone="down" delay={index * 120} />
+              ))}
+            </div>
+          </Enter>
         </div>
       </div>
     </SlideFrame>
   );
+}
+
+export default function ContextSlide() {
+  return <ContextStep step={0} />;
+}
+
+export function ContextGrowthSlide() {
+  return <ContextStep step={1} />;
+}
+
+export function ContextDeclineSlide() {
+  return <ContextStep step={2} />;
 }
