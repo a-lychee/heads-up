@@ -39,6 +39,7 @@ const columns: Column[] = [
     word: 'Now',
     tone: 'ink',
     heading: 'Built and proved',
+    fill: true,
     body: (
       <>
         <p>We built the Heads-Up prototype.</p>
@@ -121,11 +122,11 @@ export default function NextSlide() {
 
       <div className="absolute inset-x-[104px] top-[380px] grid grid-cols-[1fr_1.2fr_1fr] gap-[64px]">
         {columns.map((column, index) => (
-          <Reveal key={column.word} delay={150 + index * 180}>
-            <div className={`border-t-[4px] pt-[26px] ${toneRule[column.tone]}`}>
+          <Reveal key={column.word} delay={150 + index * 180} className={column.fill ? 'h-full' : ''}>
+            <div className={`flex h-full flex-col border-t-[4px] pt-[26px] ${toneRule[column.tone]}`}>
               <p className={`font-display text-[104px] font-extrabold leading-none tracking-[-0.04em] ${toneText[column.tone]}`}>{column.word}</p>
               <p className="mt-[22px] text-[30px] font-semibold leading-[1.25]">{column.heading}</p>
-              <div className="mt-[12px] text-[22px] leading-[1.4] text-[var(--deck-muted)]">{column.body}</div>
+              <div className={`mt-[12px] text-[22px] leading-[1.4] text-[var(--deck-muted)] ${column.fill ? 'flex flex-1 flex-col' : ''}`}>{column.body}</div>
             </div>
           </Reveal>
         ))}
