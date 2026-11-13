@@ -6,7 +6,7 @@ import { Reveal, useSlideEnvironment } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
-// This slide is three clicks of one picture: FY23, then growth to FY25 (green), then decline to FY25 (orange).
+// This slide is three clicks of one picture: FY23, then growth to FY25 (green), then decline to FY25 (red).
 // The three steps are separate slides with no crossfade between them, so each click only animates the numbers.
 
 const section = '01 · Context and Problem';
@@ -78,7 +78,7 @@ function changeText(metric: Metric) {
 
 function Stat({ metric, showFY25, animate, tone, delay }: { metric: Metric; showFY25: boolean; animate: boolean; tone: 'up' | 'down'; delay: number }) {
   const { static: isStatic } = useSlideEnvironment();
-  const color = tone === 'up' ? 'text-[var(--deck-up)]' : 'text-[var(--deck-accent)]';
+  const color = tone === 'up' ? 'text-[var(--deck-up)]' : 'text-[var(--deck-down)]';
   const change = changeText(metric);
   const format = { prefix: metric.prefix, suffix: metric.suffix, decimals: metric.decimals, grouping: metric.grouping };
 
@@ -152,7 +152,7 @@ function ContextStep({ step }: { step: Step }) {
           </div>
         </Enter>
 
-        {/* Right two-thirds: six numbers, FY23 then FY25. Click 1 turns the top row green, click 2 the bottom row Ansel orange. */}
+        {/* Right two-thirds: six numbers, FY23 then FY25. Click 1 turns the top row green, click 2 the bottom row red. */}
         <div className="flex flex-col justify-center">
           <Enter step={step} delay={250} className="flex items-baseline gap-[18px]">
             {/* Same size as the year; only the year takes the accent color */}

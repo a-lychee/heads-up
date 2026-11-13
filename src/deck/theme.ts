@@ -24,6 +24,7 @@ export const deckTheme = {
     tone3: 'rgba(42, 29, 23, 0.08)',
     accentWash: 'rgba(212, 80, 47, 0.14)',
     up: '#2e7d4f',
+    down: '#c0392b',
     timerAmberLine: 'rgba(242, 184, 75, 0.45)',
   },
   fonts: {
