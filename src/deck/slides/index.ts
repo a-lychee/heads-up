@@ -1,9 +1,9 @@
 import type { SlideDefinition } from '../types';
 import TeamSlide, { metadata as team } from './01-Team';
-import TitleSlide, { metadata as title } from './02-Title';
-import ContextSlide, { metadata as context } from './03-Context';
-import PersonaSlide, { metadata as persona } from './04-Persona';
-import ShiftSlide, { metadata as shift } from './05-Shift';
+import ContextSlide, { metadata as context } from './02-Context';
+import PersonaSlide, { metadata as persona } from './03-Persona';
+import ShiftSlide, { metadata as shift } from './04-Shift';
+import TitleSlide, { metadata as title } from './05-Title';
 import DemoSlide, { metadata as demo } from './06-Demo';
 import LearningsSlide, { metadata as learnings } from './07-Learnings';
 import NextSlide, { metadata as next } from './08-Next';
@@ -21,10 +21,10 @@ import SuccessMetricsSlide, { metadata as successMetrics } from './19-SuccessMet
 
 export const slides: SlideDefinition[] = [
   { Component: TeamSlide, ...team },
-  { Component: TitleSlide, ...title },
   { Component: ContextSlide, ...context },
   { Component: PersonaSlide, ...persona },
   { Component: ShiftSlide, ...shift },
+  { Component: TitleSlide, ...title },
   { Component: DemoSlide, ...demo },
   { Component: LearningsSlide, ...learnings },
   { Component: NextSlide, ...next },

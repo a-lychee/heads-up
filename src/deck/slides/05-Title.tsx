@@ -7,7 +7,7 @@ import beforeAfter from '@/assets/concept-a2-before-after.png';
 export const metadata: SlideMetadata = {
   id: 'title',
   title: 'Heads-Up',
-  section: '00 · Intro',
+  section: '02 · Demo',
   notes: 'Open with the simple promise: Ansel’s record, returned before the next recurring meeting. This is a private, timely Slack card—not another summary to find.',
 };
 
