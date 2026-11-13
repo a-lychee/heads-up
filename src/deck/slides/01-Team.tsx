@@ -14,7 +14,32 @@ export const metadata: SlideMetadata = {
   id: 'team',
   title: 'Meet the team',
   section: '00 · Intro',
-  notes: 'Introduce each person and their (very real) role. Keep this brief and move quickly to the user problem.',
+  // Skit script from Heads-Up_Skit_Script.pdf. Line breaks show in the editor and presenter notes.
+  notes: `PRE-SKIT: “The Summary Scroll” (Varun, Aryan, Alicia)
+
+[Varun sits at a laptop. A calendar reminder dings.]
+VARUN: “Weekly Product Sync in 30 minutes.” Uh oh. Aryan, what was I supposed to do for this meeting?
+ARYAN: Relax. Ansel, the AI meeting assistant, generated the summary.
+[Aryan hands Varun the kitchen roll. Varun starts unrolling and scrolling as he reads.]
+VARUN: “Discussion themes. Sarah’s weekend with her fiancé. How cold Chicago gets in November. Whether the office needs a second coffee machine. Synergy…”
+[Keeps unrolling. The roll hits the floor.]
+VARUN: …still synergy. Where’s my part?
+ARYAN: Near the bottom. Probably. You barely speak in meetings anyway.
+VARUN: Do I even need to be in this meeting? Am I supposed to bring something?
+ARYAN: Honestly? Just say your Wi-Fi is bad. Works every time.
+[Cut to the meeting. Alicia sits across from Varun as if on a video call.]
+VARUN: Hi Alicia, how’s it going?
+ALICIA: I could be better. Let’s get straight into it. Where’s the forecast update?
+VARUN: Forecast update? Oh yeah, yeah, I have it ready. Let me pull it up…
+[Varun freezes, then fakes a lagging connection.]
+VARUN: Can you… see my… screen…? You’re… breaking… up…
+[Varun slams the laptop shut.]
+VARUN: Why do I keep missing things?
+ARYAN: (to the audience, holding up the roll) Ansel remembers everything. Varun remembers nothing.
+
+Props: laptop, kitchen roll as the Ansel summary, reminder sound. Rehearse the unroll so it is fast and long; it is the biggest laugh. Aryan keeps the roll for the post-skit.
+
+AFTER THE SKIT: Introduce each person and their (very real) role. Keep this brief and move quickly to the user problem.`,
 };
 
 // Edit names, roles and photos here. The closing copy (09-TeamAgain.tsx) and the edited version (10-TeamUpdate.tsx)
