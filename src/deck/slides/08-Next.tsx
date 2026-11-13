@@ -9,7 +9,7 @@ export const metadata: SlideMetadata = {
   id: 'next',
   title: 'Now, next, later',
   section: '03 · Takeaways',
-  notes: 'Now: we built the Heads-Up prototype, and in a controlled group our riskiest assumption held: light users want help prepping for recurring meetings. Next: test whether that still holds at scale, which is our product-market fit test, read through weekly activity, retention and action items, with privacy as the guardrail. Later: expand the product, starting with the ideas from our Phase 1 brief.',
+  notes: 'Now: we built the Heads-Up prototype, and in a controlled group our riskiest assumption held: light users want help prepping for recurring meetings. Next: test whether that still holds at scale, which is our product-market fit test. Read it in two horizons. Short term, weeks 1–4, leading signals: do light users open the card and click through to the transcript? There is no baseline today, so those targets are ours. Long term, two quarters, behavior change: action items acted on, light users active weekly, and 12-month seat retention. Privacy is the guardrail either way. Later: expand the product, starting with the ideas from our Phase 1 brief.',
 };
 
 // Short-term leading signals: do light users even look? No baseline today, so targets are team estimates.
@@ -139,7 +139,7 @@ const columns: Column[] = [
 
 export default function NextSlide() {
   return (
-    <SlideFrame section={metadata.section} source="Kilts Center Ansel case (2026), Ex 2, 3, 5; Heads-Up Phase 1 brief">
+    <SlideFrame section={metadata.section} source="Kilts Center Ansel case (2026), Ex 2, 3, 5; Heads-Up Phase 1 brief · short-term targets are team estimates">
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
           <Headline style={{ fontSize: 64 }} secondary="Proven in a controlled group. Next, prove it at scale.">
