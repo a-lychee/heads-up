@@ -118,14 +118,17 @@ export default function PersonaSlide() {
         </div>
       </div>
 
-      {/* Transition from slide 3: the 1.29M box flies over and becomes Varun's profile card. */}
+      {/* Transition from the target-user slide: the 1.29M box charges up, flies over and becomes Varun's profile card. */}
       {!isStatic && (
-        <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden border border-white/80 bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]" aria-hidden="true">
-          <div className="deck-morph-content flex h-[80px] w-[520px] items-baseline gap-[16px] px-[24px] py-[18px]">
-            <p className="font-display text-[42px] font-extrabold leading-none tracking-[-0.035em]">1.29M</p>
-            <p className="text-[21px] leading-[1.25] text-[var(--deck-muted)]">have a weekly recurring meeting</p>
+        <>
+          <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden bg-[var(--deck-card)]" aria-hidden="true">
+            <div className="deck-morph-content flex h-[80px] w-[520px] items-baseline gap-[16px] px-[24px] py-[18px]">
+              <p className="deck-morph-number font-display text-[42px] font-extrabold leading-none tracking-[-0.035em]">1.29M</p>
+              <p className="text-[21px] leading-[1.25] text-[var(--deck-muted)]">have a weekly recurring meeting</p>
+            </div>
           </div>
-        </div>
+          <div className="deck-morph-burst pointer-events-none absolute left-[104px] top-[414px] z-10 h-[570px] w-[828px] rounded-[32px] border-[3px] border-[var(--deck-accent)]" aria-hidden="true" />
+        </>
       )}
     </SlideFrame>
   );
