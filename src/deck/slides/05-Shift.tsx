@@ -8,7 +8,7 @@ export const metadata: SlideMetadata = {
   id: 'shift',
   title: 'The behavior change',
   section: '02 · Demo',
-  notes: 'Today Ansel is reactive: Varun has to go to Ansel himself, days later if at all. Light users open it about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting. That is the behavior change Heads-Up drives.',
+  notes: 'Today Ansel is reactive: Varun has to go to Ansel himself, days later if at all. The long summary lands in email after the meeting and most light users never open it — they open Ansel about 0.4 times a week. We want Ansel to be proactive: it comes to him, thirty minutes before his next recurring meeting, with the action items for that meeting. That is the behavior change Heads-Up drives.',
 };
 
 /** Simple filled person figure. The viewBox is trimmed to the figure so the gaps around it match the other icons. */
@@ -131,10 +131,16 @@ export default function ShiftSlide() {
         {/* Captions share a second row so they line up */}
         <Reveal delay={400}>
           <p className="text-[40px] leading-[1.2] text-[var(--deck-muted)]">He has to go to Ansel.</p>
+          <p className="mt-[14px] max-w-[620px] text-[26px] leading-[1.4] text-[var(--deck-muted)]">
+            Long summaries go out by email after the meeting. Most are never opened.
+          </p>
         </Reveal>
         <span />
         <Reveal delay={2000}>
           <p className="text-[40px] font-semibold leading-[1.2]">Ansel comes to him.</p>
+          <p className="mt-[14px] max-w-[620px] text-[26px] leading-[1.4] text-[var(--deck-muted)]">
+            A ping when it matters, with clear action items for the meeting ahead — he walks in prepared.
+          </p>
         </Reveal>
       </div>
 
