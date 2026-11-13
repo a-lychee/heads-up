@@ -69,18 +69,16 @@ export interface TeamEdits {
 function Part({ part, edits, isStatic }: { part: RolePart; edits?: TeamEdits; isStatic: boolean }) {
   const swap = part.key ? edits?.replacements?.[part.key] : undefined;
   if (swap) {
-    // Swap one word in place: the old word slides out, the new one slides in, in the accent color.
+    // Swap the whole piece (it sits centered on its own line, so the old text lines up exactly with the previous slide).
+    // The old text slides out and the new one slides in, with the changed word in the accent color.
     const [before, after] = part.text.split(swap.from);
-    if (isStatic) return <>{before}<span className="text-[var(--deck-accent)]">{swap.to}</span>{after}</>;
+    const next = <>{before}<span className="text-[var(--deck-accent)]">{swap.to}</span>{after}</>;
+    if (isStatic) return next;
     return (
-      <>
-        {before}
-        <span className="inline-grid justify-items-center align-bottom">
-          <span className="deck-swap-out col-start-1 row-start-1" style={{ animationDelay: `${swap.delay}ms` }}>{swap.from}</span>
-          <span className="deck-swap-in col-start-1 row-start-1 text-[var(--deck-accent)]" style={{ animationDelay: `${swap.delay + 120}ms` }}>{swap.to}</span>
-        </span>
-        {after}
-      </>
+      <span className="inline-grid justify-items-center align-bottom">
+        <span className="deck-swap-out col-start-1 row-start-1 whitespace-nowrap" style={{ animationDelay: `${swap.delay}ms` }}>{part.text}</span>
+        <span className="deck-swap-in col-start-1 row-start-1 whitespace-nowrap" style={{ animationDelay: `${swap.delay + 120}ms` }}>{next}</span>
+      </span>
     );
   }
   const delay = part.key ? edits?.struck?.[part.key] : undefined;
