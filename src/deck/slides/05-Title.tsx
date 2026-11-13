@@ -15,7 +15,8 @@ export default function TitleSlide() {
   // Glow centered on the illustration box (left 940px, right 90px, full height).
   return (
     <SlideFrame section={metadata.section} glow={{ x: 1385, y: 540 }}>
-      <div className="absolute inset-x-[104px] top-[170px] bottom-[70px] flex items-center gap-[56px]">
+      {/* Text is centered on the full slide height, level with the illustration. */}
+      <div className="absolute inset-x-[104px] inset-y-0 flex items-center gap-[56px]">
         <div className="w-[800px] flex-shrink-0">
           <Reveal>
             <Headline style={{ fontSize: 142 }}>Heads-Up</Headline>
@@ -32,9 +33,6 @@ export default function TitleSlide() {
             <p className="mt-[36px] max-w-[720px] text-[28px] leading-[1.45] text-[var(--deck-muted)]">
               Ansel&apos;s new meeting prep companion, built to ensure you never need to scramble for a meeting again.
             </p>
-          </Reveal>
-          <Reveal delay={240}>
-            <p className="mt-[64px] text-[20px] tracking-[0.02em] text-[var(--deck-muted)]">License to Kilts · Chicago Booth · November 2026</p>
           </Reveal>
         </div>
 
