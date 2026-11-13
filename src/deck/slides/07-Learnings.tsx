@@ -7,7 +7,7 @@ export const metadata: SlideMetadata = {
   id: 'learnings',
   title: 'What we learned',
   section: '03 · Takeaways',
-  notes: 'Walk the build from the Phase 1 mockup to today’s prototype. On the technical side, Slack could not render the card we designed, so the rich view moved into the Ansel app, which we control; and we dropped audio and video from transcripts to cut compute and make the app load faster. On how we worked, we put it in front of users early and iterated constantly, so no feedback arrived too late to act on.',
+  notes: 'Walk the build from the Phase 1 mockup to today’s prototype. On the technical side, Slack could not render the card we designed, so the rich view moved into the Ansel app, which we control; and we dropped audio and video from transcripts to cut compute and make the app load faster. On how we worked, two lessons: feedback only shows up once people are actually using the app, so get it in front of them early; and every use case looks essential until you see which few do most of the work.',
 };
 
 type Lane = 'technical' | 'qualitative';
@@ -24,9 +24,9 @@ interface Stop {
 // Edit learnings here. Top lane: technical changes to Ansel. Bottom lane: qualitative learnings.
 const stops: Stop[] = [
   { lane: 'technical', at: 28, tag: 'Slack’s UI limits', title: 'Moved the rich view into the Ansel app', body: 'Our Phase 1 card wasn’t possible in Slack. The app is in our control.' },
-  { lane: 'qualitative', at: 46, tag: 'Feedback', title: 'Iterated with real user feedback', body: 'Early users worked in the app; their preferences and use cases shaped it.' },
+  { lane: 'qualitative', at: 46, tag: 'Feedback', title: 'Feedback only shows up in use', body: 'Users couldn’t say what they needed until they were actually working in the app.' },
   { lane: 'technical', at: 64, tag: 'Speed', title: 'Dropped audio and video from transcripts', body: 'Less compute, and the Ansel app loads faster.' },
-  { lane: 'qualitative', at: 82, tag: 'Scope', title: 'Keep the essentials, cut the fluff', body: 'Started with every use case; kept the 20% that does 80% of the work.' },
+  { lane: 'qualitative', at: 82, tag: 'Scope', title: 'The product is the 20%', body: 'Every use case looked essential at first. Only a few did most of the work.' },
 ];
 
 // Vertical rhythm, mirrored in both bands: 26px band padding, a 30px title, 26px to the cards, 44px from the cards
