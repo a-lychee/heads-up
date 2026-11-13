@@ -8,7 +8,7 @@ import type { SlideMetadata } from '../types';
 
 export const metadata: SlideMetadata = {
   id: 'persona',
-  title: 'Our persona',
+  title: 'User segment pain points',
   section: '01 · Context and Problem',
   notes: 'Meet Varun, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said. So today he rereads old notes, asks a teammate, or relies on memory.',
 };
@@ -25,17 +25,18 @@ const persona = {
   ],
 };
 
-// Quotes from the Heads-Up brief (Kilts case Ex 7 and team interviews, Oct 2026).
+// Quotes from Kilts case Ex 7 and our team interviews (Oct 2026), as cited in the Heads-Up brief.
+// Each card is one title line and one quote line; keep quotes short enough to fit on one line.
 const pains = [
-  { title: 'Forgets what was said', quote: 'We talk about something and I forget what we talked about. Annoying for next week.', who: 'Light user, team interview' },
-  { title: 'The notes get buried', quote: 'Half the time I forget they are there after the email arrives.', who: 'Case interview, Ex 7' },
-  { title: 'Doesn’t think to open Ansel', quote: 'If I only have three meetings that week, this is not something I think to open.', who: 'Light user, Ex 7' },
+  { title: 'Forgets what was said', quote: '…we talk about something and I forget what we talked about.', source: '(External Interview)' },
+  { title: 'The notes get buried', quote: 'Half the time I forget they are there after the email arrives.', source: '(Exhibit 7)' },
+  { title: 'Doesn’t think to open Ansel', quote: 'If I only have three meetings that week, this is not something I think to open.', source: '(Exhibit 7)' },
 ];
 
 const options = [
-  { icon: FileText, title: 'Reread old notes', body: '22 seconds on a summary, then it’s buried' },
-  { icon: MessagesSquare, title: 'Ask a colleague', body: 'Pulls a teammate off their own work' },
-  { icon: Brain, title: 'Rely on memory', body: 'Catches up during the meeting' },
+  { icon: FileText, title: 'Reread old notes' },
+  { icon: MessagesSquare, title: 'Ask a colleague' },
+  { icon: Brain, title: 'Rely on memory' },
 ];
 
 function Label({ children }: { children: ReactNode }) {
@@ -52,7 +53,7 @@ export default function PersonaSlide() {
             style={{ fontSize: 64 }}
             secondary={<span className="whitespace-nowrap">Varun struggles to remember last week&apos;s meeting.</span>}
           >
-            Who we’re building for
+            User segment pain points
           </Headline>
         </Reveal>
       </div>
@@ -83,34 +84,32 @@ export default function PersonaSlide() {
           </div>
         </Reveal>
 
-        {/* Right half: pain points, then options today */}
-        {/* Pain cards share the free height evenly so the column lines up with the profile card. */}
+        {/* Right half: pain points, then options today. Spacing is one rhythm: 14px from a label to its cards,
+            16px between cards, 36px between the two sections. The pain cards share the free height evenly,
+            so all three are the same size and the column lines up with the profile card. */}
         <div className="flex min-h-0 flex-col">
           <Reveal delay={1150}><Label>Pain points</Label></Reveal>
-          <div className="mt-[14px] flex min-h-0 flex-1 flex-col gap-[14px]">
+          <div className="mt-[14px] flex min-h-0 flex-1 flex-col gap-[16px]">
             {pains.map((pain, index) => (
               <Reveal key={pain.title} delay={1250 + index * 110} className="flex flex-1">
-                <div className="flex w-full flex-col justify-center rounded-[24px] border border-white/80 bg-white/55 px-[28px] py-[14px] backdrop-blur-[16px]">
+                <div className="flex w-full flex-col justify-center rounded-[24px] border border-white/80 bg-white/55 px-[28px] backdrop-blur-[16px]">
                   <div className="flex items-baseline justify-between gap-[16px]">
-                    <p className="text-[24px] font-semibold leading-[1.25]">{pain.title}</p>
-                    <p className="flex-shrink-0 text-[18px] text-[var(--deck-muted)]">{pain.who}</p>
+                    <p className="text-[26px] font-semibold leading-[1.25]">{pain.title}</p>
+                    <p className="flex-shrink-0 text-[18px] text-[var(--deck-muted)]">{pain.source}</p>
                   </div>
-                  <p className="mt-[4px] text-[21px] leading-[1.35] text-[var(--deck-muted)]">“{pain.quote}”</p>
+                  <p className="mt-[8px] whitespace-nowrap text-[21px] leading-[1.35] text-[var(--deck-muted)]">“{pain.quote}”</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <Reveal delay={1650} className="mt-[30px]">
+          <Reveal delay={1650} className="mt-[36px]">
             <Label>Options today</Label>
-            <div className="mt-[14px] grid grid-cols-3 gap-[14px]">
-              {options.map(({ icon: Icon, title, body }) => (
-                <div key={title} className="rounded-[22px] bg-[var(--deck-callout)] px-[20px] py-[16px]">
-                  <div className="flex items-center gap-[10px] text-[var(--deck-callout-text)]">
-                    <Icon size={22} strokeWidth={2} />
-                    <p className="text-[22px] font-semibold">{title}</p>
-                  </div>
-                  <p className="mt-[6px] text-[20px] leading-[1.3] text-[var(--deck-muted)]">{body}</p>
+            <div className="mt-[14px] grid grid-cols-3 gap-[16px]">
+              {options.map(({ icon: Icon, title }) => (
+                <div key={title} className="flex flex-col items-center gap-[12px] rounded-[22px] bg-[var(--deck-callout)] px-[16px] py-[22px] text-[var(--deck-callout-text)]">
+                  <Icon size={40} strokeWidth={1.8} />
+                  <p className="text-[26px] font-semibold leading-[1.2]">{title}</p>
                 </div>
               ))}
             </div>
