@@ -24,7 +24,7 @@ interface Stop {
 // Edit learnings here. Top lane: technical changes to Ansel. Bottom lane: qualitative learnings.
 const stops: Stop[] = [
   { lane: 'technical', at: 24, tag: 'Slack’s UI limits', title: 'Moved the rich view into the Ansel app', body: 'Our Phase 1 card wasn’t possible in Slack. The app is in our control.' },
-  { lane: 'qualitative', at: 44, tag: 'Feedback', title: 'Tested early, iterated constantly', body: 'So no feedback arrived too late to act on.' },
+  { lane: 'qualitative', at: 44, tag: 'Feedback', title: 'Tested early, iterated constantly', body: 'So no feedback came too late.' },
   { lane: 'technical', at: 63, tag: 'Speed', title: 'Dropped audio and video from transcripts', body: 'Less compute, and the Ansel app loads faster.' },
   { lane: 'qualitative', at: 82, tag: '[Tag]', title: '[Learning 4]', body: '[One line on what we learned]', placeholder: true },
 ];
@@ -46,7 +46,7 @@ export default function LearningsSlide() {
     <SlideFrame section={metadata.section}>
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
-          <Headline style={{ fontSize: 64 }} secondary="Constraints shaped the product. Feedback shaped the process.">
+          <Headline style={{ fontSize: 64 }} secondary="Constraints shaped the product, feedback the process.">
             What we learned building it
           </Headline>
         </Reveal>
@@ -71,7 +71,7 @@ export default function LearningsSlide() {
                 style={{ left: `${end.at}%`, top: TRACK_Y, marginLeft: -15, marginTop: -15, animationDelay: `${index === 0 ? 150 : 200 + DRAW_MS}ms` }}
               />
               <p
-                className={`absolute whitespace-nowrap text-center ${index === 0 ? 'translate-x-[-30%]' : '-translate-x-[70%]'}`}
+                className={`absolute whitespace-nowrap ${index === 0 ? '-translate-x-[15px] text-left' : '-translate-x-[calc(100%-15px)] text-right'}`}
                 style={{ left: `${end.at}%`, top: TRACK_Y + 26 }}
               >
                 <span className="block text-[16px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">{end.phase}</span>
