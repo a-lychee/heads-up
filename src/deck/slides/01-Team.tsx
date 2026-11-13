@@ -17,7 +17,7 @@ export const metadata: SlideMetadata = {
   notes: 'Introduce each person and their (very real) role. Keep this brief and move quickly to the user problem.',
 };
 
-// Edit names, roles and photos here. The closing copy (10-TeamAgain.tsx) and the edited version (11-TeamUpdate.tsx)
+// Edit names, roles and photos here. The closing copy (09-TeamAgain.tsx) and the edited version (10-TeamUpdate.tsx)
 // reuse this list, so the card order is the same on all three slides.
 // Each role is a black title plus an optional gray note. Give a piece a `key` if the updated slide strikes it.
 interface RolePart {

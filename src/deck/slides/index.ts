@@ -7,9 +7,9 @@ import ShiftSlide, { metadata as shift } from './05-Shift';
 import DemoSlide, { metadata as demo } from './06-Demo';
 import LearningsSlide, { metadata as learnings } from './07-Learnings';
 import NextSlide, { metadata as next } from './08-Next';
-import ThankYouSlide, { metadata as thankYou } from './09-ThankYou';
-import TeamAgainSlide, { metadata as teamAgain } from './10-TeamAgain';
-import TeamUpdateSlide, { metadata as teamUpdate } from './11-TeamUpdate';
+import TeamAgainSlide, { metadata as teamAgain } from './09-TeamAgain';
+import TeamUpdateSlide, { metadata as teamUpdate } from './10-TeamUpdate';
+import ThankYouSlide, { metadata as thankYou } from './11-ThankYou';
 import AppendixSlide, { metadata as appendix } from './12-Appendix';
 import GovernanceSlide, { metadata as governance } from './13-Governance';
 import WhyLightUsersSlide, { metadata as whyLightUsers } from './14-WhyLightUsers';
@@ -28,9 +28,9 @@ export const slides: SlideDefinition[] = [
   { Component: DemoSlide, ...demo },
   { Component: LearningsSlide, ...learnings },
   { Component: NextSlide, ...next },
-  { Component: ThankYouSlide, ...thankYou },
   { Component: TeamAgainSlide, ...teamAgain },
   { Component: TeamUpdateSlide, ...teamUpdate },
+  { Component: ThankYouSlide, ...thankYou },
   { Component: AppendixSlide, ...appendix },
   { Component: GovernanceSlide, ...governance },
   { Component: WhyLightUsersSlide, ...whyLightUsers },
