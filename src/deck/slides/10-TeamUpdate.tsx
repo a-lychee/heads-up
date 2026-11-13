@@ -18,7 +18,7 @@ export default function TeamUpdateSlide() {
   return (
     <SlideFrame section={metadata.section}>
       <div className="absolute inset-x-[104px] top-[180px]">
-        <Headline>Meet Team Product to Kilts.</Headline>
+        <Headline>Meet Team License to Kilts.</Headline>
         <TeamGrid
           reveal={false}
           edits={{

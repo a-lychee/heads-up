@@ -16,7 +16,7 @@ export default function TeamAgainSlide() {
   return (
     <SlideFrame section={metadata.section}>
       <div className="absolute inset-x-[104px] top-[180px]">
-        <Reveal><Headline>Meet Team Product to Kilts.</Headline></Reveal>
+        <Reveal><Headline>Meet Team License to Kilts.</Headline></Reveal>
         <TeamGrid />
       </div>
     </SlideFrame>
