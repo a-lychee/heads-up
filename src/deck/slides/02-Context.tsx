@@ -32,7 +32,7 @@ export const declineMetadata: SlideMetadata = {
   title: 'Context and problem · decline',
   section,
   transition: 'none',
-  notes: 'But underneath, usage is falling. Net revenue retention is down from 141% to 103%. Only 38% of seats are active in a week, down from 61%. And 44% of customers cut seats at their FY25 renewal.',
+  notes: 'But underneath, usage is falling. Net revenue retention is down from 141% to 103%. Only 38% of seats are active in a week, down from 61%. And 44% of FY25 renewal contracts cut seats.',
 };
 
 type Step = 0 | 1 | 2;
@@ -57,11 +57,11 @@ const growth: Metric[] = [
   { label: 'Provisioned seats', from: 1.1, to: 4.1, suffix: 'M', decimals: 1, change: 'percent' },
 ];
 
-// Case Ex 1, FY23 → FY25; the renewal figure is FY25 only (Ex 6).
+// Case Ex 1, FY23 → FY25; the renewal figure is FY25 only (Ex 6: 44% of the 1,610 renewal contracts analyzed).
 const decline: Metric[] = [
   { label: 'Net revenue retention', from: 141, to: 103, suffix: '%', change: 'percent' },
   { label: 'Seats active weekly', from: 61, to: 38, suffix: '%', change: 'percent' },
-  { label: 'FY25 customers that cut seats', from: null, to: 44, suffix: '%', change: 'none' },
+  { label: 'FY25 renewals that cut seats', from: null, to: 44, suffix: '%', change: 'none' },
 ];
 
 /** Wraps content in a Reveal on the first step only, so later clicks don't replay the entrance. */

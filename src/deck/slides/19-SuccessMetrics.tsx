@@ -15,7 +15,7 @@ export const metadata: SlideMetadata = {
 const metrics = [
   { name: 'Light users active each week', today: '20%', target: '26%', basis: '1 in 6 light users matching rediscovery users (57%) lifts the cohort to ~26%', source: 'Ex 3' },
   { name: '12-month seat retention, light users', today: '34%', target: '39%', basis: 'Half the gap to light users who catch up on missed meetings, who retain at 44%', source: 'Ex 3' },
-  { name: 'Action items acted on', today: '6%', target: '20%', basis: 'Acting on 1 of the ~4.7 items per meeting is ~20%', source: 'Ex 5' },
+  { name: 'Action items marked completed', today: '6%', target: '20%', basis: 'Acting on 1 of the ~4.7 items per meeting is ~20%', source: 'Ex 5' },
   { name: 'New seats active at day 90', today: '23%', target: '30%', basis: 'First value within 3 days retains 63% vs. 32% after 11+ days', source: 'Ex 2' },
 ];
 

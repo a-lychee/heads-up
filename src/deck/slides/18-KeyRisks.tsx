@@ -26,7 +26,7 @@ const alsoOnTheList: { assumption: string; level: Level; why: string; mitigation
   { assumption: 'Value moments drive seat retention', level: 'High', why: 'Today’s evidence is correlational (46% vs. 34%)', mitigation: 'A randomized holdout measures the causal lift, with 60-day activity as the early read' },
   { assumption: 'Users open a calendar-timed Slack card', level: 'Medium', why: 'Must perform closer to Slack links (46%) and push (39%) than email (18%)', mitigation: 'Post at the meeting reminder only when there is an item; tune timing against the digest' },
   { assumption: 'Ansel identifies action-item owners correctly', level: 'Medium', why: 'A wrong owner erodes trust in the card', mitigation: 'Hedged wording (“may already be done”), a source link, and “not useful” feedback' },
-  { assumption: 'Governance and AI cost stay in check', level: 'Low', why: 'FY24 open sharing was rolled back at 14 accounts', mitigation: 'Same-series records the user can already access; no new meeting processing' },
+  { assumption: 'Governance and AI cost stay in check', level: 'Low', why: 'FY24 open sharing was rolled back after objections at 14 accounts', mitigation: 'Same-series records the user can already access; no new meeting processing' },
 ];
 
 /** Four-segment severity meter. The riskiest assumption is the only one shown filled in accent. */
