@@ -44,4 +44,4 @@ export const deckTheme = {
 } as const;
 
 export const DECK_CHANNEL = 'heads-up-deck-sync';
-export const TIMER_SECONDS = 8 * 60;
+export const TIMER_SECONDS = 9 * 60;
