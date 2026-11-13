@@ -7,12 +7,12 @@ import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
 
 // Four steps of one picture. Step 0: share of all seats by cohort, bars rising from 0.
-// Step 1: the same bars morph into share of idle seats. Step 2: they morph again into each cohort's weekly active rate.
+// Step 1: the same bars morph into share of idle seats. Step 2: they morph again into each cohort's 12-month seat retention.
 // Step 3: our user group's cards appear one by one on the right.
 // The steps are separate slides with no crossfade, so the click only animates the change.
 
 const section = '01 · Context and Problem';
-const source = 'Kilts Center Ansel case (2026), Ex 3 (share of seats, weekly active rate) · idle share is our calculation from Ex 3 · $75M at $58.54 per seat, 48.5% recurring (Flowtrace)';
+const source = 'Kilts Center Ansel case (2026), Ex 3 (share of seats, 12-month seat retention) · idle share is our calculation from Ex 3 · $75M at $58.54 per seat, 48.5% recurring (Flowtrace)';
 
 export const metadata: SlideMetadata = {
   id: 'target-user',
@@ -29,12 +29,12 @@ export const idleMetadata: SlideMetadata = {
   notes: 'Now look only at the idle seats. Light users go from half of all seats to two-thirds of the idle ones.',
 };
 
-export const activeMetadata: SlideMetadata = {
-  id: 'target-user-active',
-  title: 'Our target user segment · weekly active rate',
+export const retentionMetadata: SlideMetadata = {
+  id: 'target-user-retention',
+  title: 'Our target user segment · 12-month seat retention',
   section,
   transition: 'none',
-  notes: 'And here is why. Only 20% of light users are active in a given week, against 82% of heavy users and 58% of moderate ones.',
+  notes: 'And those seats do not last. Only 34% of light-user seats are still in use after 12 months, against 81% for heavy users and 68% for moderate ones.',
 };
 
 export const oursMetadata: SlideMetadata = {
@@ -47,22 +47,22 @@ export const oursMetadata: SlideMetadata = {
 
 type Step = 0 | 1 | 2 | 3;
 
-// Exhibit 3 cohorts (FY25): share of seats and weekly active rate.
-// Idle share is our calculation: share of seats × (1 − weekly active rate).
+// Exhibit 3 cohorts (FY25): share of seats, 12-month seat retention, and (for the idle share) weekly active rate.
+// Idle share is our calculation: share of seats × (1 − weekly active rate: 82%, 58%, 20%, 0%).
 const cohorts = [
-  { id: 'heavy', name: 'Heavy', meetings: '15+ meetings a week', seats: 14, idle: 4, active: 82 },
-  { id: 'moderate', name: 'Moderate', meetings: '5–14 meetings a week', seats: 28, idle: 19, active: 58 },
-  { id: 'light', name: 'Light', meetings: 'Under 5 meetings a week', seats: 51, idle: 66, active: 20 },
-  { id: 'never', name: 'Never connected', meetings: 'No calendar connected', seats: 7, idle: 11, active: 0 },
+  { id: 'heavy', name: 'Heavy', meetings: '15+ meetings a week', seats: 14, idle: 4, retention: 81 },
+  { id: 'moderate', name: 'Moderate', meetings: '5–14 meetings a week', seats: 28, idle: 19, retention: 68 },
+  { id: 'light', name: 'Light', meetings: 'Under 5 meetings a week', seats: 51, idle: 66, retention: 34 },
+  { id: 'never', name: 'Never connected', meetings: 'No calendar connected', seats: 7, idle: 11, retention: 11 },
 ];
 
-// Which number each step shows. The last step holds the weekly active rate still while the right side builds.
-type Series = 'seats' | 'idle' | 'active';
-const seriesByStep: Series[] = ['seats', 'idle', 'active', 'active'];
+// Which number each step shows. The last step holds the retention chart still while the right side builds.
+type Series = 'seats' | 'idle' | 'retention';
+const seriesByStep: Series[] = ['seats', 'idle', 'retention', 'retention'];
 
-// One scale for every step (82% is the tallest bar), so the bars' heights compare honestly across clicks.
+// One scale for every step (81% is the tallest bar), so the bars' heights compare honestly across clicks.
 const BAR_MAX = 400; // bottom of the chart lines up with the kicker on the right
-const SCALE_MAX = 82;
+const SCALE_MAX = 81;
 const barHeight = (share: number) => (share / SCALE_MAX) * BAR_MAX;
 
 // Light seats narrowed to our user (Heads-Up brief, Opportunity Size; appendix shows the math).
@@ -93,7 +93,7 @@ function ChartTitle({ step }: { step: Step }) {
   const titles: Record<Series, ReactNode> = {
     seats: <>Share of {word('all')} seats, by meetings a week</>,
     idle: <>Share of {word('idle')} seats, by meetings a week</>,
-    active: <>{word('Weekly active rate')}, by meetings a week</>,
+    retention: <>{word('12-month seat retention')}, by meetings a week</>,
   };
   const current = seriesByStep[step];
   const previous = step > 0 ? seriesByStep[step - 1] : current;
@@ -121,7 +121,7 @@ function TargetUserStep({ step }: { step: Step }) {
       </div>
 
       <div className="absolute inset-x-[104px] bottom-[96px] top-[360px] grid grid-cols-[1fr_520px] gap-[80px]">
-        {/* Left two-thirds: one chart. Step 0 shows all seats; steps 1 and 2 morph the same bars to idle seats, then weekly active rate. */}
+        {/* Left two-thirds: one chart. Step 0 shows all seats; steps 1 and 2 morph the same bars to idle seats, then 12-month seat retention. */}
         <div className="flex flex-col">
           <Enter step={step} delay={100}>
             <ChartTitle step={step} />
@@ -218,7 +218,7 @@ export function TargetUserIdleSlide() {
   return <TargetUserStep step={1} />;
 }
 
-export function TargetUserActiveSlide() {
+export function TargetUserRetentionSlide() {
   return <TargetUserStep step={2} />;
 }
 
