@@ -64,10 +64,6 @@ const decline: Metric[] = [
   { label: 'Customers that cut seats at FY25 renewal', from: null, to: 44, suffix: '%', change: 'none' },
 ];
 
-function Label({ children }: { children: ReactNode }) {
-  return <p className="text-[22px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">{children}</p>;
-}
-
 /** Wraps content in a Reveal on the first step only, so later clicks don't replay the entrance. */
 function Enter({ step, delay, className, children }: { step: Step; delay: number; className?: string; children: ReactNode }) {
   return step === 0 ? <Reveal delay={delay} className={className}>{children}</Reveal> : <div className={className}>{children}</div>;
@@ -115,17 +111,17 @@ function Stat({ metric, showFY25, animate, tone, delay }: { metric: Metric; show
 
 function Year({ step }: { step: Step }) {
   const { static: isStatic } = useSlideEnvironment();
-  const big = 'font-display text-[64px] font-extrabold leading-none tracking-[-0.035em]';
+  const big = 'font-display text-[64px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]';
   // Flips from FY23 to FY25 on the growth click, then stays.
   if (step === 1 && !isStatic) {
     return (
       <span className="inline-grid">
         <span className={`deck-swap-out col-start-1 row-start-1 ${big}`}>FY23</span>
-        <span className={`deck-swap-in col-start-1 row-start-1 ${big} text-[var(--deck-accent)]`} style={{ animationDelay: '120ms' }}>FY25</span>
+        <span className={`deck-swap-in col-start-1 row-start-1 ${big}`} style={{ animationDelay: '120ms' }}>FY25</span>
       </span>
     );
   }
-  return <span className={`${big} ${step > 0 ? 'text-[var(--deck-accent)]' : ''}`}>{step === 0 ? 'FY23' : 'FY25'}</span>;
+  return <span className={big}>{step === 0 ? 'FY23' : 'FY25'}</span>;
 }
 
 function ContextStep({ step }: { step: Step }) {
@@ -159,7 +155,8 @@ function ContextStep({ step }: { step: Step }) {
         {/* Right two-thirds: six numbers, FY23 then FY25. Click 1 turns the top row green, click 2 the bottom row Ansel orange. */}
         <div className="flex flex-col justify-center">
           <Enter step={step} delay={250} className="flex items-baseline gap-[18px]">
-            <Label>Ansel in</Label>
+            {/* Same size as the year; only the year takes the accent color */}
+            <span className="font-display text-[64px] font-extrabold leading-none tracking-[-0.035em]">Ansel in</span>
             <Year step={step} />
           </Enter>
 
