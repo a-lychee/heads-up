@@ -27,6 +27,8 @@ interface Column {
   tone: 'ink' | 'accent' | 'secondary';
   heading: string;
   body: ReactNode;
+  /** Stretches the body to the column height so the panel fills the lane. */
+  fill?: boolean;
 }
 
 const toneText = { ink: 'text-[var(--deck-ink)]', accent: 'text-[var(--deck-accent)]', secondary: 'text-[var(--deck-secondary)]' };
@@ -41,7 +43,7 @@ const columns: Column[] = [
       <>
         <p>We built the Heads-Up prototype.</p>
         <div
-          className="mt-[18px] rounded-[22px] border px-[22px] py-[18px]"
+          className="mt-[18px] flex flex-1 flex-col justify-center rounded-[22px] border px-[22px] py-[18px]"
           style={{
             background: 'var(--deck-callout)',
             borderColor: 'color-mix(in srgb, var(--deck-accent) 30%, transparent)',
