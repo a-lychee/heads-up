@@ -1,4 +1,4 @@
-import { Brain, CalendarDays, CheckCheck, FileText, MessageSquareText, MessagesSquare, UserRound } from 'lucide-react';
+import { Brain, CheckCheck, FileText, MessagesSquare, Mic, TrendingUp, UserRound } from 'lucide-react';
 import type { ReactNode } from 'react';
 import personaImage from '@/assets/persona-engineer.png';
 import { Headline } from '../components/Headline';
@@ -10,7 +10,7 @@ export const metadata: SlideMetadata = {
   id: 'persona',
   title: 'User segment pain points',
   section: '01 · Context and Problem',
-  notes: 'Meet Varun, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said.',
+  notes: 'Meet Varun, a software engineer and a typical light user. He is an individual contributor, he attends all his meetings, he needs to speak at least once in most of them, and he cares about his performance at work. Ansel records everything, but by next week it is hard to remember what was said.',
 };
 
 export const painsMetadata: SlideMetadata = {
@@ -18,7 +18,7 @@ export const painsMetadata: SlideMetadata = {
   title: 'User segment pain points · pains',
   section: '01 · Context and Problem',
   transition: 'none',
-  notes: 'His pain points: he forgets what was said, the notes get buried in his inbox, and with only a few meetings a week he does not think to open Ansel. So today he rereads old notes, asks a teammate, or relies on memory.',
+  notes: 'His pain points: he forgets what was said, he skips the meeting summaries, and he fails to see Ansel’s value. So today he rereads old notes, asks a teammate, or relies on memory.',
 };
 
 // Persona name and title are placeholders; edit here.
@@ -26,10 +26,10 @@ const persona = {
   name: 'Varun',
   role: 'Software engineer',
   traits: [
-    { icon: CalendarDays, text: 'Fewer than 5 meetings a week' },
-    { icon: CheckCheck, text: 'Attends all of them' },
-    { icon: UserRound, text: 'Individual contributor' },
-    { icon: MessageSquareText, text: 'Gives an update or resolves an issue on most calls' },
+    { icon: UserRound, text: 'Serves as an individual contributor' },
+    { icon: CheckCheck, text: 'Attends all his meetings' },
+    { icon: Mic, text: 'Needs to speak at least once in most meetings' },
+    { icon: TrendingUp, text: 'Cares about his performance at work' },
   ],
 };
 
@@ -37,8 +37,8 @@ const persona = {
 // Each card is one title line and one quote line; keep quotes short enough to fit on one line.
 const pains = [
   { title: 'Forgets what was said', quote: '…we talk about something and I forget what we talked about.', source: '(External Interview)' },
-  { title: 'The notes get buried', quote: 'Half the time I forget they are there after the email arrives.', source: '(Exhibit 7)' },
-  { title: 'Doesn’t think to open Ansel', quote: 'If I only have three meetings that week, this is not something I think to open.', source: '(Exhibit 7)' },
+  { title: 'Skips meeting summaries', quote: 'I turned off the email digest after the first month.', source: '(Exhibit 7)' },
+  { title: 'Fails to see Ansel’s value', quote: '…most are standups, so notetaking hasn’t really been useful for me.', source: '(External Interview)' },
 ];
 
 const options = [
