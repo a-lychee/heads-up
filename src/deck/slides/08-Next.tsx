@@ -34,20 +34,20 @@ interface HorizonProps {
 
 function Horizon({ tag, when, color, items }: HorizonProps) {
   return (
-    <div className="mt-[16px]">
-      <div className="flex items-baseline justify-between gap-[12px]">
+    <div className="mt-[22px]">
+      <div className="flex items-baseline justify-between gap-[12px] border-b border-[var(--deck-hairline)] pb-[7px]">
         <span className="text-[17px] font-semibold uppercase tracking-[0.12em]" style={{ color }}>
           {tag}
         </span>
         <span className="text-[16px] text-[var(--deck-muted)]">{when}</span>
       </div>
-      <ul className="mt-[6px] space-y-[6px]">
+      <ul className="mt-[10px] space-y-[10px]">
         {items.map((metric) => (
-          <li key={metric.label} className="flex items-baseline justify-between gap-[14px] border-t border-[var(--deck-hairline)] pt-[6px]">
-            <span className="text-[20px] leading-[1.2]">{metric.label}</span>
-            <span className="whitespace-nowrap font-display text-[26px] font-extrabold tracking-[-0.03em]">
+          <li key={metric.label} className="flex items-baseline justify-between gap-[16px]">
+            <span className="text-[21px] leading-[1.2]">{metric.label}</span>
+            <span className="whitespace-nowrap font-display text-[28px] font-extrabold tracking-[-0.03em]">
               <span className="text-[var(--deck-secondary)]">{metric.from}</span>
-              <span className="text-[18px] text-[var(--deck-muted)]"> → </span>
+              <span className="text-[19px] text-[var(--deck-muted)]"> → </span>
               <span className="text-[var(--deck-accent)]">{metric.to}</span>
             </span>
           </li>
