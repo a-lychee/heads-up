@@ -189,7 +189,7 @@ export default function DeckPage() {
 
         <section className="relative min-w-0 flex-1 bg-[var(--deck-chrome)] p-4 sm:p-7">
           <SlideStage key={state.index} stageClassName="deck-stage-flat sm:rounded-xl" label={`Slide ${state.index + 1}: ${slide.title}`}>
-            <div className="deck-crossfade"><ActiveSlide /></div>
+            <div className={slide.transition === 'none' ? undefined : 'deck-crossfade'}><ActiveSlide /></div>
           </SlideStage>
           <div className="absolute right-2 top-1/2 -translate-y-1/2 sm:right-3">
             <ProgressDots index={state.index} onNavigate={navigate} />
@@ -207,7 +207,7 @@ export default function DeckPage() {
         <div className={`fixed inset-0 z-50 bg-black ${idle ? 'cursor-none' : ''}`}>
           {blackScreen ? <div className="h-full w-full bg-black" onClick={() => setBlackScreen(false)} /> : (
             <SlideStage stageClassName="deck-stage-flat" onClick={next} label={`Presenting slide ${state.index + 1}`}>
-              <div key={state.index} className="deck-crossfade"><ActiveSlide /></div>
+              <div key={state.index} className={slide.transition === 'none' ? undefined : 'deck-crossfade'}><ActiveSlide /></div>
             </SlideStage>
           )}
           <div className="absolute right-5 top-1/2 -translate-y-1/2"><ProgressDots index={state.index} onNavigate={navigate} idle={idle} /></div>

@@ -221,6 +221,10 @@
 }
 .deck-strike-static { background-size: 100% 3px; animation: none; }
 @keyframes deck-strike { to { background-size: 100% 3px; } }
+.deck-swap-out { animation: deck-swap-out 0.4s ease-in forwards; }
+.deck-swap-in { opacity: 0; animation: deck-swap-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes deck-swap-out { to { opacity: 0; transform: translateY(-10px); } }
+@keyframes deck-swap-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Slide 5 */
 .deck-ants { animation: deck-ants 1.6s linear infinite; }

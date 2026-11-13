@@ -120,7 +120,7 @@ export default function PresenterPage() {
           <section>
             <p className={`${label} mb-2`}>Now · {slide.title}</p>
             <div className="aspect-video w-full overflow-hidden rounded-lg border border-[var(--deck-lines)]">
-              <SlideStage key={state.index} stageClassName="deck-stage-flat"><div className="deck-crossfade"><ActiveSlide /></div></SlideStage>
+              <SlideStage key={state.index} stageClassName="deck-stage-flat"><div className={slide.transition === 'none' ? undefined : 'deck-crossfade'}><ActiveSlide /></div></SlideStage>
             </div>
           </section>
           <section className="w-[65%]">

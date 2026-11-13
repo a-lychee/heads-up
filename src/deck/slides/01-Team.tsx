@@ -61,10 +61,28 @@ export interface TeamEdits {
   struck?: Record<string, number>;
   /** New text written in above a member's role, by member id. */
   corrections?: Record<string, { text: string; delay: number }>;
+  /** Role pieces whose text swaps to new text (no strike), by key. */
+  replacements?: Record<string, { from: string; to: string; delay: number }>;
 }
 
 /** A piece of a role, struck through in the accent color if the edits say so. */
 function Part({ part, edits, isStatic }: { part: RolePart; edits?: TeamEdits; isStatic: boolean }) {
+  const swap = part.key ? edits?.replacements?.[part.key] : undefined;
+  if (swap) {
+    // Swap one word in place: the old word slides out, the new one slides in, in the accent color.
+    const [before, after] = part.text.split(swap.from);
+    if (isStatic) return <>{before}<span className="text-[var(--deck-accent)]">{swap.to}</span>{after}</>;
+    return (
+      <>
+        {before}
+        <span className="inline-grid justify-items-center align-bottom">
+          <span className="deck-swap-out col-start-1 row-start-1" style={{ animationDelay: `${swap.delay}ms` }}>{swap.from}</span>
+          <span className="deck-swap-in col-start-1 row-start-1 text-[var(--deck-accent)]" style={{ animationDelay: `${swap.delay + 120}ms` }}>{swap.to}</span>
+        </span>
+        {after}
+      </>
+    );
+  }
   const delay = part.key ? edits?.struck?.[part.key] : undefined;
   if (delay === undefined) return <>{part.text}</>;
   return (
