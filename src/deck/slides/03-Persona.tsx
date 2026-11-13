@@ -10,7 +10,15 @@ export const metadata: SlideMetadata = {
   id: 'persona',
   title: 'User segment pain points',
   section: '01 · Context and Problem',
-  notes: 'Meet Varun, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said. So today he rereads old notes, asks a teammate, or relies on memory.',
+  notes: 'Meet Varun, a software engineer and a typical light user. He has fewer than five meetings a week and goes to all of them. In each one he owns a piece: an update to give or an issue to resolve. Ansel records everything, but the notes reach him right after the meeting, and by next week it is hard to remember what was said.',
+};
+
+export const painsMetadata: SlideMetadata = {
+  id: 'persona-pains',
+  title: 'User segment pain points · pains',
+  section: '01 · Context and Problem',
+  transition: 'none',
+  notes: 'His pain points: he forgets what was said, the notes get buried in his inbox, and with only a few meetings a week he does not think to open Ansel. So today he rereads old notes, asks a teammate, or relies on memory.',
 };
 
 // Persona name and title are placeholders; edit here.
@@ -43,24 +51,33 @@ function Label({ children }: { children: ReactNode }) {
   return <p className="text-[20px] font-semibold uppercase tracking-[0.1em] text-[var(--deck-muted)]">{children}</p>;
 }
 
-export default function PersonaSlide() {
+type Step = 0 | 1;
+
+/** Reveal on the first step only, so the click doesn't replay the entrance. */
+function Enter({ step, delay, className, children }: { step: Step; delay: number; className?: string; children: ReactNode }) {
+  return step === 0 ? <Reveal delay={delay} className={className}>{children}</Reveal> : <div className={className}>{children}</div>;
+}
+
+// Two steps: the persona alone first (with the card morph from the target-user slide), then on the click
+// the pain points and options appear on the right. The click just shows them, with no animation.
+function PersonaStep({ step }: { step: Step }) {
   const { static: isStatic } = useSlideEnvironment();
   return (
     <SlideFrame section={metadata.section} source="Kilts Center Ansel case (2026), Ex 5, 7, 8; team interviews (n=13) · persona is a composite">
       <div className="absolute inset-x-[104px] top-[160px]">
-        <Reveal>
+        <Enter step={step} delay={0}>
           <Headline
             style={{ fontSize: 64 }}
             secondary={<span className="whitespace-nowrap">Varun struggles to remember last week&apos;s meeting.</span>}
           >
             User segment pain points
           </Headline>
-        </Reveal>
+        </Enter>
       </div>
 
       <div className="absolute inset-x-[104px] top-[370px] bottom-[96px] grid grid-cols-2 gap-[56px]">
         {/* Left half: profile. Label matches the right column's section labels. */}
-        <Reveal delay={950} className="flex h-full flex-col">
+        <Enter step={step} delay={950} className="flex h-full flex-col">
           <Label>Our persona</Label>
           <div className="mt-[14px] flex min-h-0 flex-1 overflow-hidden rounded-[32px] border border-white/70 bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]">
             <div className="flex w-[340px] flex-shrink-0 items-end justify-center bg-[var(--deck-accent-wash)] px-[28px] pt-[36px]">
@@ -82,28 +99,27 @@ export default function PersonaSlide() {
               </ul>
             </div>
           </div>
-        </Reveal>
+        </Enter>
 
         {/* Right half: pain points, then options today. Spacing is one rhythm: 14px from a label to its cards,
             16px between cards, 36px between the two sections. The pain cards share the free height evenly,
             so all three are the same size and the column lines up with the profile card. */}
-        <div className="flex min-h-0 flex-col">
-          <Reveal delay={1150}><Label>Pain points</Label></Reveal>
+        <div className={`flex min-h-0 flex-col ${step === 0 ? 'invisible' : ''}`}>
+          <Label>Pain points</Label>
           <div className="mt-[14px] flex min-h-0 flex-1 flex-col gap-[16px]">
-            {pains.map((pain, index) => (
-              <Reveal key={pain.title} delay={1250 + index * 110} className="flex flex-1">
+            {pains.map((pain) => (
+              <div key={pain.title} className="flex flex-1">
                 <div className="flex w-full flex-col justify-center rounded-[24px] border border-white/80 bg-white/55 px-[28px] backdrop-blur-[16px]">
-                  <div className="flex items-baseline justify-between gap-[16px]">
-                    <p className="text-[26px] font-semibold leading-[1.25]">{pain.title}</p>
-                    <p className="flex-shrink-0 text-[18px] text-[var(--deck-muted)]">{pain.source}</p>
-                  </div>
+                  <p className="text-[26px] font-semibold leading-[1.25]">
+                    {pain.title} <span className="text-[15px] font-normal text-[var(--deck-secondary)]">{pain.source}</span>
+                  </p>
                   <p className="mt-[8px] whitespace-nowrap text-[21px] leading-[1.35] text-[var(--deck-muted)]">“{pain.quote}”</p>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
 
-          <Reveal delay={1650} className="mt-[36px]">
+          <div className="mt-[36px]">
             <Label>Options today</Label>
             <div className="mt-[14px] grid grid-cols-3 gap-[16px]">
               {options.map(({ icon: Icon, title }) => (
@@ -113,12 +129,12 @@ export default function PersonaSlide() {
                 </div>
               ))}
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
 
       {/* Transition from the target-user slide: the 1.29M box charges up, flies over and becomes Varun's profile card. */}
-      {!isStatic && (
+      {!isStatic && step === 0 && (
         <>
           <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden bg-[var(--deck-card)]" aria-hidden="true">
             <div className="deck-morph-content flex h-[80px] w-[520px] items-baseline gap-[16px] px-[24px] py-[18px]">
@@ -131,4 +147,12 @@ export default function PersonaSlide() {
       )}
     </SlideFrame>
   );
+}
+
+export default function PersonaSlide() {
+  return <PersonaStep step={0} />;
+}
+
+export function PersonaPainsSlide() {
+  return <PersonaStep step={1} />;
 }
