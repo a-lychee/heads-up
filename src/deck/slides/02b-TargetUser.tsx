@@ -154,25 +154,19 @@ function TargetUserStep({ step }: { step: Step }) {
             </Reveal>
             <div className="mt-[24px] flex flex-col">
               {funnel.map((item, index) => {
-                const last = index === funnel.length - 1;
                 return (
                   <div key={item.label}>
                     <Reveal delay={400 + index * 350}>
                       <div
-                        className={`flex items-baseline gap-[16px] rounded-[20px] px-[24px] py-[18px] ${
-                          last
-                            ? `border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)] ${isStatic ? '' : 'deck-spotlight'}`
-                            : 'border border-white/80 bg-white/55'
-                        }`}
-                        style={last ? { animationDelay: '2300ms' } : undefined}
+                        className="flex items-baseline gap-[16px] rounded-[20px] border border-white/80 bg-white/55 px-[24px] py-[18px]"
                       >
-                        <p className={`font-display text-[42px] font-extrabold leading-none tracking-[-0.035em] ${last ? 'text-[var(--deck-accent)]' : ''}`}>{item.value}</p>
+                        <p className="font-display text-[42px] font-extrabold leading-none tracking-[-0.035em]">{item.value}</p>
                         <p className="text-[21px] leading-[1.25] text-[var(--deck-muted)]">{item.label}</p>
                       </div>
                     </Reveal>
                     <Reveal delay={550 + index * 350}>
                       <div className="flex h-[44px] items-center justify-center text-[var(--deck-secondary)]" aria-hidden="true">
-                        {last ? <span className="text-[34px] font-semibold leading-none">=</span> : <ArrowDown size={26} strokeWidth={2.2} />}
+                        <ArrowDown size={26} strokeWidth={2.2} />
                       </div>
                     </Reveal>
                   </div>

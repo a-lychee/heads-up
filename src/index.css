@@ -209,11 +209,11 @@
 }
 
 /* Persona slide: a copy of the target-user slide's 1.29M box flies from its spot into Varun's profile card.
-   1.29M box (our-user step, right column) after its lift (scale 1.02, -6px): left 1291, top 727, 530×84. Profile card: left 104, top 414, 828×570. */
+   1.29M box (our-user step, right column): left 1296, top 734, 520×80. Profile card: left 104, top 414, 828×570. */
 .deck-morph { animation: deck-morph 1.35s cubic-bezier(0.65, 0, 0.35, 1) both; }
 .deck-morph-content { animation: deck-morph-content 1.35s ease both; }
 @keyframes deck-morph {
-  0%, 22% { left: 1291px; top: 727px; width: 530px; height: 84px; opacity: 1; border-radius: 20px; }
+  0%, 22% { left: 1296px; top: 734px; width: 520px; height: 80px; opacity: 1; border-radius: 20px; }
   72% { left: 104px; top: 414px; width: 828px; height: 570px; opacity: 1; border-radius: 32px; }
   100% { left: 104px; top: 414px; width: 828px; height: 570px; opacity: 0; border-radius: 32px; }
 }
