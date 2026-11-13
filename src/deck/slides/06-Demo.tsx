@@ -1,10 +1,12 @@
 import { ArrowUpRight, CalendarDays, Check, Clock, Hash, Lock } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 import { Headline } from '../components/Headline';
 import { Reveal } from '../components/Reveal';
 import { SlideFrame } from '../components/SlideFrame';
 import type { SlideMetadata } from '../types';
+
+// Live demo: the Heads-Up conversation in the Chicago Booth Slack workspace.
+const DEMO_URL = 'https://chicagobooth.slack.com/archives/D0CH8UGSC9L';
 
 export const metadata: SlideMetadata = {
   id: 'demo',
@@ -184,9 +186,15 @@ export default function DemoSlide() {
           </Reveal>
 
           <Reveal delay={700} className="mt-auto">
-            <Link to="/demo" className="inline-flex items-center gap-[10px] rounded-full bg-[var(--deck-ink)] px-[24px] py-[12px] text-[20px] font-semibold text-white">
+            {/* Opens the live demo in Slack, in a new tab so the deck stays open. */}
+            <a
+              href={DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-[10px] rounded-full bg-[var(--deck-ink)] px-[24px] py-[12px] text-[20px] font-semibold text-white"
+            >
               Open live demo <ArrowUpRight size={22} />
-            </Link>
+            </a>
           </Reveal>
         </div>
 
