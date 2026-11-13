@@ -209,11 +209,11 @@
 }
 
 /* Persona slide: a copy of the target-user slide's 1.29M box flies from its spot into Varun's profile card.
-   1.29M box after its lift (scale 1.02, -6px): left 947, top 821, 412×124. Profile card: left 104, top 414, 828×570. */
+   1.29M box (idle-seats step, right column) after its lift (scale 1.02, -6px): left 1291, top 761, 530×108. Profile card: left 104, top 414, 828×570. */
 .deck-morph { animation: deck-morph 1.35s cubic-bezier(0.65, 0, 0.35, 1) both; }
 .deck-morph-content { animation: deck-morph-content 1.35s ease both; }
 @keyframes deck-morph {
-  0%, 22% { left: 947px; top: 821px; width: 412px; height: 124px; opacity: 1; border-radius: 22px; }
+  0%, 22% { left: 1291px; top: 761px; width: 530px; height: 108px; opacity: 1; border-radius: 20px; }
   72% { left: 104px; top: 414px; width: 828px; height: 570px; opacity: 1; border-radius: 32px; }
   100% { left: 104px; top: 414px; width: 828px; height: 570px; opacity: 0; border-radius: 32px; }
 }
@@ -222,6 +222,10 @@
 /* Context slide: a number fades from ink to green (up) or red (down) while it counts. */
 .deck-tint { animation: deck-tint 1.1s ease both; }
 @keyframes deck-tint { from { color: var(--deck-ink); } }
+
+/* Target-user slide: a bar grows from --bar-from (0 on the first step, the previous value on the click) to its height. */
+.deck-bar { animation: deck-bar 1.1s cubic-bezier(0.65, 0, 0.35, 1) both; }
+@keyframes deck-bar { from { height: var(--bar-from, 0px); } }
 
 /* Team, updated: an accent strike-through that draws across each line of the role. */
 .deck-strike {
