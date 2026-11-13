@@ -9,7 +9,7 @@ export const metadata: SlideMetadata = {
   id: 'context',
   title: 'Context and problem',
   section: '01 · Context and Problem',
-  notes: 'Ansel makes the best meeting notes in its category, but usage is falling: only 38% of seats are active in a week, down from 61%, and 44% of renewals cut seats. Look at who holds those seats. Light users are half of all seats and two-thirds of the idle ones, and only one in five is active in a week. The ones who still attend a recurring meeting are 1.29 million seats and $75M of ARR. That is who we are building for.',
+  notes: 'Ansel is an AI meeting notetaker for enterprises: $240M of ARR, 4.1 million seats, and it leads on note quality and governance. But usage is falling. Seats active in a week fell from 61% to 38% in two years, and net revenue retention from 141% to 103%. Most idle seats, 66%, belong to light users, who have fewer than five meetings a week. Our user is the light user who rarely opens Ansel but still has a weekly recurring meeting: 1.29 million seats, or $75M of addressable ARR.',
 };
 
 // Exhibit 3 cohorts (FY25). Idle share is our calculation: share × (1 − weekly active).
@@ -20,6 +20,15 @@ const cohorts = [
   { id: 'never', name: 'Never connected', meetings: 'No calendar', seats: 7, idle: 11, active: 0 },
 ];
 
+const BAR_MAX = 170; // px height of the 66% column
+
+// Light seats narrowed to our user (Heads-Up brief, Opportunity Size; appendix slide 16 shows the math).
+const funnel = [
+  { value: '2.09M', label: 'light seats' },
+  { value: '1.71M', label: 'attend their meetings' },
+  { value: '1.29M', label: 'have a weekly recurring meeting' },
+];
+
 function Label({ children, accent = false }: { children: ReactNode; accent?: boolean }) {
   return (
     <p className={`text-[20px] font-semibold uppercase tracking-[0.1em] ${accent ? 'text-[var(--deck-accent)]' : 'text-[var(--deck-muted)]'}`}>
@@ -28,12 +37,24 @@ function Label({ children, accent = false }: { children: ReactNode; accent?: boo
   );
 }
 
-function Stat({ value, label }: { value: ReactNode; label: string }) {
+// Ansel at a glance (case, company context).
+const anselStats = [
+  { value: '$240M', label: 'ARR' },
+  { value: '4.1M', label: 'seats' },
+  { value: '3,900', label: 'customers' },
+];
+
+// The problem: two declines, each shown as was (gray) → now (accent). Case, business situation.
+const declines = [
+  { from: '61%', to: '38%', label: 'Seats active weekly, in 2 years' },
+  { from: '141%', to: '103%', label: 'Net revenue retention, in 3 years' },
+];
+
+function DownArrow() {
   return (
-    <div className="flex items-baseline gap-[16px]">
-      <span className="w-[120px] flex-shrink-0 font-display text-[48px] font-extrabold leading-none tracking-[-0.035em]">{value}</span>
-      <span className="text-[24px] leading-[1.3] text-[var(--deck-muted)]">{label}</span>
-    </div>
+    <svg width="44" height="56" viewBox="0 0 44 56" aria-hidden="true" className="flex-shrink-0">
+      <path d="M22 4 V46 M8 32 L22 48 L36 32" fill="none" stroke="var(--deck-accent)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
@@ -42,79 +63,129 @@ export default function ContextSlide() {
   return (
     <SlideFrame
       section={metadata.section}
+      className="deck-no-glow"
       source="Kilts Center Ansel case (2026), company context, Ex 3 · idle share is our calculation from Ex 3 · $75M at $58.54 per seat, 48.5% recurring (Flowtrace)"
     >
       <div className="absolute inset-x-[104px] top-[160px]">
         <Reveal>
           <Headline
             style={{ fontSize: 64 }}
-            secondary={<span className="whitespace-nowrap">Ansel&apos;s notes lead, but its seats sit idle.</span>}
+            secondary="Ansel is a leading notetaker, but its usage is falling"
           >
-            Context and our problem to solve
+            Context and problem
           </Headline>
         </Reveal>
       </div>
 
-      <div className="absolute inset-x-[104px] top-[370px] bottom-[96px] grid grid-cols-[500px_1fr] gap-[72px]">
-        {/* Left third: what Ansel is, and the problem, centered against the right column. */}
-        <div className="flex flex-col justify-center gap-[44px]">
-          <Reveal delay={100}>
-            <Label>Ansel</Label>
-            <p className="mt-[12px] text-[30px] font-semibold leading-[1.25]">The quality leader in AI meeting notes for enterprises</p>
-            <p className="mt-[14px] text-[24px] text-[var(--deck-muted)]">$240M ARR · 4.1M seats</p>
-          </Reveal>
-          <Reveal delay={180} className="border-t border-[var(--deck-hairline-strong)] pt-[40px]">
-            <Label>The problem</Label>
-            <p className="mt-[12px] text-[30px] font-semibold leading-[1.25]">Usage is falling, and customers are cutting seats</p>
-            <div className="mt-[30px] space-y-[28px]">
-              <Stat value={<CountUp value={38} suffix="%" />} label="active weekly, down from 61%" />
-              <Stat value={<CountUp value={44} suffix="%" />} label="of renewals cut seats" />
+      {/* Two rows shared by both columns, so the left labels line up with the right ones. */}
+      <div className="absolute inset-x-[104px] top-[360px] bottom-[96px] grid grid-cols-[500px_1fr] grid-rows-[auto_auto] items-start gap-x-[72px] gap-y-[30px]">
+        {/* Left, row 1: Ansel in a dark card */}
+        <Reveal delay={100}>
+          <div className="rounded-[28px] bg-[var(--deck-ink)] px-[30px] pb-[28px] pt-[26px] text-white">
+            <p className="text-[20px] font-semibold uppercase tracking-[0.1em] text-white/70">Ansel</p>
+            <p className="mt-[12px] text-[25px] leading-[1.35] text-white/95">
+              An AI meeting notetaker for enterprises that leads on notetaking quality and governance controls
+            </p>
+            <div className="mt-[20px] flex gap-[40px] border-t border-white/20 pt-[18px]">
+              {anselStats.map((stat) => (
+                <div key={stat.label}>
+                  <p className="font-display text-[38px] font-extrabold leading-none tracking-[-0.03em]">{stat.value}</p>
+                  <p className="mt-[6px] text-[19px] text-white/80">{stat.label}</p>
+                </div>
+              ))}
             </div>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
 
-        {/* Right two-thirds: every cohort, ours highlighted, and why */}
-        <div className="flex flex-col">
+        {/* Right two-thirds: where the idle seats are (as in appendix slide 14), then who we pick, then the kicker */}
+        <div>
           <Reveal delay={240}>
-            <Label>Who uses Ansel · share of 4.1M seats</Label>
+            <Label>Share of idle seats, by meetings a week</Label>
           </Reveal>
-          <div className="mt-[16px] grid grid-cols-[1fr_1fr_1.5fr_1fr] items-end gap-[18px]">
+
+          {/* Column chart of idle-seat share */}
+          <div className="mt-[14px] grid grid-cols-4 items-end gap-[24px]" style={{ height: BAR_MAX + 52 }}>
             {cohorts.map((cohort, index) => {
               const ours = cohort.id === 'light';
               return (
-                <Reveal key={cohort.id} delay={300 + index * 90}>
+                <Reveal key={cohort.id} delay={300 + index * 90} className="flex h-full flex-col items-center justify-end">
+                  <p className={`font-display text-[40px] font-extrabold leading-none tracking-[-0.035em] ${ours ? 'text-[var(--deck-accent)]' : 'text-[var(--deck-secondary)]'}`}>
+                    <CountUp value={cohort.idle} suffix="%" />
+                  </p>
                   <div
-                    className={`flex flex-col rounded-[28px] px-[26px] ${ours && !isStatic ? 'deck-spotlight' : ''} ${
-                      ours
-                        ? 'h-[420px] border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] py-[26px] shadow-[var(--deck-card-shadow)]'
-                        : 'h-[380px] border border-white/80 bg-white/45 py-[24px]'
-                    }`}
-                  >
-                    {ours && <span className="mb-[10px] self-start rounded-full bg-[var(--deck-accent)] px-[14px] py-[5px] text-[16px] font-semibold uppercase tracking-[0.08em] text-white">Our user</span>}
-                    <p className={`font-display font-extrabold leading-[1.05] tracking-[-0.03em] ${ours ? 'text-[34px]' : 'text-[26px]'}`}>{cohort.name}</p>
-                    <p className="mt-[4px] text-[20px] text-[var(--deck-muted)]">{cohort.meetings}</p>
-                    <p className={`mt-auto font-display font-extrabold leading-none tracking-[-0.035em] ${ours ? 'text-[80px] text-[var(--deck-accent)]' : 'text-[56px] text-[var(--deck-secondary)]'}`}>
-                      <CountUp value={cohort.seats} suffix="%" />
-                    </p>
-                    <p className="mt-[4px] text-[20px] text-[var(--deck-muted)]">of seats</p>
-                    <div className={`mt-[16px] space-y-[6px] border-t pt-[14px] text-[20px] leading-[1.3] ${ours ? 'border-[var(--deck-hairline-strong)] font-semibold' : 'border-[var(--deck-hairline)] text-[var(--deck-muted)]'}`}>
-                      <p>{cohort.idle}% of idle seats</p>
-                      <p>{cohort.active}% active weekly</p>
-                    </div>
-                  </div>
+                    className={`mt-[10px] w-[60%] rounded-t-[14px] ${ours ? 'bg-[var(--deck-accent)]' : 'bg-[var(--deck-tone-2)]'}`}
+                    style={{ height: (cohort.idle / 66) * BAR_MAX }}
+                  />
                 </Reveal>
               );
             })}
           </div>
+          <div className="grid grid-cols-4 gap-[24px] border-t-2 border-[var(--deck-hairline-strong)] pt-[10px]">
+            {cohorts.map((cohort) => {
+              const ours = cohort.id === 'light';
+              return (
+                <p key={cohort.id} className="text-center leading-[1.2]">
+                  <span className={`block text-[22px] font-semibold ${ours ? 'text-[var(--deck-accent)]' : ''}`}>{cohort.name}</span>
+                  <span className="block text-[18px] text-[var(--deck-muted)]">{cohort.meetings} · {cohort.seats}% of seats</span>
+                </p>
+              );
+            })}
+          </div>
 
-          <Reveal delay={720} className="mt-auto">
-            <div className="flex items-center gap-[32px] rounded-[24px] bg-[var(--deck-callout)] px-[30px] py-[20px]">
-              <p className="font-display text-[44px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]">
+        </div>
+
+        {/* Left, row 2: the problem */}
+        <Reveal delay={180}>
+          <Label>The problem</Label>
+          {declines.map((decline) => (
+            <div key={decline.label} className="mt-[18px] flex items-center gap-[20px]">
+              <DownArrow />
+              <div>
+                <p className="whitespace-nowrap font-display text-[56px] font-extrabold leading-none tracking-[-0.04em]">
+                  <span className="text-[var(--deck-secondary)]">{decline.from}</span>
+                  <span className="text-[34px] text-[var(--deck-muted)]"> → </span>
+                  <span className="text-[var(--deck-accent)]">{decline.to}</span>
+                </p>
+                <p className="mt-[6px] text-[22px] text-[var(--deck-muted)]">{decline.label}</p>
+              </div>
+            </div>
+          ))}
+        </Reveal>
+
+        <div>
+          {/* Who we pick: light users, narrowed to those with a recurring meeting */}
+          <Reveal delay={720}>
+            <Label accent>Our user: light users who rarely open Ansel, but have a recurring meeting</Label>
+            <div className="mt-[12px] grid grid-cols-[1fr_auto_1fr_auto_1.15fr] items-center gap-[14px]">
+              {funnel.map((step, index) => {
+                const last = index === funnel.length - 1;
+                return (
+                  <div key={step.label} className="contents">
+                    <div
+                      className={`rounded-[20px] px-[22px] py-[14px] ${
+                        last
+                          ? `border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)] ${isStatic ? '' : 'deck-spotlight'}`
+                          : 'border border-white/80 bg-white/55'
+                      }`}
+                    >
+                      <p className={`font-display text-[40px] font-extrabold leading-none tracking-[-0.035em] ${last ? 'text-[var(--deck-accent)]' : ''}`}>{step.value}</p>
+                      <p className="mt-[6px] text-[19px] leading-[1.25] text-[var(--deck-muted)]">{step.label}</p>
+                    </div>
+                    {!last && <span className="text-[30px] text-[var(--deck-secondary)]" aria-hidden="true">→</span>}
+                  </div>
+                );
+              })}
+            </div>
+          </Reveal>
+
+          {/* Kicker */}
+          <Reveal delay={900} className="mt-[16px]">
+            <div className="flex items-center gap-[24px] rounded-[22px] bg-[var(--deck-accent)] px-[28px] py-[14px] text-white">
+              <p className="font-display text-[52px] font-extrabold leading-none tracking-[-0.035em]">
                 $<CountUp value={75} />M
               </p>
-              <p className="text-[24px] leading-[1.3]">
-                <span className="font-semibold">1.29M light seats with a recurring meeting.</span>{' '}
-                <span className="text-[var(--deck-muted)]">They still attend, but open only a third of their summaries.</span>
+              <p className="text-[24px] font-semibold leading-[1.25]">
+                of addressable ARR <span className="font-normal text-white/80">· 1.29M seats × $58.54 per seat</span>
               </p>
             </div>
           </Reveal>

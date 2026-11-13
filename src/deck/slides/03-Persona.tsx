@@ -118,19 +118,12 @@ export default function PersonaSlide() {
         </div>
       </div>
 
-      {/* Transition from slide 3: the light-user card flies over and becomes Varun's profile card. */}
+      {/* Transition from slide 3: the 1.29M box flies over and becomes Varun's profile card. */}
       {!isStatic && (
         <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]" aria-hidden="true">
-          <div className="deck-morph-content flex h-[428px] w-[369px] flex-col px-[26px] py-[26px]">
-            <span className="mb-[10px] self-start rounded-full bg-[var(--deck-accent)] px-[14px] py-[5px] text-[16px] font-semibold uppercase tracking-[0.08em] text-white">Our user</span>
-            <p className="font-display text-[34px] font-extrabold leading-[1.05] tracking-[-0.03em]">Light</p>
-            <p className="mt-[4px] text-[20px] text-[var(--deck-muted)]">Under 5 a week</p>
-            <p className="mt-auto font-display text-[80px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]">51%</p>
-            <p className="mt-[4px] text-[20px] text-[var(--deck-muted)]">of seats</p>
-            <div className="mt-[16px] space-y-[6px] border-t border-[var(--deck-hairline-strong)] pt-[14px] text-[20px] font-semibold leading-[1.3]">
-              <p>66% of idle seats</p>
-              <p>20% active weekly</p>
-            </div>
+          <div className="deck-morph-content h-[104px] w-[381px] px-[22px] py-[14px]">
+            <p className="font-display text-[40px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]">1.29M</p>
+            <p className="mt-[6px] text-[19px] leading-[1.25] text-[var(--deck-muted)]">have a weekly recurring meeting</p>
           </div>
         </div>
       )}
