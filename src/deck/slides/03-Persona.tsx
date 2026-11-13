@@ -121,9 +121,9 @@ export default function PersonaSlide() {
       {/* Transition from slide 3: the 1.29M box flies over and becomes Varun's profile card. */}
       {!isStatic && (
         <div className="deck-morph pointer-events-none absolute z-20 overflow-hidden border-2 border-[var(--deck-accent)] bg-[var(--deck-card)] shadow-[var(--deck-card-shadow)]" aria-hidden="true">
-          <div className="deck-morph-content h-[104px] w-[381px] px-[22px] py-[14px]">
-            <p className="font-display text-[40px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]">1.29M</p>
-            <p className="mt-[6px] text-[19px] leading-[1.25] text-[var(--deck-muted)]">have a weekly recurring meeting</p>
+          <div className="deck-morph-content h-[124px] w-[412px] px-[26px] py-[18px]">
+            <p className="font-display text-[48px] font-extrabold leading-none tracking-[-0.035em] text-[var(--deck-accent)]">1.29M</p>
+            <p className="mt-[8px] text-[22px] leading-[1.25] text-[var(--deck-muted)]">have a weekly recurring meeting</p>
           </div>
         </div>
       )}
