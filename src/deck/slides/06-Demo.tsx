@@ -9,14 +9,15 @@ export const metadata: SlideMetadata = {
   id: 'demo',
   title: 'Demo',
   section: '02 · Demo',
-  notes: 'Set the scene: Varun is a software engineer, newish to the project, with a weekly product sync in 30 minutes. He does not remember what was discussed last week or what update he owes. Four things are already true: his manager invited him and gave him permission to review last meeting’s transcript, he is on the invite, he connected his calendar and Slack to Ansel, and he attended last week with Ansel recording. Then switch to the demo tab.',
+  notes: 'Set the scene: Varun is one of seven software engineers on the team and new to the project, with a weekly product sync in 30 minutes. He does not remember what was discussed last week, and like most light users he does not review Ansel summaries after meetings. Four things are already true: his manager invited him and gave him permission to review last meeting’s transcript, he is on the invite, he connected his calendar and Slack to Ansel, and he attended last week with Ansel recording. Then switch to the demo tab.',
 };
 
 // The situation (left third)
 const traits = [
-  'Software engineer, new to the project',
-  'Can’t recall last week’s discussion',
-  'Owes an update, but isn’t sure which',
+  'One of 7 engineers on the team',
+  'New to the project',
+  'Can’t recall last week’s meeting',
+  'Skips Ansel summaries after meetings',
 ];
 
 // What is already true (right two-thirds). These are the demo's preconditions, and they keep it inside today's permissions.
