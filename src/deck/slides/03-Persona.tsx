@@ -36,9 +36,9 @@ const persona = {
 // Quotes from Kilts case Ex 7 and our team interviews (Oct 2026), as cited in the Heads-Up brief.
 // Each card is one title line and one quote line; keep quotes short enough to fit on one line.
 const pains = [
-  { title: 'Forgets what was said', quote: '…we talk about something and I forget what we talked about.', source: '(External Interview)' },
-  { title: 'Skips meeting summaries', quote: 'I turned off the email digest after the first month.', source: '(Exhibit 7)' },
-  { title: 'Fails to see Ansel’s value', quote: '…most are standups, so notetaking hasn’t really been useful for me.', source: '(External Interview)' },
+  { title: 'Forgets what was said', quote: 'Nobody remembers what we talked about last week, so we waste time recalling.', source: '(External Interview)' },
+  { title: 'Skips meeting summaries', quote: 'Half the time I forget they are there after the email arrives.', source: '(Exhibit 7)' },
+  { title: 'Fails to see Ansel’s value', quote: 'If I only have three meetings that week, this is not something I think to open.', source: '(Exhibit 7)' },
 ];
 
 const options = [
